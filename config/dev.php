@@ -6,4 +6,8 @@
     }
     // remote (for linode dev) | local (for Mac dev)
     define('ENV','local');
+
+    // error logging
+    // 'http://03071e4c4c914bc78b720403e57d1ee4@sentry.chintown.org/5'
+    define('SENTRY_API', '');
 ?>
