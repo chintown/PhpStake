@@ -11,7 +11,7 @@
     if (file_exists(FOLDER_ROOT.$controller_path)) { // use (full) local path
         include $controller_path; // use path under php's include_path scope
     } else {
-        $err_msg = 'WARN: _'.$controller.' does not exist.';
+        $err_msg = 'WARN: '.FOLDER_ROOT.$controller_path.' does not exist.';
         if (DEV_MODE) {
             de($err_msg);
         } else {
