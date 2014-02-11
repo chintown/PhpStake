@@ -1,22 +1,16 @@
 <?php
+    define('SITE_CODE',   'phpstake');
+    define('CURRENT_HOST', '0');
     define('CHINTOWN_HOST', 'www.chintown.org');
-    define('SERVER_HOST', (ENV === 'remote')
-                        ? 'x'
-                        : 'localhost');
-    define('WEB_HOST',    (ENV === 'remote')
-                        ? SERVER_HOST
-                        : 'localhost/~chintown');
-    define('DB_HOST', (ENV === 'remote')
-                        ? 'localhost'
-                        : CHINTOWN_HOST);
+    define('DB_HOST',     (ENV === 'local') ? CHINTOWN_HOST : 'localhost');
 
 
-    define('WEB_PATH',    '/___SITE___');
+    define('SERVER_HOST', (ENV === 'local') ? 'localhost' : CURRENT_HOST);
+    define('WEB_HOST',    (ENV === 'local') ? 'localhost/~chintown' : SERVER_HOST); // for dpd.js
+    define('WEB_PATH',    (ENV === 'local') ? '/~chintown/'.SITE_CODE : '/'.SITE_CODE);
     define('WEB_ROOT',    'http://'.WEB_HOST.WEB_PATH);
     define('STATIC_ROOT', 'http://'.WEB_HOST.WEB_PATH);
 
 
-    define('HOME', (ENV === 'remote')
-                        ? '/home/chintown'
-                        : '/Users/chintown');
-    define('FOLDER_ROOT', HOME . '/src/php/___SITE___/');
+    define('HOME',        (ENV === 'remote') ? '/home/chintown' : '/Users/chintown');
+    define('FOLDER_ROOT', HOME.'/src/php/'.SITE_CODE.'/');
