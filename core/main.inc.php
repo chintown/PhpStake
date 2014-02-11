@@ -1,9 +1,19 @@
 <?php
-    $cwd = dirname(__FILE__).'/';
-    require($cwd . '../config/dev.php');
-    require($cwd . '../config/path.php');
-    require($cwd . '../common/std.php');
-    require($cwd . '../lib/mdetect.php');
-    require($cwd . '../core/translation.php');
-    require($cwd . '../config/user.php');
-    require($cwd . '../core/controller.php');
+    /* for self-contain testing only */
+    /**
+    $project_path = realpath(dirname(__FILE__).'/../');
+    ini_set('include_path', ini_get('include_path') . ':' . $project_path);
+    //*/
+
+    require('config/dev.php');
+    require('config/path.php');
+
+    $project_path = realpath(dirname(__FILE__).'/../');
+    ini_set('include_path', ini_get('include_path') . ':' . $project_path);
+
+    require('common/std.php');
+    require('lib/mdetect.php');
+    require('core/translation.php');
+    require('core/controller.php');
+    require('config/user.php');
+
