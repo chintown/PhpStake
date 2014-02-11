@@ -1,0 +1,26 @@
+entry:
+    index: home
+
+nicetime:
+    periods:
+        - second
+        - minute
+        - hour
+        - day
+        - week
+        - month
+        - year
+        - decade
+    lengths:
+        - 60
+        - 60
+        - 24
+        - 7
+        - 4.35
+        - 12
+        - 12
+        - 10
+    tenses:
+        past: ago
+        future: from now
+    plural: s
