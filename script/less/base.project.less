@@ -1,0 +1,38 @@
+@import (reference) "config.project.less";
+@import (reference) "shortcut.layout.less";
+
+// UTIL SET -------------------------------------------------------------------
+.msg {
+    background-color: #FFF8C6; color: #7E2217; /*Lemon Chiffon, Indian Red4*/
+}
+.frame {
+    border: solid 1px @main-fg;
+}
+
+
+
+// base block ==========================================================
+html {
+    background: @main-bg; //url(@img-bg-side);
+}
+body {
+    color: @main-fg;
+    background: @img-bg-main; //url(@img-bg-main) 50% 0 no-repeat;
+
+    height: 99%; // no effect in IE
+    border: solid 1px @main-bg; // DEV: 1px for fixing weird top margin
+}
+
+#wrap {
+}
+#content {
+    width: 800px;
+    .l-height-fit;
+    position: relative; // for children's refernce
+
+    margin: 0 auto;
+}
+
+mark {
+    background-color: rgba(255, 165, 0, 0.4) !important;
+}

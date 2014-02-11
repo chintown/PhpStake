@@ -1,0 +1,62 @@
+@dev: 0;
+* { .dev-border(@dev); }
+.dev-color (@dev, @color) when (@dev = 1) {background-color: @color;}
+.dev-color (@dev, @color) when (@dev = 0) {}
+.dev-border (@dev) when (@dev = 1) {border: double 1px black;}
+.dev-border (@dev) when (@dev = 0) {}
+.dev-border-high (@dev, @color, @width) when (@dev = 1) {border: double @width @color;}
+.dev-border-high (@dev, @color, @width) when (@dev = 0) {}
+
+// COLOR / FONT THEME ---------------------------------------------------------
+@hotpink: #C25283;
+@blue: #153E7E;
+@gray: #6D6968;
+@red: #E42217;
+@cyan: #50EBEC;
+@purlple: #842DCE;
+@gold: gold;
+@tan: #97694F;
+@icecream: #FFF8C6;
+
+
+@color-cold: rgba(0, 136, 204, 1);
+@color-cold-light: rgba(0, 136, 204, 0.4);
+@color-warm: rgba(255, 165, 0, 1);
+@color-warm-light: rgba(255, 165, 0, 0.4);
+
+.alpha(@ratio) {
+    @ratio-ie: @ratio * 100;
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=@ratio-ie)";
+    /* IE 5-7 */
+    filter: alpha(opacity=@ratio-ie);
+    /* Netscape */
+    -moz-opacity: @ratio;
+    /* Safari 1.x */
+    -khtml-opacity: @ratio;
+    /* Good browsers */
+    opacity: @ratio;
+}
+.bold {font-weight: bolder;}
+.hide {display: none;}
+.invisible {visibility: hidden}
+.shadow(@color) {text-shadow: @color 0em 0em 0.2em;}
+/* http://mattsnider.com/css-string-truncation-with-ellipsis/ */
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  /*-moz-binding: url("/editor/xml/ellipsis.xml#ellipsis");*/
+}
+.glow {
+  background-color: transparent;
+  -webkit-box-shadow: #ccc 4px 0 10px,#ccc -4px 0 10px,#aaa 0 38px 36px -24px;
+  -moz-box-shadow: #ccc 4px 0 10px,#ccc -4px 0 10px,#aaa 0 38px 36px -24px;
+  box-shadow: #ccc 4px 0 10px,#ccc -4px 0 10px,#aaa 0 38px 36px -24px;
+}
+.debug {
+  border-style:none; position: relative; padding: 2px;
+  font-size: 14px; font-weight: bold;
+  background-color: #616D7E; color: white; /*Slate Gray4*/
+}

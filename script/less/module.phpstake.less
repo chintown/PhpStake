@@ -1,0 +1,74 @@
+@import (reference) "module.bootstrap.less";
+@import (reference) "config.project.less";
+@import (reference) "shortcut.style.less";
+@import (reference) "shortcut.layout.less";
+
+// general
+
+.title {
+  font-family: @font-title;
+  font-size: @font-size-title;
+}
+.content {
+  font-family: @font-content;
+  font-size: @font-size-content;
+  padding: 0px 0px @line-space 0px;
+}
+.text {
+  font-family: @font-text;
+  font-size: @font-size-text;
+  padding: 0px 0px @line-space 0px;
+}
+
+.table {
+  list-style: none;
+  .pair {
+    .l-clear;
+    margin-top: @line-space;
+  }
+  .k, .v {
+    display: inline-block;
+  }
+  .k {
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+    .text;
+  }
+  .v {
+    text-align: left;
+    .text;
+  }
+  input, textarea{
+    padding: 0px;
+    .text;
+  }
+}
+
+.page-badge {
+  display: none;
+  position: fixed;
+  right: 100px;
+  bottom: 200px;
+  i {
+    z-index: -1;
+    font-size: 500px;
+    color: rgba(20%, 20%, 20%, 0.2);
+  }
+}
+
+.nav-select {
+  .bold;
+  color: @main-fg;
+}
+.nav-normal {
+  color: @side-fg;
+}
+
+.nav-vert {
+  float: none;
+}
+.nav-hori {
+  float: left;
+  padding-right: 20px;
+}
