@@ -39,6 +39,11 @@ update:
 
 stub:
 	$(SRCTOP)/tool/gen_entry.sh ${name};
+	@perl -pi -e "s/___STUB___/${name}/" "$(SRCTOP)/entry/${name}.php";
+	@perl -pi -e "s/___STUB___/${name}/" "$(SRCTOP)/template/${name}.footer.php";
+
+stub_purge:
+	$(SRCTOP)/tool/clean_entry.sh ${name};
 
 deploy: prod remote update script
 

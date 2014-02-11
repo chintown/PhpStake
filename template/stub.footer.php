@@ -15,7 +15,7 @@ if (DEV_MODE) { ?>
 <script src="<?=toggle_min_script(WEB_PATH.'/js/common.jquery.js')?>" type="text/javascript"></script>
 <script src="<?=toggle_min_script(WEB_PATH.'/js/common.project.js')?>" type="text/javascript"></script>
 <script src="<?=toggle_min_script(WEB_PATH.'/js/CrudManager.js')?>" type="text/javascript"></script>
-<script src="<?=toggle_min_script(WEB_PATH.'/js/stub.js')?>" type="text/javascript"></script>
+<script src="<?=toggle_min_script(WEB_PATH.'/js/___STUB___.js')?>" type="text/javascript"></script>
 <?php } else { ?>
 <script src="<?=WEB_PATH?>/js/___STUB___.pack.min.js" type="text/javascript"></script>
 <?php } ?>
