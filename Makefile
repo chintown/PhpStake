@@ -31,6 +31,9 @@ js:
 css:
 	@$(SRCTOP)/tool/gen_css.sh;
 
+bootstrap:
+	lessc -x $(SRCTOP)/script/less/bootstrap/bootstrap.less > $(SRCTOP)/htdoc/css/bootstrap.css
+
 update:
 	@git pull origin master
 

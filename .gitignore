@@ -3,6 +3,7 @@ config/pw.php
 htdoc/js/*.min.js
 htdoc/css
 script/less/bootstrap/tests
+script/less/*.css
 sftp-config.json
 lib/kerns-dummy/
 
