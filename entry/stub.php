@@ -1,8 +1,8 @@
 <?php
     //session_start();
-    //require('../common/authentication.php');
+    //require('../core/authentication.php');
 
-    require('../common/main.inc.php');
+    require('../core/main.inc.php');
     require('../template/header.php');
 ?>
 

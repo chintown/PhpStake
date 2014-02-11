@@ -29,7 +29,7 @@
     <meta name="description" content="<?=$DESCRIPTION?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-    <link rel="stylesheet" href="<?=$entry_css?>">
+    <link rel="stylesheet" href="<?=$ENTRY_CSS?>">
     <style>
       /*body {
         padding-top: 60px;

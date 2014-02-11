@@ -8,6 +8,8 @@
     define('ENV','local');
 
     // error logging
+    // 'http://03071e4c4c914bc78b720403e57d1ee4:89efa30eab8b43af86192dded6ee2b6c@sentry.chintown.org/5
+    define('SENTRY_API_PHP', '');
     // 'http://03071e4c4c914bc78b720403e57d1ee4@sentry.chintown.org/5'
     define('SENTRY_API_JS', '');
 ?>
