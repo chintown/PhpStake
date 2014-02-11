@@ -55,12 +55,7 @@
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-reorder"></i></a>
                       <ul class="dropdown-menu">
                           <li><a href="<?=WEB_ROOT?>"><i class="icon-home"></i> <?=$NAV_DICT['index']?></a></li>
-                          <li><a href="list.php"><i class="icon-list-alt"></i> <?=$NAV_DICT['list']?></a></li>
-                          <li><a href="publish.php"><i class="icon-truck"></i> <?=$NAV_DICT['publish']?></a></li>
-                          <li><a href="picked.php"><i class="icon-bullhorn"></i> <?=$NAV_DICT['picked']?></a></li>
-                          <li><a href="news_giddens.php"><i class="icon-bullhorn"></i> <?=$NAV_DICT['news_giddens']?></a></li>
                           <?php       if (is_admin()) { ?>
-                          <li><a href="xray.php"><i class="icon-eye-open"></i> <?=$NAV_DICT['xray']?></a></li>
                           <?php       } ?>
                       </ul>
                   </li>
