@@ -9,5 +9,5 @@
 
     // error logging
     // 'http://03071e4c4c914bc78b720403e57d1ee4@sentry.chintown.org/5'
-    define('SENTRY_API', '');
+    define('SENTRY_API_JS', '');
 ?>
