@@ -1,6 +1,4 @@
 <?php
-    define('SITE_CODE',   'phpstake');
-    define('CURRENT_HOST', '0');
     define('CHINTOWN_HOST', 'www.chintown.org');
     define('DB_HOST',     (ENV === 'local') ? CHINTOWN_HOST : 'localhost');
 

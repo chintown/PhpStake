@@ -6,11 +6,12 @@
     //*/
 
     require('config/dev.php');
-    require('config/path.php');
+    require('config/prerequisite.php');
 
     $project_path = realpath(dirname(__FILE__).'/../');
     ini_set('include_path', ini_get('include_path') . ':' . $project_path);
 
+    require('config/path.php');
     require('common/std.php');
     require('lib/mdetect.php');
     require('core/translation.php');
