@@ -10,5 +10,10 @@
     define('STATIC_ROOT', 'http://'.WEB_HOST.WEB_PATH);
 
 
-    define('HOME',        (ENV === 'remote') ? '/home/chintown' : '/Users/chintown');
+    define('HOME',        (ENV === 'remote') ? '/Users/chintown' : '/Users/chintown');
     define('FOLDER_ROOT', HOME.'/src/php/'.SITE_CODE.'/');
+
+
+    define('PARENT_SITE_CODE', 'phpstake');
+    define('PARENT_WEB_PATH',    (ENV === 'local') ? '/~chintown/'.PARENT_SITE_CODE : '/'.PARENT_SITE_CODE);
+    define('PARENT_FOLDER_ROOT', HOME.'/src/php/'.PARENT_SITE_CODE.'/');

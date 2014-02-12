@@ -5,24 +5,24 @@
     ini_set('include_path', ini_get('include_path') . ':' . $project_path);
     //*/
 
-    /* parent project */
-    /**/
+
+    /**/ //__PARENT_PROJECT__
     require 'config/dev.php';
     require 'config/prerequisite.php';
 
-    $project_path = realpath(dirname(__FILE__).'/../');
+    $project_path = realpath(dirname(__FILE__).'/../').'/';
     ini_set('include_path', ini_get('include_path') . ':' . $project_path);
 
-    require 'config/path.php';
-    require 'common/std.php';
-    require 'lib/mdetect.php';
-    require 'core/translation.php';
-    require 'core/controller.php';
-    require 'config/user.php';
+    require $project_path.'config/path.php';
+    require $project_path.'common/std.php';
+    require $project_path.'lib/mdetect.php';
+    require $project_path.'core/translation.php';
+    require $project_path.'core/controller.php';
+    require $project_path.'config/user.php';
     //*/
 
-    /* child project */
-    /**
+
+    /** //__CHILD_PROJECT__
     $project_path = realpath(dirname(__FILE__).'/../');
     ini_set('include_path', ini_get('include_path') . ':' . $project_path);
     // var_dump(ini_get('include_path'));
