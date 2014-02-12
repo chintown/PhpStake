@@ -4,10 +4,10 @@
 
 
     define('SERVER_HOST', (ENV === 'local') ? 'localhost' : CURRENT_HOST);
-    define('WEB_HOST',    (ENV === 'local') ? 'localhost/~chintown' : SERVER_HOST); // for dpd.js
+    define('WEB_HOST',    (ENV === 'local') ? 'localhost/~chintown/' : SERVER_HOST); // for dpd.js
     define('WEB_PATH',    (ENV === 'local') ? '/~chintown/'.SITE_CODE : '/'.SITE_CODE);
-    define('WEB_ROOT',    'http://'.WEB_HOST.WEB_PATH);
-    define('STATIC_ROOT', 'http://'.WEB_HOST.WEB_PATH);
+    define('WEB_ROOT',    'http://'.SERVER_HOST.WEB_PATH);
+    define('STATIC_ROOT', 'http://'.SERVER_HOST.WEB_PATH);
 
 
     define('HOME',        (ENV === 'remote') ? '/home/chintown' : '/Users/chintown');
