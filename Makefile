@@ -72,3 +72,7 @@ decrypt_pw:
 fork:
 	cp -r $(SRCTOP)/../PhpStake $(SRCTOP)/../z${name}
 	@perl -pi -e "s/___SITE___/${name}/" "$(SRCTOP)/../z${name}/config/prerequisite.php";
+	@perl -pi -e "s|/[*][*]/ //__PARENT_PROJECT__|/** //__PARENT_PROJECT__|" "$(SRCTOP)/../z${name}/core/main.inc.php";
+	@perl -pi -e "s|/[*][*] //__CHILD_PROJECT__|/**/ //__CHILD_PROJECT__|" "$(SRCTOP)/../z${name}/core/main.inc.php";
+	mv "$(SRCTOP)/../z${name}/.git/" /tmp/$RANDOM.git;
+	mv "$(SRCTOP)/../z${name}/.idea/" /tmp/$RANDOM.idea;
