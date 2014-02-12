@@ -10,7 +10,6 @@
 
         public function Translator($lang) {
             global $cwd;
-
             $fn_lang = $cwd . '../i18n/' . $lang . '.yaml';
             if (!file_exists($fn_lang)) {
                 if (DEV_MODE) {
@@ -18,7 +17,15 @@
                 }
                 exit(1);
             }
-            $this->dict = spyc_load_file($fn_lang);
+            $parent_dict = spyc_load_file($fn_lang);
+
+            $child_dict = array();
+            $fn_lang = FOLDER_ROOT . '/i18n/' . $lang . '.yaml';
+            if (file_exists($fn_lang)) {
+                $child_dict = spyc_load_file($fn_lang);
+            }
+
+            $this->dict = array_merge($parent_dict, $child_dict);
         }
         public function k($key, $options='') {
             $value = $this->get_value($key);
