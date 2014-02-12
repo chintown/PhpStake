@@ -16,6 +16,6 @@
 ?>
 </div>
 <?php
-    //add_extra_footer('___STUB___.footer.php');
+    add_extra_footer('___STUB___.footer.php');
     require('../template/footer.php');
 ?>
