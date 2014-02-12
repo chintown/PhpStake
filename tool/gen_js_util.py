@@ -12,7 +12,7 @@ def get_controllers():
     controllers = []
     files = os.listdir(template_dir)
     for file in files:
-        if file.endswith('.footer.php'):
+        if file.endswith('.footer.php') and not file.startswith('jquery.'):
             controller = file.split('.')[0]
             controllers.append(controller)
     return controllers
@@ -30,7 +30,8 @@ def get_users(controller):
         if m is not None:
             g = m.groups()
             js_file = g[0]  # e.g. /static/js/portfolio.js
-            users.append(js_file)
+            if not js_file.endswith('___STUB___.js'):
+                users.append(js_file)
     users = map(lambda user: user.lstrip('/'), users)
     return users
 
