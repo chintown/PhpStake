@@ -6,12 +6,13 @@
     define('LANG', $lang);
     $TRANS = new Translator(LANG);
 
+    $site_caped = ucfirst(SITE_CODE);
     // browser title
-    $TITLE_SITE = '___SITE_CAPED___'; // 'eContent — My ePub Assistant';
+    $TITLE_SITE = $site_caped;
     // display title of html page
-    $TITLE_PAGE = '___SITE_CAPED___';
+    $TITLE_PAGE = $site_caped;
     // meta tags
-    $KEYWORDS = '___SITE___';
+    $KEYWORDS = ''.SITE_CODE;
     $DESCRIPTION = '___DESCRIPTION___';
     // prefix of browser title shows the current page
     $NAV_DICT = array(
