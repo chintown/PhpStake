@@ -69,3 +69,6 @@ decrypt_pw:
 	openssl cast5-cbc -d -in ${PW_FILE}.cast5 -out ${PW_FILE}
 	chmod 644 ${PW_FILE}
 
+fork:
+	cp -r $(SRCTOP)/../PhpStake $(SRCTOP)/../z${name}
+	@perl -pi -e "s/___SITE___/${name}/" "$(SRCTOP)/../z${name}/config/prerequisite.php";
