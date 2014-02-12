@@ -2,10 +2,7 @@
 #.PHONY: clean
 
 SRCTOP := $(shell pwd)
-#@sed -i '' "s/MODE',[0-1]/MODE',1/" "$(SRCTOP)/config/dev.php";
-#@sed -i '' "s/MODE',[0-1]/MODE',0/" "$(SRCTOP)/config/dev.php";
-#@sed -i '' "s/ENV','.*'/ENV','local'/" "$(SRCTOP)/config/dev.php";
-#@sed -i '' "s/ENV','.*'/ENV','remote'/" "$(SRCTOP)/config/dev.php";
+PARENTTOP := $(shell grep __PARENT_ROOT__ core/main.inc.php |  cut -d ' ' -f6 | tr -d "'")
 
 dev:
 	@perl -pi -e "s/MODE',[0-1]/MODE',1/" "$(SRCTOP)/config/dev.php";
@@ -26,10 +23,10 @@ remote:
 script: js css
 
 js:
-	@$(SRCTOP)/tool/gen_js.sh;
+	@$(PARENTTOP)/tool/gen_js.sh;
 
 css:
-	@$(SRCTOP)/tool/gen_css.sh;
+	@$(PARENTTOP)/tool/gen_css.sh;
 
 bootstrap:
 	lessc -x $(SRCTOP)/script/less/bootstrap/bootstrap.less > $(SRCTOP)/htdoc/css/bootstrap.css
@@ -38,12 +35,12 @@ update:
 	@git pull origin master
 
 stub:
-	$(SRCTOP)/tool/gen_entry.sh ${name};
+	$(PARENTTOP)/tool/gen_entry.sh ${name};
 	@perl -pi -e "s/___STUB___/${name}/" "$(SRCTOP)/entry/${name}.php";
 	@perl -pi -e "s/___STUB___/${name}/" "$(SRCTOP)/template/${name}.footer.php";
 
 stub_purge:
-	$(SRCTOP)/tool/clean_entry.sh ${name};
+	$(PARENTTOP)/tool/clean_entry.sh ${name};
 
 deploy: prod remote update script
 
