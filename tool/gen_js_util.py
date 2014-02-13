@@ -1,3 +1,5 @@
+#! /usr/bin/env python
+# coding: utf-8
 import sys
 import os
 import re
@@ -54,20 +56,22 @@ def get_lib(controller):
     return libs
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 3:
         '''
         USAGE:
-            gen_js_util.py controllers_need_customized_js
+            gen_js_util.py controllers_need_customized_js target_filepath
             -> portfolio dashboard index (space separated)
-            gen_js_util.py user_js_file_names <controller_name>
+            gen_js_util.py user_js_file_names <controller_name> target_filepath
             -> /static/js/std.js /static/js/Manage.js /static/js/Flipper.js ...
-            gen_js_util.py lib_js_file_names <controller_name>
+            gen_js_util.py lib_js_file_names <controller_name> target_filepath
             -> lib/MXHR/DUI.js lib/MXHR/Stream.js lib/jqueryjson/jquery.json.js ...
         '''
     else:
         action = sys.argv[1]
+        target_filepath = sys.argv[-1]
         #print action
 
+        template_dir = target_filepath + '/' + template_dir
         controllers = get_controllers()
         if action == 'controllers_need_customized_js':
             result = controllers
