@@ -35,7 +35,7 @@ update:
 	@git pull origin master
 
 stub:
-	$(PARENTTOP)/tool/gen_entry.sh ${name};
+	$(PARENTTOP)/tool/gen_entry.sh ${name} $(PARENTTOP) $(SRCTOP);
 	@perl -pi -e "s/___STUB___/${name}/" "$(SRCTOP)/entry/${name}.php";
 	@perl -pi -e "s/___STUB___/${name}/" "$(SRCTOP)/template/${name}.footer.php";
 
@@ -96,20 +96,3 @@ fork:
 	@perl -pi -e "s/___SITE___/${name}/" "$(SRCTOP)/../${name}/config/prerequisite.php";
 	@perl -pi -e "s|/[*][*]/ //__PARENT_PROJECT__|/** //__PARENT_PROJECT__|" "$(SRCTOP)/../${name}/core/main.inc.php";
 	@perl -pi -e "s|/[*][*] //__CHILD_PROJECT__|/**/ //__CHILD_PROJECT__|" "$(SRCTOP)/../${name}/core/main.inc.php";
-
-fork_subtraction:
-	$(eval TRASH_DIR := $(shell mktemp -d -t phpstake))
-	@echo "cleaning...";
-	@rm -rf $(SRCTOP)/../z${name}
-	@echo "forking...";
-	cp -r $(SRCTOP)/../PhpStake $(SRCTOP)/../z${name}
-	@perl -pi -e "s/___SITE___/${name}/" "$(SRCTOP)/../z${name}/config/prerequisite.php";
-	@perl -pi -e "s|/[*][*]/ //__PARENT_PROJECT__|/** //__PARENT_PROJECT__|" "$(SRCTOP)/../z${name}/core/main.inc.php";
-	@perl -pi -e "s|/[*][*] //__CHILD_PROJECT__|/**/ //__CHILD_PROJECT__|" "$(SRCTOP)/../z${name}/core/main.inc.php";
-	@echo "cleaning...";
-	mv "$(SRCTOP)/../z${name}/.git/" $(TRASH_DIR);
-	mv "$(SRCTOP)/../z${name}/.idea/" $(TRASH_DIR);
-	mv "$(SRCTOP)/../z${name}/common/" $(TRASH_DIR);
-	mv "$(SRCTOP)/../z${name}/core/" $(TRASH_DIR);
-	mv "$(SRCTOP)/../z${name}/lamp/" $(TRASH_DIR);
-	mv "$(SRCTOP)/../z${name}/tool/" $(TRASH_DIR);
