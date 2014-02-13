@@ -3,7 +3,7 @@
     //session_start();
     //require '../core/authentication.php';
     require $path_fix_before_inc.'core/main.inc.php';
-    require '../template/header.php';
+    require 'template/header.php';
 ?>
 
 <div id="___STUB___">
@@ -17,5 +17,5 @@
 </div>
 <?php
     add_extra_footer('___STUB___.footer.php');
-    require '../template/footer.php';
+    require 'template/footer.php';
 ?>
