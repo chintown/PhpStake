@@ -67,9 +67,49 @@ decrypt_pw:
 	chmod 644 ${PW_FILE}
 
 fork:
+	@echo "backup...";
+	-@mv $(SRCTOP)/../${name} $(shell mktemp -d -t phpstake)
+	@echo "forking project structure...";
+	mkdir -p $(SRCTOP)/../${name}/core
+	mkdir -p $(SRCTOP)/../${name}/config
+	mkdir -p $(SRCTOP)/../${name}/controller
+	mkdir -p $(SRCTOP)/../${name}/entry
+	mkdir -p $(SRCTOP)/../${name}/i18n
+	mkdir -p $(SRCTOP)/../${name}/lib
+	mkdir -p $(SRCTOP)/../${name}/script/less
+	mkdir -p $(SRCTOP)/../${name}/template
+	mkdir -p $(SRCTOP)/../${name}/tool
+	mkdir -p $(SRCTOP)/../${name}/htdoc/js
+	mkdir -p $(SRCTOP)/../${name}/htdoc/css
+	mkdir -p $(SRCTOP)/../${name}/htdoc/font
+	mkdir -p $(SRCTOP)/../${name}/htdoc/icon
+	mkdir -p $(SRCTOP)/../${name}/htdoc/img
+	mkdir -p $(SRCTOP)/../${name}/htdoc/error
+	mkdir -p $(SRCTOP)/../${name}/htdoc/xml
+	cp -r $(SRCTOP)/../PhpStake/config $(SRCTOP)/../${name}/
+	cp $(SRCTOP)/../PhpStake/htdoc/crossdomain.xml $(SRCTOP)/../${name}/htdoc/crossdomain.xml
+	cp $(SRCTOP)/../PhpStake/htdoc/robots.txt $(SRCTOP)/../${name}/htdoc/robots.txt
+	cp $(SRCTOP)/../PhpStake/htdoc/humans.txt $(SRCTOP)/../${name}/htdoc/humans.txt
+	cp $(SRCTOP)/../PhpStake/core/main.inc.php $(SRCTOP)/../${name}/core/main.inc.php
+	cp $(SRCTOP)/../PhpStake/Makefile $(SRCTOP)/../${name}/Makefile
+	@echo "configuring..."
+	@perl -pi -e "s/___SITE___/${name}/" "$(SRCTOP)/../${name}/config/prerequisite.php";
+	@perl -pi -e "s|/[*][*]/ //__PARENT_PROJECT__|/** //__PARENT_PROJECT__|" "$(SRCTOP)/../${name}/core/main.inc.php";
+	@perl -pi -e "s|/[*][*] //__CHILD_PROJECT__|/**/ //__CHILD_PROJECT__|" "$(SRCTOP)/../${name}/core/main.inc.php";
+
+fork_subtraction:
+	$(eval TRASH_DIR := $(shell mktemp -d -t phpstake))
+	@echo "cleaning...";
+	@rm -rf $(SRCTOP)/../z${name}
+	@echo "forking...";
 	cp -r $(SRCTOP)/../PhpStake $(SRCTOP)/../z${name}
 	@perl -pi -e "s/___SITE___/${name}/" "$(SRCTOP)/../z${name}/config/prerequisite.php";
 	@perl -pi -e "s|/[*][*]/ //__PARENT_PROJECT__|/** //__PARENT_PROJECT__|" "$(SRCTOP)/../z${name}/core/main.inc.php";
 	@perl -pi -e "s|/[*][*] //__CHILD_PROJECT__|/**/ //__CHILD_PROJECT__|" "$(SRCTOP)/../z${name}/core/main.inc.php";
-	mv "$(SRCTOP)/../z${name}/.git/" /tmp/$RANDOM.git;
-	mv "$(SRCTOP)/../z${name}/.idea/" /tmp/$RANDOM.idea;
+	@echo "cleaning...";
+	mv "$(SRCTOP)/../z${name}/.git/" $(TRASH_DIR);
+	mv "$(SRCTOP)/../z${name}/.idea/" $(TRASH_DIR);
+	mv "$(SRCTOP)/../z${name}/common/" $(TRASH_DIR);
+	mv "$(SRCTOP)/../z${name}/core/" $(TRASH_DIR);
+	mv "$(SRCTOP)/../z${name}/lamp/" $(TRASH_DIR);
+	mv "$(SRCTOP)/../z${name}/tool/" $(TRASH_DIR);
