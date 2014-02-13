@@ -1,6 +1,6 @@
 <?php
     require 'raven.php';
-    require_once('../lib/FirePHPCore/fb.php');
+    require_once 'lib/FirePHPCore/fb.php';
 
     // routing
     $script_name = $_SERVER['SCRIPT_NAME']; // /foo/bar/index.php
