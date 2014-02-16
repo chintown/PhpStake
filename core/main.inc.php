@@ -18,7 +18,7 @@
     require $project_path.'lib/mdetect.php';
     require $project_path.'core/translation.php';
     require $project_path.'core/controller.php';
-    require $project_path.'config/user.php';
+    require 'config/user.php';
     //*/
 
 
