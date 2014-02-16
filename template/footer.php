@@ -1,5 +1,5 @@
-
       </div> <?php /*#content*/ ?>
+      <div class="ajax-msg alert hide"></div>
     </div> <?php /*#wrap*/ ?>
     <div id="wrap_resource">
       <?php echo serialize_vars_as_js(array('DEV_MODE' => DEV_MODE,'IS_MOBILE' => $IS_MOBILE,'WEB_HOST' => WEB_HOST)); ?>

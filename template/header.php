@@ -87,11 +87,6 @@
               <li><a href="login.php"><?=$NAV_DICT['login']?></a></li>
             </ul>
             <?php } ?>
-
-              <div id="msg" class="container">
-                  <span class="alert hide"></span>
-              </div>
-
           </div>
         </div>
       </div>
