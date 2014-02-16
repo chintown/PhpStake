@@ -80,6 +80,7 @@ fork:
 	mkdir -p $(ROOT_CHILD)/../${name}/lib
 	mkdir -p $(ROOT_CHILD)/../${name}/script/less
 	mkdir -p $(ROOT_CHILD)/../${name}/template
+	cp $(ROOT_CHILD)/../PhpStake/template/project.footer.php $(ROOT_CHILD)/../${name}/template/project.footer.php
 	mkdir -p $(ROOT_CHILD)/../${name}/tool
 	mkdir -p $(ROOT_CHILD)/../${name}/htdoc
 	cp $(ROOT_CHILD)/../PhpStake/htdoc/crossdomain.xml $(ROOT_CHILD)/../${name}/htdoc/crossdomain.xml

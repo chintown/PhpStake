@@ -14,7 +14,7 @@ def get_controllers():
     controllers = []
     files = os.listdir(template_dir)
     for file in files:
-        if file.endswith('.footer.php') and not file.startswith('jquery.'):
+        if file.endswith('.footer.php') and not file.startswith('jquery.') and not file.startswith('project.'):
             controller = file.split('.')[0]
             controllers.append(controller)
     return controllers
