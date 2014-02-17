@@ -1,5 +1,9 @@
 entry:
-    index: home
+  index: home
+  setting: setting
+  login: login
+  logout: logout
+  register: register
 
 nicetime:
     periods:

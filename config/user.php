@@ -16,5 +16,9 @@
     $DESCRIPTION = '___DESCRIPTION___';
     // prefix of browser title shows the current page
     $NAV_DICT = array(
-        'index' => $TRANS->k('entry.index', 'capital')
+        'index' => $TRANS->k('entry.index', 'capital'),
+        'setting' => $TRANS->k('entry.setting', 'capital'),
+        'login' => $TRANS->k('entry.login', 'capital'),
+        'logout' => $TRANS->k('entry.logout', 'capital'),
+        'register' => $TRANS->k('entry.register', 'capital'),
     );
