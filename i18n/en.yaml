@@ -5,6 +5,18 @@ entry:
   logout: logout
   register: register
 
+common:
+    save: save
+    download: download
+    preview: preview
+    ok: ok
+    cancel: cancel
+
+    first page: «
+    prev page: ‹
+    next page: ›
+    last page: »
+
 nicetime:
     periods:
         - second

@@ -218,7 +218,7 @@ var CrudManager = Class.extend({
         var $add = (tmplAdd.length === 0)
             ? this.genDefaultRow() // default
             : tmplAdd.tmpl({});
-        $add.addClass('crud-add pairs');
+        $add.addClass('crud-add table');
 
         var data = this.getHeads(); // [{k:, kDisp:}, {}, ...]
 
@@ -226,7 +226,7 @@ var CrudManager = Class.extend({
         $columns = ($columns === false) ? this.genDefaultInputColumns(data) : $columns; // default
         // template-generated result does not have addClass method
         $.each($columns, function (idx, column) {
-            $(column).addClass('crud-modal-column');
+            $(column).addClass('crud-modal-column pair');
         });
 
         $add.append($columns);
@@ -239,7 +239,7 @@ var CrudManager = Class.extend({
         var $edit = (tmplEdit.length === 0)
             ? this.genDefaultRow() // default
             : tmplEdit.tmpl({});
-        $edit.addClass('crud-edit pairs');
+        $edit.addClass('crud-edit table');
 
         var heads = this.getHeads(); // [{k:, kDisp:}, {}, ...]
         $.each(data, function (i, row) {
@@ -250,7 +250,7 @@ var CrudManager = Class.extend({
         $columns = ($columns === false) ? this.genDefaultInputColumns(data) : $columns; // default
         // template-generated result does not have addClass method
         $.each($columns, function (idx, column) {
-            $(column).addClass('crud-modal-column');
+            $(column).addClass('crud-modal-column pair');
         });
 
         $edit.append($columns);
