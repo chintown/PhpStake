@@ -7,7 +7,8 @@ var CrudManager = Class.extend({
     template_id: '',
 
     init: function (config) {
-        this.panel = $(config.containerSelector).addClass('crud-table');
+        this.panel = $(config.containerSelector).addClass('crud-table')
+        this.panel.css('position', 'relative'); // avoid leak of absolute children
         this.editingCallback = config.editingCallback;
         this.template_id = config.template_id || '';
     },
@@ -41,8 +42,8 @@ var CrudManager = Class.extend({
             dict = $.extend({id: r['$id']}, dict); // this is a trick for make guarantee the order of key
             var idx = self.panelBody.find('.crud-row').length - 1;
             var data = self.convertToInternal(dict);
-            ////de.log(data, 'genBodyRows');
-            self.panelBody.append(self.genBodyRows(self, idx, data));
+            ////de.log(data, 'genBodyRow');
+            self.panelBody.append(self.genBodyRow(self, idx, data));
         });
     },
     executeUpdateWithUI: function (dpd, $row) {
@@ -63,7 +64,7 @@ var CrudManager = Class.extend({
             }
 
             var data = self.convertToInternal(dict);
-            var $updatedRow = self.genBodyRows(self, parseInt($row.attr('data-id')), data);
+            var $updatedRow = self.genBodyRow(self, parseInt($row.attr('data-id')), data);
             replaceDom($updatedRow, $row);
         });
     },
@@ -163,10 +164,9 @@ var CrudManager = Class.extend({
         $head.append($columns);
         return $head;
     },
-    genBodyRows:function (self, idx, data) {
-        // XXX this function should be genBodyRow, no 's'
+    genBodyRow:function (self, idx, data) {
         var tmplRow = $('.crud_body_row'); // user-defined
-        if (tmplRow.length > 1) { // always get latter on for overriding
+        if (tmplRow.length > 1) { // always get latter one for overriding
             tmplRow = $(tmplRow.get(tmplRow.length - 1));
         }
         var $row = (tmplRow.length === 0)
@@ -189,6 +189,10 @@ var CrudManager = Class.extend({
             // single wrapper
             $row.append($columns);
         }
+
+        var $control = $('#crud_control').tmpl({});
+        $row.append($control);
+
         return $row;
     },
     genBody: function () {
@@ -201,7 +205,7 @@ var CrudManager = Class.extend({
 
         var dataSets = this.getBodies();
         $.each(dataSets, function (idx, data) {
-            $body.append(self.genBodyRows(self, idx, data));
+            $body.append(self.genBodyRow(self, idx, data));
         });
 
         this.panelBody = $body;

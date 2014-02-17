@@ -15,6 +15,13 @@
     <div name='${k}' class='${k}'>${v}</div>
 </script>
 
+<script id='crud_control' type='text/x-jquery-tmpl'>
+    <div class='crud-control'>
+        <a class='crud-control-edit' href="javascript:void(0)" ><i class="icon-edit"></i></a>
+        <a class='crud-control-remove' href="javascript:void(0)" ><i class="icon-remove"></i></a>
+    </div>
+</script>
+
 <script class='crud_add' type='text/x-jquery-tmpl'>
     <ul class='unstyled'></ul>
 </script>
