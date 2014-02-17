@@ -1,9 +1,9 @@
 <?php
+    session_start();
     $path_fix_before_inc = '../';
-    //session_start();
-    //require '../core/authentication.php';
     require $path_fix_before_inc.'core/main.inc.php';
     require 'template/header.php';
+    require '../core/authentication.php';
 ?>
 
 <div id="___STUB___">
