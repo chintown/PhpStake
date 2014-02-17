@@ -11,8 +11,8 @@
 
 <div id="wrap_template">
 <?php
-    //require '../template/crud.php';
-    //require '../template/___STUB___.crud.php';
+    //require 'template/crud.php';
+    //require 'template/___STUB___.crud.php';
 ?>
 </div>
 <?php
