@@ -95,6 +95,7 @@ fork:
 	mkdir -p $(ROOT_CHILD)/../${name}/htdoc/error
 	mkdir -p $(ROOT_CHILD)/../${name}/htdoc/xml
 	cp $(ROOT_CHILD)/../PhpStake/Makefile $(ROOT_CHILD)/../${name}/Makefile
+	cp $(ROOT_CHILD)/../PhpStake/.gitignore $(ROOT_CHILD)/../${name}/.gitignore
 	@echo "configuring..."
 	@perl -pi -e "s/___SITE___/${name}/" "$(ROOT_CHILD)/../${name}/config/prerequisite.php";
 	@perl -pi -e "s|/[*][*]/ //__PARENT_PROJECT__|/** //__PARENT_PROJECT__|" "$(ROOT_CHILD)/../${name}/core/main.inc.php";
