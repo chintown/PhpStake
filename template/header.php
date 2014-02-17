@@ -51,26 +51,28 @@
       <div class="navbar"> <?php /*.navbar-fixed-top*/ ?>
         <div class="navbar-inner">
           <div class="container">
-              <ul id="menu" class="nav pull-left">
-                  <li class="dropdown">
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-reorder"></i></a>
-                      <ul class="dropdown-menu">
-                          <li><a href="<?=WEB_ROOT?>"><i class="icon-home"></i> <?=$NAV_DICT['index']?></a></li>
-                          <?php       if (is_admin()) { ?>
-                          <?php       } ?>
-                      </ul>
-                  </li>
-              </ul>
+            <ul id="menu" class="nav pull-left">
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-reorder"></i></a>
+                <ul class="dropdown-menu">
+                  <li><a href="<?=WEB_ROOT?>"><i class="icon-home"></i> <?=$NAV_DICT['index']?></a></li>
+                  <?php       if (is_admin()) { ?>
+                  <?php       } ?>
+                </ul>
+              </li>
+            </ul>
+
             <!-- <a class="brand" href="<?=WEB_ROOT?>"><i class="icon-home"></i></a> -->
             <ul class="breadcrumb pull-left">
-                <?=$BREADCRUMB?>
+              <?=$BREADCRUMB?>
             </ul>
+
             <?php if(is_login()) { ?>
             <ul class="nav pull-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=$_SESSION['ID']?> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><a href="settings.php"><i class="icon-cog"></i> <?=$NAV_DICT['settings']?></a></li>
+                  <li><a href="setting.php"><i class="icon-cog"></i> <?=$NAV_DICT['setting']?></a></li>
                   <li class="divider"></li>
                   <li><a href="logout.php"><i class="icon-off"></i> <?=$NAV_DICT['logout']?></a></li>
                 </ul>
@@ -88,6 +90,7 @@
               <li><a href="login.php"><?=$NAV_DICT['login']?></a></li>
             </ul>
             <?php } ?>
+
           </div>
         </div>
       </div>
