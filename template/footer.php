@@ -1,7 +1,18 @@
 
       </div> <?php /*#content*/ ?>
+      <?php
+        if (isset($r_msg)) {
+            $visibility = '';
+            $alert_type = 'alert-' . $r_msg->type;
+            $alert_msg = $r_msg->msg;
+        } else {
+            $alert_type = '';
+            $visibility = 'hide';
+            $alert_msg = '';
+        }
+      ?>
 
-      <div class="ajax-msg alert hide"></div>
+      <div class="ajax-msg alert <?=$alert_type.' '.$visibility?>"><?=$alert_msg?></div>
     </div> <?php /*#wrap*/ ?>
 
 
