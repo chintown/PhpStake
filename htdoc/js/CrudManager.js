@@ -301,5 +301,9 @@ var CrudManager = Class.extend({
             });
         });
         return data;
+    },
+
+    getNextRowId: function () {
+        this.panelBody.find('.crud-row').length - 1;
     }
-});
+ });
