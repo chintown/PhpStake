@@ -31,39 +31,35 @@ var ParseCrudManager = CrudManager.extend({
         );
     },
     executeUpdateWithUI: function (parseClass, $row) {
+        var parseInstance = new parseClass();
         var self = this;
         var dict = this.exportFromModal(this.editModal, 'edit');
         dict['objectId'] = dict['id'];
         delete dict['id'];
 
-        var queryInstance = new Parse.Query(parseClass);
-        queryInstance.equalTo("objectId", dict['objectId']);
-        queryInstance.first().then(function(matchedInstance) {
-            $.each(dict, function(key, value) {
-                matchedInstance.set(key, value);
-            });
-            return matchedInstance.save();
-        }, function(error) {
-            ajaxMsgError('Failed to update project, '+dict['objectId']+', with error code: ' + error.description);
-        }).then(function(parseInstance) {
+        parseInstance.id = dict['objectId'];
+        $.each(dict, function(key, value) {
+            parseInstance.set(key, value);
+        });
+
+        parseInstance.save().then(function(parseInstance) {
             var data = self.convertToInternal(dict);
             var $updatedRow = self.genBodyRow(self, parseInt($row.attr('data-id')), data);
             replaceDom($updatedRow, $row);
 
             self.editingCallback();
+        }, function(error) {
+            ajaxMsgError('Failed to update project, '+dict['objectId']+', with error code: ' + error.description);
         });
     },
     executeRemoveWithUI: function (parseClass, $row) {
+        var parseInstance = new parseClass();
         var self = this;
         var id = $row.find('.id').text().trim();
 
-        var queryInstance = new Parse.Query(parseClass);
-        queryInstance.equalTo("objectId", id);
-        queryInstance.first().then(function(matchedInstance) {
-            matchedInstance.destroy();
-        }, function(error) {
-            ajaxMsgError('Failed to find project, '+dict['objectId']+', with error code: ' + error.description);
-        }).then(function(parseInstance) {
+        parseInstance.id = id;
+
+        parseInstance.destroy().then(function(parseInstance) {
             self.editingCallback();
 
             $row.remove();
