@@ -57,6 +57,9 @@ fix_tool_permission:
 	@chmod +x $(ROOT_CHILD)/tool/*.sh
 	@chmod +x $(ROOT_CHILD)/tool/*.py
 
+fix_production_inc_path:
+	@perl -pi -e "s/Users/home/" "$(ROOT_CHILD)/core/main.inc.php";
+
 #http://ejohn.org/blog/keeping-passwords-in-source-control/
 PW_FILE=config/pw.php
 encrypt_pw:
