@@ -14,8 +14,8 @@ var ParseCrudManager = CrudManager.extend({
             parseInstance.set(key, value);
         });
 
-        parseInstance.save(null, {
-            success: function(parseInstance) {
+        parseInstance.save().then(
+            function(parseInstance) {
                 dict = $.extend({id: parseInstance.objectId}, dict); // this is a trick for make guarantee the order of key
                 self.panelBody.append(self.genBodyRow(
                     self,
@@ -25,10 +25,10 @@ var ParseCrudManager = CrudManager.extend({
 
                 self.editingCallback();
             },
-            error: function(parseInstance, error) {
+            function(error) {
                 ajaxMsgError('Failed to create new object, with error code: ' + error.description);
             }
-        });
+        );
     },
     executeUpdateWithUI: function (parseClass, $row) {
         var self = this;
@@ -38,27 +38,19 @@ var ParseCrudManager = CrudManager.extend({
 
         var queryInstance = new Parse.Query(parseClass);
         queryInstance.equalTo("objectId", dict['objectId']);
-        queryInstance.first({
-            success: function(matchedInstance) {
-                $.each(dict, function(key, value) {
-                    matchedInstance.set(key, value);
-                });
-                matchedInstance.save(null, {
-                    success: function(parseInstance) {
-                        var data = self.convertToInternal(dict);
-                        var $updatedRow = self.genBodyRow(self, parseInt($row.attr('data-id')), data);
-                        replaceDom($updatedRow, $row);
+        queryInstance.first().then(function(matchedInstance) {
+            $.each(dict, function(key, value) {
+                matchedInstance.set(key, value);
+            });
+            return matchedInstance.save();
+        }, function(error) {
+            ajaxMsgError('Failed to update project, '+dict['objectId']+', with error code: ' + error.description);
+        }).then(function(parseInstance) {
+            var data = self.convertToInternal(dict);
+            var $updatedRow = self.genBodyRow(self, parseInt($row.attr('data-id')), data);
+            replaceDom($updatedRow, $row);
 
-                        self.editingCallback();
-                    },
-                    error: function(parseInstance, error) {
-                        ajaxMsgError('Failed to update project, '+dict['objectId']+', with error code: ' + error.description);
-                    }
-                });
-            },
-            error: function(matchedInstance, error) {
-                ajaxMsgError('Failed to find project, '+dict['objectId']+', with error code: ' + error.description);
-            }
+            self.editingCallback();
         });
     },
     executeRemoveWithUI: function (parseClass, $row) {
@@ -67,22 +59,16 @@ var ParseCrudManager = CrudManager.extend({
 
         var queryInstance = new Parse.Query(parseClass);
         queryInstance.equalTo("objectId", id);
-        queryInstance.first({
-            success: function(matchedInstance) {
-                matchedInstance.destroy({
-                    success: function(parseInstance) {
-                        self.editingCallback();
+        queryInstance.first().then(function(matchedInstance) {
+            matchedInstance.destroy();
+        }, function(error) {
+            ajaxMsgError('Failed to find project, '+dict['objectId']+', with error code: ' + error.description);
+        }).then(function(parseInstance) {
+            self.editingCallback();
 
-                        $row.remove();
-                    },
-                    error: function(parseInstance, error) {
-                        ajaxMsgError('Failed to remove project, '+id+', with error code: ' + error.description);
-                    }
-                });
-            },
-            error: function(matchedInstance, error) {
-                ajaxMsgError('Failed to find project, '+dict['objectId']+', with error code: ' + error.description);
-            }
+            $row.remove();
+        }, function(parseInstance, error) {
+            ajaxMsgError('Failed to remove project, '+id+', with error code: ' + error.description);
         });
     }
 });

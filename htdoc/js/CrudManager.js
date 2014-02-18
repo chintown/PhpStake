@@ -9,7 +9,7 @@ var CrudManager = Class.extend({
     init: function (config) {
         this.panel = $(config.containerSelector).addClass('crud-table')
         this.panel.css('position', 'relative'); // avoid leak of absolute children
-        this.editingCallback = config.editingCallback;
+        this.editingCallback = config.editingCallback || this.editingCallback;
         this.template_id = config.template_id || '';
     },
     render: function () {
