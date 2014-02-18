@@ -31,7 +31,7 @@
         <script>Raven.config(SENTRY_API).install();</script>
       <?php } ?>
 
-      <? include("template/project.footer.php"); ?>
+      <? include("template/common.project.footer.php"); ?>
 
       <?php if (!empty($FOOTER_EXTRA)) { include("template/$FOOTER_EXTRA"); }?>
     </div> <?php /*#wrap_resource*/ ?>
