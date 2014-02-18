@@ -28,6 +28,9 @@ js:
 css:
 	@$(ROOT_PARENT)/tool/gen_css.sh $(ROOT_PARENT) $(ROOT_CHILD);
 
+css_parent:
+		@$(shell pwd)/tool/gen_css.sh $(shell pwd) $(shell pwd);
+
 bootstrap:
 	lessc -x $(ROOT_CHILD)/script/less/bootstrap/bootstrap.less > $(ROOT_CHILD)/htdoc/css/bootstrap.css
 
