@@ -74,7 +74,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="setting.php"><i class="icon-cog"></i> <?=$NAV_DICT['setting']?></a></li>
                   <li class="divider"></li>
-                  <li><a href="logout.php"><i class="icon-off"></i> <?=$NAV_DICT['logout']?></a></li>
+                  <li><a  id="logout" href="logout.php"><i class="icon-off"></i> <?=$NAV_DICT['logout']?></a></li>
                 </ul>
               </li>
 
