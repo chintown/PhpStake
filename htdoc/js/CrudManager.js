@@ -27,7 +27,7 @@ var CrudManager = Class.extend({
     },
     executeAddWithUI: function (dpd) {
         var self = this;
-        var dict = this.exportModal(this.addModal, 'add');
+        var dict = this.exportFromModal(this.addModal, 'add');
         delete dict['id'];
         dpd.post(dict, function (r) {
             self.editingCallback();
@@ -48,7 +48,7 @@ var CrudManager = Class.extend({
     },
     executeUpdateWithUI: function (dpd, $row) {
         var self = this;
-        var dict = this.exportModal(this.editModal, 'edit');
+        var dict = this.exportFromModal(this.editModal, 'edit');
         var id = dict['id'];
         var param = $.extend({}, dict); // we need to keep the original set for updating dom
         delete param['id'];
@@ -270,7 +270,7 @@ var CrudManager = Class.extend({
         });
         return dict;
     },
-    exportModal: function (modal, source) {
+    exportFromModal: function (modal, source) {
         var data = {};
         modal.find('.crud-modal-column').each(function (idx, column) {
             var $input = $(column).find('.v');

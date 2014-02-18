@@ -7,7 +7,7 @@ var ParseCrudManager = CrudManager.extend({
     executeAddWithUI: function (parseClass) {
         var parseInstance = new parseClass();
         var self = this;
-        var dict = this.exportModal(this.addModal, 'add');
+        var dict = this.exportFromModal(this.addModal, 'add');
         delete dict['id']; // new record has empty id
 
         $.each(dict, function(key, value) {
@@ -32,7 +32,7 @@ var ParseCrudManager = CrudManager.extend({
     },
     executeUpdateWithUI: function (parseClass, $row) {
         var self = this;
-        var dict = this.exportModal(this.editModal, 'edit');
+        var dict = this.exportFromModal(this.editModal, 'edit');
         dict['objectId'] = dict['id'];
         delete dict['id'];
 
