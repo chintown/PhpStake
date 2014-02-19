@@ -85,7 +85,7 @@ function parseQueryString(query) {
     }
 
     // Split into key/value pairs
-    queries = query.split("&");
+    queries = query.replace('?', '').split("&");
 
     // Convert the array of strings into an object
     for ( i = 0, l = queries.length; i < l; i++ ) {
