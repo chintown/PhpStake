@@ -67,6 +67,7 @@ for controller in $controllers; do
     min_libs='';
     for lib in $lib_scripts; do
         pre="$DIR_PARENT/htdoc/"${lib%.*};                        # output
+        ([ -e $pre".js" ] && pre="$pre") || pre="$DIR_CHILD/htdoc/"${lib%.*};
         echo "$pre";
         min_libs="$min_libs $pre.min.js";
     done
