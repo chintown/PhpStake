@@ -108,3 +108,34 @@ function toggleRadio(_this) {
     $this.parent().find('input[type="radio"]').prop('checked', true);
     $this.prop('checked', true);
 }
+
+
+function initDropHint(targets, className) {
+    var $body = $('body');
+    var dragOverHandler = function (e) {
+        targets.forEach(function($target, idx) {
+            $target.addClass(className);
+        });
+    };
+    var dragLeaveHandler = function (e) {
+        targets.forEach(function($target, idx) {
+            $target.removeClass(className);
+        });
+    };
+    targets.forEach(function($target, idx) {
+        var target = $target.get(0);
+        $body.bind("dragover", dragOverHandler);
+        $body.bind("dragleave", dragLeaveHandler);
+        target.addEventListener('dragenter', function (e) {
+            e.stopPropagation();
+            $('body').unbind("dragleave");
+        }, true);
+        target.addEventListener('dragleave', function (e) {
+            e.stopPropagation();
+            $('body').bind("dragleave", dragLeaveHandler);
+        }, true);
+        target.addEventListener('drop', function (e) {
+            $(target).removeClass(className);
+        });
+    });
+}
