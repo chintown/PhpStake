@@ -62,7 +62,7 @@
             return $array;
         }
 
-        private function sort($result) {
+        private function sort(&$result) {
             if (!empty($this->sortCriteria)) {
                 $paramsOfSorter = array();
                 foreach ($this->sortCriteria as $criterion => $order) {
