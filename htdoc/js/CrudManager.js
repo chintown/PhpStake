@@ -304,6 +304,6 @@ var CrudManager = Class.extend({
     },
 
     getNextRowId: function () {
-        this.panelBody.find('.crud-row').length - 1;
+        return this.panelBody.find('.crud-row').length - 1;
     }
  });

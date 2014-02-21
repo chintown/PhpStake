@@ -16,7 +16,7 @@ var ParseCrudManager = CrudManager.extend({
 
         parseInstance.save().then(
             function(parseInstance) {
-                dict = $.extend({id: parseInstance.objectId}, dict); // this is a trick for make guarantee the order of key
+                dict = $.extend({id: parseInstance.id}, dict); // this is a trick for make guarantee the order of key
                 self.panelBody.append(self.genBodyRow(
                     self,
                     self.getNextRowId(),
