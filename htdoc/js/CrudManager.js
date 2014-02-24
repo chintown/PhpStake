@@ -184,7 +184,11 @@ var CrudManager = Class.extend({
         var $mostInner = $row.find(' *:not(:has("*"))'); // http://stackoverflow.com/questions/4250893/find-the-inner-most-text-with-javascript-jquery-regardless-of-number-of-nested
         if ($mostInner.length !== 0) {
             // multiple wrapper
-            $mostInner.append($columns);
+            if ($row.find('.crud_body_column_placeholder')) {
+                $row.find('.crud_body_column_placeholder').append($columns);
+            } else {
+                $($mostInner.get(0)).append($columns);
+            }
         } else {
             // single wrapper
             $row.append($columns);
