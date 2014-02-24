@@ -272,6 +272,10 @@ var CrudManager = Class.extend({
     },
     exportFromModal: function (modal, source) {
         var data = {};
+        if (!modal) {
+            console.warn('undefined modal object found while exportFromModal');
+            return data;
+        }
         modal.find('.crud-modal-column').each(function (idx, column) {
             var $input = $(column).find('.v');
             var k = $input.attr('name');
