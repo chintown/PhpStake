@@ -6,7 +6,6 @@ script/less/bootstrap/tests
 script/less/*.css
 sftp-config.json
 lib/kerns-dummy/
-lib/FirePHPCore/
 
 ### Editor specific
 # PhPStorm specific
