@@ -159,15 +159,49 @@ function initDropHint(targets, className) {
         $body.bind("dragover", dragOverHandler);
         $body.bind("dragleave", dragLeaveHandler);
         target.addEventListener('dragenter', function (e) {
-            e.stopPropagation();
             $('body').unbind("dragleave");
         }, true);
         target.addEventListener('dragleave', function (e) {
-            e.stopPropagation();
             $('body').bind("dragleave", dragLeaveHandler);
         }, true);
         target.addEventListener('drop', function (e) {
             $(target).removeClass(className);
         });
     });
+}
+
+function setClassTogglingWhileMouseOver($hoverAtDom, toggleAtTarget, className) {
+    setClassTogglingWhileHovering($hoverAtDom, toggleAtTarget, className, false);
+}
+function setClassTogglingWhileMouseOut($hoverAtDom, toggleAtTarget, className) {
+    setClassTogglingWhileHovering($hoverAtDom, toggleAtTarget, className, true);
+}
+function setClassTogglingWhileHovering($hoverAtDom, toggleAtTarget, className, isReversedToggling) {
+    $hoverAtDom.live('mouseover', function(e) {
+        var $target = _getToggleAtDom(e.target, toggleAtTarget);
+        if (isReversedToggling) {
+            $target.removeClass(className);
+        } else {
+            $target.addClass(className);
+        }
+    });
+    $hoverAtDom.live('mouseout', function(e) {
+        var $target = _getToggleAtDom(e.target,     toggleAtTarget);
+        if (isReversedToggling) {
+            $target.addClass(className);
+        } else {
+            $target.removeClass(className);
+        }
+    });
+}
+function _getToggleAtDom(hoverAtDom, toggleAtTarget) {
+    var $target;
+    if (toggleAtTarget === null) {
+        $target = $(hoverAtDom);
+    } else if (typeof toggleAtTarget == 'string') {
+        $target = $(hoverAtDom).find(toggleAtTarget);
+    } else {
+        $target = toggleAtTarget;
+    }
+    return $target;
 }
