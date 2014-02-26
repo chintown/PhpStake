@@ -17,6 +17,8 @@ common:
     next page: ›
     last page: »
 
+    hint_remove: This action will remove the item you picked. There's no chance to undo it. Are you sure?
+
 nicetime:
     periods:
         - second
