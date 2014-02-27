@@ -56,8 +56,8 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-reorder"></i></a>
                 <ul class="dropdown-menu">
                   <li><a href="<?=WEB_ROOT?>"><i class="icon-home"></i> <?=$NAV_DICT['index']?></a></li>
-                  <?php       foreach ($DROPDOWN_DICT as $name=>$profile) { ?>
-                  <li><a href="<?=WEB_ROOT?>"><i class="<?=$profile['icon']?>"></i> <?=$NAV_DICT[$name]?></a></li>
+                  <?php       foreach ($DROPDOWN_DICT as $entry=>$profile) { ?>
+                  <li><a href="<?=WEB_ROOT.'/'.$entry.'.php'?>"><i class="<?=$profile['icon']?>"></i> <?=$NAV_DICT[$entry]?></a></li>
                   <?php       } ?>
                   <?php       if (is_admin()) { ?>
                   <?php       } ?>
