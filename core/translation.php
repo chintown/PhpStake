@@ -69,6 +69,8 @@
                     $callbacks[] = array('name'=> 'strtoupper', 'params'=> array());
                 } else if ($option === 'lower') {
                     $callbacks[] = array('name'=> 'strtolower', 'params'=> array());
+                } else if ($option === 'sentence') {
+                    $callbacks[] = array('name'=> 'ucfirst_sentences', 'params'=> array());
                 } else if ($option === 'capital') {
                     $callbacks[] = array('name'=> 'ucfirst', 'params'=> array());
                 } else if ($option === 'word') {
