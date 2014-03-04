@@ -277,3 +277,28 @@ function normalizeFilename (text, prefixPreventEmpty) {
 //de.log(normalizeFilename('a\\b;c\'d/e(f)g[h]i{j}k<l>m`n+o|p:q"rstuvwxyx'));
 //de.log(normalizeFilename('!@#$@#%#^#$%^'));
 //de.log(normalizeFilename('5/5/5'));
+
+
+function setCookie(key, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toGMTString();
+    }
+    document.cookie = key + "=" + value +expires + "; path=/";
+}
+function getCookie(key) {
+    var keyPrefix = key + "=";
+    var cookies = document.cookie.split(';');
+    for(var i=0;i < cookies.length;i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.indexOf(keyPrefix) === 0) {
+            return cookie.substring(keyPrefix.length,cookie.length);
+        }
+    }
+    return null;
+}
+function removeCookie(key) {
+    setCookie(key, "", -1);
+}
