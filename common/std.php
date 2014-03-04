@@ -41,7 +41,7 @@
 
     /* string manipulation */
     function ucfirst_sentences($s) {
-        return  preg_replace_callback('/([.!?])\s*(\w)/', function ($matches) {
+        return  preg_replace_callback('/([.!?])\s+(\w)/', function ($matches) {
             return strtoupper($matches[1] . ' ' . $matches[2]);
         }, ucfirst(strtolower($s)));
     }
