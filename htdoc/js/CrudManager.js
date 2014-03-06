@@ -5,9 +5,12 @@ var CrudManager = Class.extend({
     editModal: null,
     editingCallback: function () {},
     template_id: '',
+    getNextRowId: function () {
+        return this.panelBody.find('.crud-row').length - 1;
+    },
 
     init: function (config) {
-        this.panel = $(config.containerSelector).addClass('crud-table')
+        this.panel = $(config.containerSelector).addClass('crud-table');
         this.panel.css('position', 'relative'); // avoid leak of absolute children
         this.editingCallback = config.editingCallback || this.editingCallback;
         this.template_id = config.template_id || '';
@@ -22,7 +25,7 @@ var CrudManager = Class.extend({
     },
     renderEditModal: function (containerSelector, $row) {
         this.editModal = $(containerSelector);
-        var data = this.convertToInternal(this.extractRow($row));
+        var data = this.convertToInternal(this.extractDisplayRow($row));
         this.editModal.html('').append(this.genEdit(data));
     },
     executeAddWithUI: function (dpd) {
@@ -107,7 +110,11 @@ var CrudManager = Class.extend({
         if ($more_fine_templ.length > 0) {
             return $more_fine_templ.tmpl(info);
         } else if ($fine_templ.length > 0) {
-            return $fine_templ.tmpl(info);
+            try {
+                return $fine_templ.tmpl(info);
+            } catch (e) {
+                console.error('can not render template with given data. please check whether there is an exception happened in js templateHelper.', $fine_templ.get(0), info);
+            }
         } else {
             return $templ.tmpl(info);
         }
@@ -144,6 +151,13 @@ var CrudManager = Class.extend({
                 {k: 'comment',  v:'<!-- comment 2 -->'}
             ]
         ]
+    },
+    getHeadKeys: function () {
+        var headKeys = [];
+        $.each(this.getHeads(), function(idx, head) {
+            headKeys.push(head['k']);
+        });
+        return headKeys;
     },
     // -------------------------------------------------------------------------
     genHead: function () {
@@ -261,9 +275,25 @@ var CrudManager = Class.extend({
         return $edit;
     },
     // -------------------------------------------------------------------------
-    extractRow: function ($row) {
+    getDisplayColumnByName: function ($row, name) {
+        var $field = $row.find('.crud-column[name="'+name+'"]');
+        if ($field.length === 0) {
+            console.error('can not get column, '+name+', from $row', $row);
+            return false;
+        }
+        return $field;
+    },
+    getModalColumnByClass: function ($row, clazz) {
+        var $field = $row.find('.crud-modal-column.'+clazz+'');
+        if ($field.length === 0) {
+            console.error('can not get column, '+clazz+', from $row', $row);
+            return false;
+        }
+        return $field;
+    },
+    extractDisplayRow: function ($row) {
         /* <div name="content" class="content crud-column">a</div>
-            -> {content: "a"}
+            -> {content: "a", ...}
          */
         var dict = {};
         $row.find('.crud-column').each(function (idx, column) {
@@ -274,29 +304,53 @@ var CrudManager = Class.extend({
         });
         return dict;
     },
+    extractModalRow: function ($row) {
+        /*  <ul class="crud-edit table">
+              <li class="content crud-modal-column pair">
+                <span class="k">Content</span>
+                <input type="text" name="content" class="v" value="a">
+              </li>
+              ...
+            </ul>
+         -> {content: "a", ...}
+         */
+        var dict = {};
+        $row.find('.crud-modal-column').each(function (idx, column) {
+            var $column = $(column);
+            var $input = $column.find('input');
+            if ($input.length === 0) {
+                $input = $column.find('textarea');
+            }
+            de.assert($input.length !== 0, 'can not find input/textarea from column ... must set it while editing', column);
+            var k = $input.attr('name');
+            dict[k] = $input.val(); // do i need to trim this?
+        });
+        return dict;
+    },
     exportFromModal: function (modal, source) {
         var data = {};
         if (!modal) {
             console.warn('undefined modal object found while exportFromModal');
             return data;
         }
-        modal.find('.crud-modal-column').each(function (idx, column) {
-            var $input = $(column).find('.v');
-            var k = $input.attr('name');
-            data[k] = $input.val();
-            return true;
-        });
-        return data;
+
+        return this.extractModalRow(modal);
     },
     convertToInternal: function (dict) {
         /* {x:1,y:1}
          -> [{k:x,v:1}, {k:y,v:1}]
+            NOTE that 1) keys does not existed in HEAD will be ignored!
+                      2) missing value of existing key will be set as default
          */
-        var info = [];
-        $.each(dict, function (k, v) {
-            info.push({k: k, v: v});
+        var info = [], head = this.getHeadKeys(), self = this;
+        $.each(head, function (idx, field) {
+            if (field in dict) {
+                info.push({k: field, v: dict[field]});
+            } else {
+                info.push({k: field, v: self.getInternalDefault(field)});
+            }
         });
-        return info
+        return info;
     },
     convertToInternals: function (dicts) {
         /* [{x:1,y:1}]
@@ -310,8 +364,7 @@ var CrudManager = Class.extend({
         });
         return data;
     },
-
-    getNextRowId: function () {
-        return this.panelBody.find('.crud-row').length - 1;
+    getInternalDefault: function (field) {
+        return '';
     }
  });
