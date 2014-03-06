@@ -25,14 +25,14 @@ var CrudManager = Class.extend({
     },
     renderEditModal: function (containerSelector, $row) {
         this.editModal = $(containerSelector);
-        var data = this.convertToInternal(this.extractDisplayRow($row));
+        var data = this.convertToInternal(this.extractFromDisplay($row));
         this.editModal.html('').append(this.genEdit(data));
     },
     executeAddWithUI: function (dpd) {
         var self = this;
-        var dict = this.exportFromModal(this.addModal, 'add');
-        delete dict['id'];
-        dpd.post(dict, function (r) {
+        var dict = this.extractFromModal(this.addModal, 'add');
+        var params = this.extractToBackend(dict);
+        dpd.post(params, function (r) {
             self.editingCallback();
 
             try {
@@ -51,11 +51,9 @@ var CrudManager = Class.extend({
     },
     executeUpdateWithUI: function (dpd, $row) {
         var self = this;
-        var dict = this.exportFromModal(this.editModal, 'edit');
-        var id = dict['id'];
-        var param = $.extend({}, dict); // we need to keep the original set for updating dom
-        delete param['id'];
-        dpd.put(id, param, function (r) {
+        var dict = this.extractFromModal(this.editModal, 'edit');
+        var params = this.extractToBackend(dict);
+        dpd.put(dict['id'], params, function (r) {
             self.editingCallback();
 
             try {
@@ -291,7 +289,7 @@ var CrudManager = Class.extend({
         }
         return $field;
     },
-    extractDisplayRow: function ($row) {
+    extractFromDisplay: function ($row) {
         /* <div name="content" class="content crud-column">a</div>
             -> {content: "a", ...}
          */
@@ -304,18 +302,14 @@ var CrudManager = Class.extend({
         });
         return dict;
     },
-    extractModalRow: function ($row) {
-        /*  <ul class="crud-edit table">
-              <li class="content crud-modal-column pair">
-                <span class="k">Content</span>
-                <input type="text" name="content" class="v" value="a">
-              </li>
-              ...
-            </ul>
-         -> {content: "a", ...}
-         */
-        var dict = {};
-        $row.find('.crud-modal-column').each(function (idx, column) {
+    extractFromModal: function (modal, source) {
+        var data = {};
+        if (!modal) {
+            console.warn('undefined modal object found while extractFromModal');
+            return data;
+        }
+
+        modal.find('.crud-modal-column').each(function (idx, column) {
             var $column = $(column);
             var $input = $column.find('input');
             if ($input.length === 0) {
@@ -323,18 +317,15 @@ var CrudManager = Class.extend({
             }
             de.assert($input.length !== 0, 'can not find input/textarea from column ... must set it while editing', column);
             var k = $input.attr('name');
-            dict[k] = $input.val(); // do i need to trim this?
+            de.assert(k, 'input/textarea must be bound with name attribute', $input);
+            data[k] = $input.val(); // do i need to trim this?
         });
-        return dict;
+        return data;
     },
-    exportFromModal: function (modal, source) {
-        var data = {};
-        if (!modal) {
-            console.warn('undefined modal object found while exportFromModal');
-            return data;
-        }
-
-        return this.extractModalRow(modal);
+    extractToBackend: function (dict) {
+        var params =  $.extend({}, dict);
+        delete params['id'];
+        return params;
     },
     convertToInternal: function (dict) {
         /* {x:1,y:1}
@@ -347,7 +338,7 @@ var CrudManager = Class.extend({
             if (field in dict) {
                 info.push({k: field, v: dict[field]});
             } else {
-                info.push({k: field, v: self.getInternalDefault(field)});
+                info.push({k: field, v: ''});
             }
         });
         return info;
@@ -363,8 +354,5 @@ var CrudManager = Class.extend({
             });
         });
         return data;
-    },
-    getInternalDefault: function (field) {
-        return '';
     }
  });
