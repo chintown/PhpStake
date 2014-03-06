@@ -26,7 +26,7 @@ var ParseCrudManager = CrudManager.extend({
                 self.editingCallback();
             },
             function(error) {
-                ajaxMsgError('Failed to create new object, with error code: ' + error.description);
+                ajaxMsgError('Failed to create new object, with error code: ' + JSON.stringify(error));
             }
         );
     },
