@@ -49,7 +49,7 @@ var ParseCrudManager = CrudManager.extend({
 
             self.editingCallback();
         }, function(error) {
-            ajaxMsgError('Failed to update project, '+dict['objectId']+', with error code: ' + error.description);
+            ajaxMsgError('Failed to update project, '+dict['objectId']+', with error code: ' + JSON.stringify(error));
         });
     },
     executeRemoveWithUI: function (parseClass, $row) {
@@ -64,7 +64,7 @@ var ParseCrudManager = CrudManager.extend({
 
             $row.remove();
         }, function(parseInstance, error) {
-            ajaxMsgError('Failed to remove project, '+id+', with error code: ' + error.description);
+            ajaxMsgError('Failed to remove project, '+id+', with error code: ' + JSON.stringify(error));
         });
     }
 });
