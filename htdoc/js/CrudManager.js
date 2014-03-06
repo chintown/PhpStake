@@ -42,7 +42,7 @@ var CrudManager = Class.extend({
                 // TODO show err msg
                 return;
             }
-            dict = $.extend({id: r['$id']}, dict); // this is a trick for make guarantee the order of key
+            dict = $.extend(dict, {id: r['$id']}); // this is a trick for make guarantee the order of key
             var idx = self.panelBody.find('.crud-row').length - 1;
             var data = self.convertToInternal(dict);
             ////de.log(data, 'genBodyRow');
