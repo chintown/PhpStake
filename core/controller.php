@@ -45,7 +45,7 @@
                     : '';
 
     // dynamic variable for global usage
-    $IS_MOBILE = is_mobile_client();
+    $IS_MOBILE = isset($IS_MOBILE) ? $IS_MOBILE : is_mobile_client();
     $CONTROLLER_NAME = $controller_id;
     $ENTRY_CSS = $extra_css;
     $BREADCRUMB = '';
