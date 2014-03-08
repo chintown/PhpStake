@@ -1,3 +1,14 @@
+/*
+    here's function lifecycle
+    [displaying div table]
+     \ 1. extractFromDisplay
+     \ 2. renderEditModal
+    [edit/add modal]
+     | 3. extractFromModal  4. extractToBackend
+    [executeUpdateWithUI] ----------------------[backend]
+     | 4. convertToInternals
+    [genBodyRows]
+*/
 var CrudManager = Class.extend({
     panel: null,
     panelBody: null,
