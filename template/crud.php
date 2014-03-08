@@ -1,3 +1,4 @@
+<!-- add/edit modal must contain input/textarea for each row -->
 <script class='crud_head_row' type='text/x-jquery-tmpl'>
     <ul class='unstyled'></ul>
 </script>
