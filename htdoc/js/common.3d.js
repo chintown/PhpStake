@@ -8,7 +8,8 @@ jQuery.fn.extend({
 
 function transformComposer($obj, cssDict) {
     var styles = {};
-    var rawStyle = $obj.get(0).style.webkitTransform;
+    var rawStyle = $obj.get(0).style.webkitTransform
+                    || $obj.get(0).style.MozTransform;
     rawStyle.replace(/(\w+)\(([-+.0-9]+)(deg|px)\)/g, function() {
         var action = arguments[1],
             value = parseFloat(arguments[2]),
@@ -55,4 +56,5 @@ function transformComposer($obj, cssDict) {
     //de.log('result', resultStyle);
     resultStyle = resultStyle.join(' ');
     $obj.get(0).style.webkitTransform = resultStyle;
+    $obj.get(0).style.MozTransform = resultStyle;
 }
