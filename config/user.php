@@ -14,6 +14,7 @@
     // meta tags
     $KEYWORDS = ''.SITE_CODE;
     $DESCRIPTION = '___DESCRIPTION___';
+    $HOME_LOGO = ''; // url
     // prefix of browser title shows the current page
     $NAV_DICT = array(
         'index' => $TRANS->k('entry.index', 'capital'),

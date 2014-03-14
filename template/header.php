@@ -50,7 +50,16 @@
       <div class="navbar"> <?php /*.navbar-fixed-top*/ ?>
         <div class="navbar-inner">
           <div class="container">
-            <ul id="menu" class="nav pull-left">
+            <?
+               $has_home_logo = !empty($HOME_LOGO);
+               if ($has_home_logo) {
+            ?>
+            <a id="home_logo" class="brand" href="<?=WEB_ROOT?>"><div style="background-image: url('<?=$HOME_LOGO?>')"></div></a>
+            <? }
+               $class_menu_position = ($has_home_logo) ? 'pull-right' : 'pull-left';
+            ?>
+
+            <ul id="menu" class="nav <?=$class_menu_position?>">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-reorder"></i></a>
                 <ul class="dropdown-menu">
@@ -64,13 +73,12 @@
               </li>
             </ul>
 
-            <!-- <a class="brand" href="<?=WEB_ROOT?>"><i class="icon-home"></i></a> -->
             <ul class="breadcrumb pull-left">
               <?=$BREADCRUMB?>
             </ul>
 
             <?php if(is_login()) { ?>
-            <ul class="nav pull-right">
+            <ul id="user_control" class="nav pull-right">
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=$_SESSION['ID']?> <b class="caret"></b></a>
                 <ul class="dropdown-menu">

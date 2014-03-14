@@ -5,6 +5,20 @@ body {
   text-shadow: 0px 1px 0px #FFF;
 }
 
+@nav_available_height: 42px;
+@logo_padding: 2px;
+#home_logo {
+  padding: @logo_padding 10px @logo_padding 20px;
+  height: @nav_available_height - @logo_padding * 2;
+  div {
+    width: 100px;
+    height: 100%;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+}
+
 #wrap {
   position: relative;
 }
