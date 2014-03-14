@@ -34,6 +34,10 @@
   -webkit-box-shadow: @params;
   -moz-box-shadow: @params;
 }
+.box-sizing(@param) {
+  box-sizing: @param;
+  -moz-box-sizing: @param;
+}
 .alpha(@ratio) {
     @ratio-ie: @ratio * 100;
     /* IE 8 */
