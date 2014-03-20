@@ -11,6 +11,8 @@ common:
     preview: preview
     ok: ok
     cancel: cancel
+    yes: yes
+    no: no
 
     first page: «
     prev page: ‹
