@@ -30,14 +30,20 @@ var CrudManager = Class.extend({
         this.panel.append(this.genHead());
         this.panel.append(this.genBody());
     },
-    renderAddModal: function (containerSelector) {
+    renderAddModal: function (containerSelector, callback) {
         this.addModal = $(containerSelector);
         this.addModal.html('').append(this.genAdd());
+        if (callback) {
+            callback();
+        }
     },
-    renderEditModal: function (containerSelector, $row) {
+    renderEditModal: function (containerSelector, $row, callback) {
         this.editModal = $(containerSelector);
         var data = this.convertToInternal(this.extractFromDisplay($row));
         this.editModal.html('').append(this.genEdit(data));
+        if (callback) {
+            callback();
+        }
     },
     executeAddWithUI: function (dpd) {
         var self = this;
@@ -217,7 +223,11 @@ var CrudManager = Class.extend({
             $row.append($columns);
         }
 
-        var $control = $('#crud_control').tmpl({});
+        var $tmplControl = $('.crud_control');
+        if ($tmplControl.length > 1) { // always get latter one for overriding
+            $tmplControl = $($tmplControl.get($tmplControl.length - 1));
+        }
+        var $control = $tmplControl.tmpl({});
         $row.append($control);
 
         return $row;
