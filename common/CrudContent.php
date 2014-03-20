@@ -27,7 +27,7 @@ class CrudContent {
     function addRow($row) {
         $norm = array();
         foreach ($row as $identifier => $value) {
-            $norm[$identifier] = purify($value, 'html');
+            $norm[$identifier] = $value; //purify($value, 'html');
         }
         $this->rows[] = $norm;
     }
