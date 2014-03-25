@@ -17,6 +17,7 @@ function Flipper(jQuerySelector) {
     var BACKWARD = -1;
     var numDisplay = 1;
     var isLoop = 1;
+    var eidx= 0;
     var sidx= 0;
     var lastSidx= 0;
 
@@ -80,7 +81,7 @@ function Flipper(jQuerySelector) {
         if (isExistingCheck) {
             renderRecords = renderRecordsIfInexisted;
         }
-    }
+    };
     this.setRecordRender = function(cb) {
         renderRecord = cb;
     };
@@ -161,11 +162,12 @@ function Flipper(jQuerySelector) {
         var maxIdx = records.length-1;
         var num = records.length;
         idxList = [];
-        pseudo_sidx = sidx+numDisplay*direction;
+        var pseudo_sidx = sidx+numDisplay*direction;
+        var pseudo_eidx;
         if (isLoop == NOLOOP) {
             // sidx
             if (pseudo_sidx < 0) sidx = 0;
-            else if (maxIdx < pseudo_sidx) sidx = maxIdx;
+            else if (maxIdx < pseudo_sidx) sidx = sidx;
             else sidx = pseudo_sidx;
 
             // eidx
@@ -195,7 +197,7 @@ function Flipper(jQuerySelector) {
             else sidx = pseudo_sidx;
 
             // fill the idxList
-            for (count=0; count<numDisplay; count++) {
+            for (var count=0; count<numDisplay; count++) {
                 var i = sidx + count;
                 i = (i > maxIdx)?(i % num):(i);
                 idxList.push(i);
@@ -215,6 +217,7 @@ function Flipper(jQuerySelector) {
         oajax['para']['sidx'] = sidx;
         oajax['para']['eidx'] = eidx;
         $.get(oajax['action'], oajax['para'], function(o) {
+            var list;
             if ('undefined' != typeof(oajax['callback'])) {
                 list = oajax['callback'](o);
             } else {
@@ -256,8 +259,7 @@ function Flipper(jQuerySelector) {
     };
     var renderRecord = function (itemIdx, item) {
         /* default method */
-        var o = $('<div>').attr('id',panel.attr('id')+"-"+itemIdx).html(item);
-        return o;
+        return $('<div>').attr('id', panel.attr('id') + "-" + itemIdx).html(item);
     };
     var renderControlers = function() {
         // tar.append(controllerBackward);
