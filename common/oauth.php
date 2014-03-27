@@ -51,9 +51,8 @@
                         }
                         keep_user_in_session($profile['id']);
 
-                        if (!DEV_MODE) {de('ok and move back');
-                            header('Location: '. $r);
-                        }
+                        if (DEV_MODE) {die('ok');}
+                        header('Location: '. $r);
                         exit(0);
                     }
                 }
