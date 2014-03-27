@@ -1,8 +1,11 @@
 <?php
+    require_once 'common/rest.php';
+
     define('OAUTH_STATE_UNKNOWN', -1);
     define('OAUTH_STATE_REQUEST', 0);
     define('OAUTH_STATE_CALLBACK', 1);
     define('OAUTH_STATE_FAILED', 2);
+
     function evaluate_fb_oauth_state($code, $token, $param) {
         if (!empty($param['error'])) {
             return OAUTH_STATE_FAILED;
@@ -74,12 +77,20 @@
             error_log('[Error] fetch fb graph: failed to request on '.$graph_url);
             return false;
         }
-        $profile = json_decode($response);
+        $profile = json_decode($response, true);
         if (!isset($profile->id)) {
-            error_log('[Error] fetch fb graph: failed to parse json response'.var_export($profile));
+            error_log('[Error] fetch fb graph: failed to parse json response'.var_export($profile, true));
             return false;
         }
         return $profile;
+    }
+
+    // https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow/#nonjscancel
+    function inspect_fb_error($param) {
+        if ($param['error_reason'] != 'user_denied') {
+            $param = pickup($param, 'error', 'error_code', 'error_description', 'error_reason');
+            error_log(var_export($param, true));
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -100,4 +111,11 @@
         $url = $_SESSION['r'];
         unset($_SESSION['r']);
         return $url;
+    }
+
+    function register_oauth_user($source, $identifier, $params) {
+        $params['_source'] = $source;
+        $params['_identifier'] = $identifier;
+        send_rest('POST', 'register.php', $params);
+        // TODO error handling
     }
