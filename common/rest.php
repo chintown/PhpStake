@@ -1,4 +1,30 @@
 <?php
+    function send_rest_w_curl_less($method, $url, $data) {
+        $response = null;
+        switch(strtoupper($method)) {
+            case 'POST':
+                $options = array(
+                    'http' => array(
+                        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                        'method'  => 'POST',
+                        'content' => http_build_query($data),
+                    ),
+                );
+                $context  = stream_context_create($options);
+                $response = file_get_contents($url, false, $context);
+                break;
+            default:
+                die($method . ' not implement yet');
+                break;
+        }
+        return array(
+            'meta'=> array(
+                'url' => $url,
+                'payload' => $data,
+            ),
+            'result'=> $response
+        );
+    }
     function send_rest($method, $url, $data) {
         # headers and data (this is API dependent, some uses XML)
         $handle = curl_init();
