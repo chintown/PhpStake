@@ -106,19 +106,22 @@
     }
     // https://developers.facebook.com/docs/graph-api/reference/user/
     function request_fb_graph_profile($access_token) {
-        /* array(
-            'id' => '807364688',
-            'name' => 'Chintown Chen',
-            'first_name' => 'Chintown',
-            'last_name' => 'Chen',
-            'link' => 'http://www.facebook.com/chintown',
-            'username' => 'chintown',
-            'gender' => 'male',
-            'timezone' => 8,
-            'locale' => 'en_US',
-            'verified' => true,
-            'updated_time' => '2012-07-24T16:03:10+0000',
-        ))
+        /*
+        {
+           "id": "100007849806256",
+           "name": "Chi Ku",
+           "first_name": "Chi",
+           "last_name": "Ku",
+           "link": "https://www.facebook.com/chi.ku.9026",
+           "birthday": "12/20/1984",
+           "gender": "male",
+           "email": "app\u0040kuchi.tw",
+           "timezone": 8,
+           "locale": "en_US",
+           "verified": true,
+           "updated_time": "2014-03-27T02:39:19+0000",
+           "username": "chi.ku.9026"
+        }
         */
         $graph_url = "https://graph.facebook.com/me"
                     ."?access_token=" . $access_token;
