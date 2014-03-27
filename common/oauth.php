@@ -6,6 +6,54 @@
     define('OAUTH_STATE_CALLBACK', 1);
     define('OAUTH_STATE_FAILED', 2);
 
+    // create a entry in child project. then call this flow wrapper in the get method
+    function fb_get_wrapper($req, $res) {
+        $param = pickup($req, 'r', 'code', 'state', 'error', 'error_code', 'error_description', 'error_reason');
+        $r = purify($param['r'], 'eol');
+        $r = empty($r) ? 'index.php' : $r;
+        $code = $param['code']; // action should be done before code expires
+        $token = $param['state'];
+
+        $state = evaluate_fb_oauth_state($code, $token, $param);
+        if ($state == OAUTH_STATE_REQUEST) {
+            set_redirection_to_session($r);
+            set_csrf_token();
+            delegate_by_fb_oauth(WEB_ROOT.'/oauth_fb.php');
+        } else if ($state == OAUTH_STATE_FAILED) {
+            inspect_fb_error($param);
+            Header("Location: login.php");
+            exit(0);
+        } else if ($state == OAUTH_STATE_CALLBACK) {
+            if (!is_csrf_token_valid($token)) {
+                die('go away');
+            } else {
+                // write the token into a session, fb_access_token
+                $access = request_fb_graph_token($code, WEB_ROOT.'/oauth_fb.php');
+                if(!$access) {
+                    die('no graph token');
+                } else {
+                    $response = request_fb_graph_profile($access['token']);
+                    if (!$response) {
+                        die('no graph profile');
+                    } else {
+                        // welcome!
+                        $profile = pickup($response, 'id', 'name', 'email');
+                        $profile['access_token'] = $access['token'];
+                        $profile['expired_stamp'] = time() + $access['expiration_seconds'];
+
+                        //keep_user_in_session($profile['id']);
+                        connect_oauth_user('facebook', $profile['id'], $profile);
+                    }
+                }
+            }
+
+//            header('Location: '. $r);
+//            exit(0);
+        } else if ($state == OAUTH_STATE_UNKNOWN) {
+            die("nothing to do");
+        }
+    }
+
     function evaluate_fb_oauth_state($code, $token, $param) {
         if (!empty($param['error'])) {
             return OAUTH_STATE_FAILED;
@@ -51,11 +99,13 @@
         $params = null;
         parse_str($response, $params);
         de($params);
-        $params['expires'] = intval($params['expires']);
-        return $params;
+        return array(
+            'token' => $params['access_token'],
+            'expiration_seconds' => intval($params['expires'])
+        );
     }
     // https://developers.facebook.com/docs/graph-api/reference/user/
-    function request_fb_graph_profile() {
+    function request_fb_graph_profile($access_token) {
         /* array(
             'id' => '807364688',
             'name' => 'Chintown Chen',
@@ -71,7 +121,7 @@
         ))
         */
         $graph_url = "https://graph.facebook.com/me"
-                    ."?access_token=" . $_SESSION['fb_access_token'];
+                    ."?access_token=" . $access_token;
         de($graph_url);
         $response = file_get_contents($graph_url);
         if ($response === false) {
