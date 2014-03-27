@@ -41,10 +41,10 @@
                         $profile['access_token'] = $access['token'];
                         $profile['expired_stamp'] = time() + $access['expiration_seconds'];
 
-                        //keep_user_in_session($profile['id']);
                         if (!connect_oauth_user('facebook', $profile['id'], $profile)) {
                             die('dangling oauth user');
                         }
+                        keep_user_in_session($profile['id']);
                     }
                 }
             }
