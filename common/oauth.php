@@ -186,7 +186,7 @@
     function link_oauth_user($source, $identifier, $params) {
         $params['source'] = $source;
         $params['identifier'] = $identifier;
-        $response = send_rest_w_curl_less('POST', WEB_ROOT . '/oauth_connect.php', $params);
+        $response = send_rest_w_curl_less('POST', WEB_ROOT . '/oauth_link.php', $params);
         if ($response['result'] != 'ok') {
             de($response['result']);
             error_log('[Error] link oauth user: '.$response['result']);
