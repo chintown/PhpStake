@@ -51,6 +51,8 @@
         $params = null;
         parse_str($response, $params);
         $_SESSION['fb_access_token'] = $params['access_token'];
+        $_SESSION['fb_expires'] = intval($params['expires']);
+
         return true;
     }
     // https://developers.facebook.com/docs/graph-api/reference/user/
