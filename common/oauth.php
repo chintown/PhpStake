@@ -42,7 +42,7 @@
                     ."&redirect_uri=" . urlencode($url_callback)
                     ."&client_secret=" . FB_APP_SECRET
                     ."&code=" . $code;
-
+        de($token_url);
         $response = file_get_contents($token_url);
         if ($response === false) {
             error_log('[Error] fetch fb graph token: failed to request on '.$token_url);
@@ -52,7 +52,7 @@
         parse_str($response, $params);
         $_SESSION['fb_access_token'] = $params['access_token'];
         $_SESSION['fb_expires'] = intval($params['expires']);
-
+        de($params);
         return true;
     }
     // https://developers.facebook.com/docs/graph-api/reference/user/
@@ -73,14 +73,14 @@
         */
         $graph_url = "https://graph.facebook.com/me"
                     ."?access_token=" . $_SESSION['fb_access_token'];
-
+        de($graph_url);
         $response = file_get_contents($graph_url);
         if ($response === false) {
             error_log('[Error] fetch fb graph: failed to request on '.$graph_url);
             return false;
         }
         $profile = json_decode($response, true);
-        if (!isset($profile->id)) {
+        if (!isset($profile['id'])) {
             error_log('[Error] fetch fb graph: failed to parse json response'.var_export($profile, true));
             return false;
         }
