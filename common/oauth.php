@@ -1,8 +1,18 @@
 <?php
+    define('OAUTH_STATE_UNKNOWN', -1);
     define('OAUTH_STATE_REQUEST', 0);
     define('OAUTH_STATE_CALLBACK', 1);
-    function evaluate_oauth_state($code, $token) {
-        return (!empty($code) && !empty($token)) ? OAUTH_STATE_CALLBACK : OAUTH_STATE_REQUEST;
+    define('OAUTH_STATE_FAILED', 2);
+    function evaluate_fb_oauth_state($code, $token, $param) {
+        if (!empty($param['error'])) {
+            return OAUTH_STATE_FAILED;
+        } else if (empty($code)) {
+            return OAUTH_STATE_REQUEST;
+        } else if (!empty($code) && !empty($token)) {
+            return OAUTH_STATE_CALLBACK;
+        } else {
+            return OAUTH_STATE_UNKNOWN;
+        }
     }
     // https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow/
     function delegate_by_fb_oauth($url_callback=null) {
