@@ -42,7 +42,9 @@
                         $profile['expired_stamp'] = time() + $access['expiration_seconds'];
 
                         //keep_user_in_session($profile['id']);
-                        connect_oauth_user('facebook', $profile['id'], $profile);
+                        if (!connect_oauth_user('facebook', $profile['id'], $profile)) {
+                            die('dangling oauth user');
+                        }
                     }
                 }
             }
@@ -172,6 +174,11 @@
         $params['source'] = $source;
         $params['identifier'] = $identifier;
         $response = send_rest_w_curl_less('POST', WEB_ROOT . '/oauth_connect.php', $params);
-        print_r($response);
-        // TODO error handling
+        if ($response['result'] != 'ok') {
+            de($response['result']);
+            error_log('[Error] connect oauth user: '.$response['result']);
+            return false;
+        } else {
+            return true;
+        }
     }
