@@ -53,8 +53,8 @@
 
                         if (!DEV_MODE) {de('ok and move back');
                             header('Location: '. $r);
-                            exit(0);
                         }
+                        exit(0);
                     }
                 }
             }
