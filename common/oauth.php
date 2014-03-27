@@ -1,4 +1,5 @@
 <?php
+    require_once 'common/auth.php';
     require_once 'common/rest.php';
 
     define('OAUTH_STATE_UNKNOWN', -1);
