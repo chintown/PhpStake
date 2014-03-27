@@ -13,6 +13,7 @@
         $r = empty($r) ? 'index.php' : $r;
         $code = $param['code']; // action should be done before code expires
         $token = $param['state'];
+        $msg = '';
 
         $state = evaluate_fb_oauth_state($code, $token, $param);
         if ($state == OAUTH_STATE_REQUEST) {
@@ -20,21 +21,23 @@
             set_csrf_token();
             delegate_by_fb_oauth(WEB_ROOT.'/oauth_fb.php');
         } else if ($state == OAUTH_STATE_FAILED) {
-            inspect_fb_error($param);
-            Header("Location: login.php");
-            exit(0);
+            $msg = inspect_fb_error($param);
+            if (DEV_MODE) {die($msg);}
         } else if ($state == OAUTH_STATE_CALLBACK) {
             if (!is_csrf_token_valid($token)) {
-                die('go away');
+                $msg = 'go away';
+                if (DEV_MODE) {die($msg);}
             } else {
                 // write the token into a session, fb_access_token
                 $access = request_fb_graph_token($code, WEB_ROOT.'/oauth_fb.php');
                 if(!$access) {
-                    die('no graph token');
+                    $msg = 'no graph token';
+                    if (DEV_MODE) {die($msg);}
                 } else {
                     $response = request_fb_graph_profile($access['token']);
                     if (!$response) {
-                        die('no graph profile');
+                        $msg = 'no graph profile';
+                        if (DEV_MODE) {die($msg);}
                     } else {
                         // welcome!
                         $profile = pickup($response, 'id', 'name', 'email');
@@ -42,18 +45,25 @@
                         $profile['expired_stamp'] = time() + $access['expiration_seconds'];
 
                         if (!connect_oauth_user('facebook', $profile['id'], $profile)) {
-                            die('dangling oauth user');
+                            $msg = 'oauth user does not connect';
+                            if (DEV_MODE) {die($msg);}
                         }
                         keep_user_in_session($profile['id']);
+
+                        if (!DEV_MODE) {
+                            header('Location: '. $r);
+                            exit(0);
+                        }
                     }
                 }
             }
-
-//            header('Location: '. $r);
-//            exit(0);
         } else if ($state == OAUTH_STATE_UNKNOWN) {
-            die("nothing to do");
+            $msg = "nothing to do";
+            if (DEV_MODE) {die($msg);}
         }
+
+        Header("Location: login.php?msg=".$msg);
+        exit(0);
     }
 
     function evaluate_fb_oauth_state($code, $token, $param) {
@@ -147,7 +157,9 @@
             $param = pickup($param, 'error', 'error_code', 'error_description', 'error_reason');
             de($param);
             error_log(var_export($param, true));
+            return $param['error_description'];
         }
+        return '';
     }
 
     // -------------------------------------------------------------------------
