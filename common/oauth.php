@@ -14,29 +14,29 @@
         $r = empty($r) ? 'index.php' : $r;
         $code = $param['code']; // action should be done before code expires
         $token = $param['state'];
-        $msg = '';
+        $msg = '_';
 
         $state = evaluate_fb_oauth_state($code, $token, $param);
-        if ($state == OAUTH_STATE_REQUEST) {
+        if ($state == OAUTH_STATE_REQUEST) {de('go to fb');
             set_redirection_to_session($r);
             set_csrf_token();
             delegate_by_fb_oauth(WEB_ROOT.'/oauth_fb.php');
-        } else if ($state == OAUTH_STATE_FAILED) {
+        } else if ($state == OAUTH_STATE_FAILED) {de('come from fb w error');
             $msg = inspect_fb_error($param);
             if (DEV_MODE) {die($msg);}
-        } else if ($state == OAUTH_STATE_CALLBACK) {
-            if (!is_csrf_token_valid($token)) {
+        } else if ($state == OAUTH_STATE_CALLBACK) {de('come from fb');
+            if (!is_csrf_token_valid($token)) {de('csrf');
                 $msg = 'go away';
                 if (DEV_MODE) {die($msg);}
             } else {
                 // write the token into a session, fb_access_token
                 $access = request_fb_graph_token($code, WEB_ROOT.'/oauth_fb.php');
-                if(!$access) {
+                if(!$access) {de('can not access graph');
                     $msg = 'no graph token';
                     if (DEV_MODE) {die($msg);}
                 } else {
                     $response = request_fb_graph_profile($access['token']);
-                    if (!$response) {
+                    if (!$response) {de('can not get profile');
                         $msg = 'no graph profile';
                         if (DEV_MODE) {die($msg);}
                     } else {
@@ -45,20 +45,20 @@
                         $profile['access_token'] = $access['token'];
                         $profile['expired_stamp'] = time() + $access['expiration_seconds'];
 
-                        if (!connect_oauth_user('facebook', $profile['id'], $profile)) {
-                            $msg = 'oauth user does not connect';
+                        if (!link_oauth_user('facebook', $profile['id'], $profile)) {de('can not link');
+                            $msg = 'oauth user does not link';
                             if (DEV_MODE) {die($msg);}
                         }
                         keep_user_in_session($profile['id']);
 
-                        if (!DEV_MODE) {
+                        if (!DEV_MODE) {de('ok and move back');
                             header('Location: '. $r);
                             exit(0);
                         }
                     }
                 }
             }
-        } else if ($state == OAUTH_STATE_UNKNOWN) {
+        } else if ($state == OAUTH_STATE_UNKNOWN) {de('unknown status');
             $msg = "nothing to do";
             if (DEV_MODE) {die($msg);}
         }
@@ -183,13 +183,13 @@
         return $url;
     }
 
-    function connect_oauth_user($source, $identifier, $params) {
+    function link_oauth_user($source, $identifier, $params) {
         $params['source'] = $source;
         $params['identifier'] = $identifier;
         $response = send_rest_w_curl_less('POST', WEB_ROOT . '/oauth_connect.php', $params);
         if ($response['result'] != 'ok') {
             de($response['result']);
-            error_log('[Error] connect oauth user: '.$response['result']);
+            error_log('[Error] link oauth user: '.$response['result']);
             return false;
         } else {
             return true;
