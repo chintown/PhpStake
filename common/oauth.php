@@ -50,10 +50,9 @@
         }
         $params = null;
         parse_str($response, $params);
-        $_SESSION['fb_access_token'] = $params['access_token'];
-        $_SESSION['fb_expires'] = intval($params['expires']);
         de($params);
-        return true;
+        $params['expires'] = intval($params['expires']);
+        return $params;
     }
     // https://developers.facebook.com/docs/graph-api/reference/user/
     function request_fb_graph_profile() {
@@ -91,6 +90,7 @@
     function inspect_fb_error($param) {
         if ($param['error_reason'] != 'user_denied') {
             $param = pickup($param, 'error', 'error_code', 'error_description', 'error_reason');
+            de($param);
             error_log(var_export($param, true));
         }
     }
@@ -115,9 +115,10 @@
         return $url;
     }
 
-    function register_oauth_user($source, $identifier, $params) {
-        $params['_source'] = $source;
-        $params['_identifier'] = $identifier;
-        send_rest('POST', 'register.php', $params);
+    function connect_oauth_user($source, $identifier, $params) {
+        $params['source'] = $source;
+        $params['identifier'] = $identifier;
+        $response = send_rest('POST', 'oauth_connect.php', $params);
+        var_dump($response);
         // TODO error handling
     }
