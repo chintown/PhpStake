@@ -168,7 +168,7 @@
     function connect_oauth_user($source, $identifier, $params) {
         $params['source'] = $source;
         $params['identifier'] = $identifier;
-        $response = send_rest_w_curl_less('POST', 'oauth_connect.php', $params);
-        var_dump($response);
+        $response = send_rest_w_curl_less('POST', WEB_ROOT . '/oauth_connect.php', $params);
+        print_r($response);
         // TODO error handling
     }
