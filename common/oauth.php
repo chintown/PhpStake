@@ -13,7 +13,10 @@
         $dialog_url = "https://www.facebook.com/dialog/oauth"
             ."?client_id=" . FB_APP_ID
             ."&redirect_uri=" . urlencode($url_callback)
-            ."&state=" . $_SESSION['state'];
+            ."&state=" . $_SESSION['token'];
+        if (DEV_MODE) {
+            error_log($dialog_url);
+        }
         echo("<script> top.location.href='" . $dialog_url . "'</script>");
         exit(0);
     }
@@ -76,7 +79,7 @@
     function is_csrf_token_valid($token) {
         $is_valid = (isset($_SESSION['token']) && ($_SESSION['token'] === $token));
         if (!$is_valid) {
-            error_log('[Error] validate csrf: ' . 'invalid token: '.$token."\n"."expected token:".$_SESSION['state']);
+            error_log('[Error] validate csrf: ' . 'invalid token: '.$token."\n"."expected token:".$_SESSION['token']);
         }
         return $is_valid;
     }
