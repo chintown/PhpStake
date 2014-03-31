@@ -192,10 +192,12 @@
 //        $params['source'] = $source;
 //        $params['identifier'] = $identifier;
 //        $response = send_rest_w_curl_less('POST', WEB_ROOT . '/oauth_link.php', $params);
+//        $json = json_decode($response['result'], true);
 
         $response = oauth_link($source, $identifier, $params);
+        $json = json_decode($response, true);
 
-        $json = json_decode($response['result'], true);
+        de($response);
         if (isset($json['msg']) && $json['msg'] == 'ok') {
             return $json['user_id'];
         } else {
