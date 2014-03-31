@@ -15,6 +15,14 @@
         session_write_close();
     }
 
+    function keep_user_in_cookie($user_id, $last_seconds) {
+        setcookie("ID", $user_id, time() + $last_seconds, WEB_PATH);
+    }
+    function remove_user_from_cookie() {
+        unset($_COOKIE['ID']);
+        setcookie("ID", null, -1, WEB_PATH);
+    }
+
     function keep_session_in_cookie($sessionToken, $last_seconds) {
         setcookie("TOKEN", $sessionToken, time() + $last_seconds, WEB_PATH);
     }
