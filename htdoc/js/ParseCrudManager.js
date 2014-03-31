@@ -1,3 +1,9 @@
+function createParseAclUmask022() {
+    var acl = new Parse.ACL(Parse.User.current());
+    acl.setPublicReadAccess(true);
+    return acl;
+}
+
 var ParseCrudManager = CrudManager.extend({
     objectId: null,
     init: function(config) {
@@ -13,6 +19,8 @@ var ParseCrudManager = CrudManager.extend({
         $.each(params, function(key, value) {
             parseInstance.set(key, value);
         });
+
+        parseInstance.setACL(createParseAclUmask022());
 
         parseInstance.save().then(
             function(parseInstance) {
