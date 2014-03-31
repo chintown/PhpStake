@@ -289,15 +289,12 @@ function setCookie(key, value, days) {
     document.cookie = key + "=" + value +expires + "; path=/";
 }
 function getCookie(key) {
-    var keyPrefix = key + "=";
-    var cookies = document.cookie.split(';');
-    for(var i=0;i < cookies.length;i++) {
-        var cookie = cookies[i].trim();
-        if (cookie.indexOf(keyPrefix) === 0) {
-            return cookie.substring(keyPrefix.length,cookie.length);
-        }
+    var matchResult = document.cookie.match(key+'=(.*?);');
+    if (matchResult) {
+        return matchResult[1];
+    } else {
+        return null;
     }
-    return null;
 }
 function removeCookie(key) {
     setCookie(key, "", -1);
