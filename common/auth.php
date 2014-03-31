@@ -15,18 +15,22 @@
         session_write_close();
     }
 
+    function evaluate_domain() {
+        return SERVER_HOST == 'localhost' ? '' : SERVER_HOST;
+    }
+
     function keep_user_in_cookie($user_id, $last_seconds) {
-        setcookie("ID", $user_id, time() + $last_seconds, WEB_PATH);
+        setcookie("ID", $user_id, time() + $last_seconds, WEB_PATH, evaluate_domain());
     }
     function remove_user_from_cookie() {
         unset($_COOKIE['ID']);
-        setcookie("ID", null, -1, WEB_PATH);
+        setcookie("ID", null, -1, WEB_PATH, evaluate_domain());
     }
 
     function keep_session_in_cookie($sessionToken, $last_seconds) {
-        setcookie("TOKEN", $sessionToken, time() + $last_seconds, WEB_PATH);
+        setcookie("TOKEN", $sessionToken, time() + $last_seconds, WEB_PATH, evaluate_domain());
     }
     function remove_session_from_cookie() {
         unset($_COOKIE['TOKEN']);
-        setcookie("TOKEN", null, -1, WEB_PATH);
+        setcookie("TOKEN", null, -1, WEB_PATH, evaluate_domain());
     }
