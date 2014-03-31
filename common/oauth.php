@@ -45,11 +45,12 @@
                         $profile['access_token'] = $access['token'];
                         $profile['expired_stamp'] = time() + $access['expiration_seconds'];
 
-                        if (!link_oauth_user('facebook', $profile['id'], $profile)) {de('can not link');
+                        $user_id = link_oauth_user('facebook', $profile['id'], $profile);
+                        if (!$user_id) {de('can not link');
                             $msg = 'oauth user does not link';
                             if (DEV_MODE) {die($msg);}
                         }
-                        keep_user_in_session($profile['id']);
+                        keep_user_in_session($user_id);
 
                         if (DEV_MODE) {die('ok');}
                         header('Location: '. $r);
@@ -182,15 +183,22 @@
         return $url;
     }
 
+    // with give oauth source and oauth identification string (and other optional parameters),
+    // child project must implement oath_link entry
+    // to bind login information on certain existing/newly-created user account.
+    // the entry should also returns the user_id for session setting
     function link_oauth_user($source, $identifier, $params) {
         $params['source'] = $source;
         $params['identifier'] = $identifier;
         $response = send_rest_w_curl_less('POST', WEB_ROOT . '/oauth_link.php', $params);
-        if ($response['result'] != 'ok') {
-            de($response['result']);
-            error_log('[Error] link oauth user: '.$response['result']);
-            return false;
+
+
+        $json = json_decode($response['result'], true);
+        if (isset($json['msg']) && $json['msg'] == 'ok') {
+            return $json['user_id'];
         } else {
-            return true;
+            de($json['msg']);
+            error_log('[Error] link oauth user: '.$json['result']);
+            return false;
         }
     }
