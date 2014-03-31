@@ -1,6 +1,7 @@
 <?php
     require_once 'common/auth.php';
-    require_once 'common/rest.php';
+    //require_once 'common/rest.php';
+    require_once 'common/oauth_link.php';
 
     define('OAUTH_STATE_UNKNOWN', -1);
     define('OAUTH_STATE_REQUEST', 0);
@@ -188,10 +189,12 @@
     // to bind login information on certain existing/newly-created user account.
     // the entry should also returns the user_id for session setting
     function link_oauth_user($source, $identifier, $params) {
-        $params['source'] = $source;
-        $params['identifier'] = $identifier;
-        $response = send_rest_w_curl_less('POST', WEB_ROOT . '/oauth_link.php', $params);
+//        $params['source'] = $source;
+//        $params['identifier'] = $identifier;
+//        $response = send_rest_w_curl_less('POST', WEB_ROOT . '/oauth_link.php', $params);
 
+        require "common/oauth_link.php";
+        $response = oauth_link($source, $identifier, $params);
 
         $json = json_decode($response['result'], true);
         if (isset($json['msg']) && $json['msg'] == 'ok') {
