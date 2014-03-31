@@ -14,3 +14,11 @@
         unset($_SESSION['ID']);
         session_write_close();
     }
+
+    function keep_session_in_cookie($sessionToken, $last_seconds) {
+        setcookie("TOKEN", $sessionToken, time() + $last_seconds, WEB_PATH);
+    }
+    function remove_session_from_cookie() {
+        unset($_COOKIE['TOKEN']);
+        setcookie("TOKEN", null, -1, WEB_PATH);
+    }
