@@ -54,7 +54,7 @@
                         keep_user_in_session($user_id);
 
                         if (DEV_MODE) {die('ok');}
-                        header('Location: '. $r);
+                        header('Location: '. get_redirection_from_session());
                         exit(0);
                     }
                 }
