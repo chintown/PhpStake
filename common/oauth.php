@@ -193,7 +193,6 @@
 //        $params['identifier'] = $identifier;
 //        $response = send_rest_w_curl_less('POST', WEB_ROOT . '/oauth_link.php', $params);
 
-        require "common/oauth_link.php";
         $response = oauth_link($source, $identifier, $params);
 
         $json = json_decode($response['result'], true);
