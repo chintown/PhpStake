@@ -1,7 +1,7 @@
 <?php
     require_once 'common/auth.php';
     //require_once 'common/rest.php';
-    require_once 'common/oauth_link.php';
+    require 'common/oauth_link.php';
 
     define('OAUTH_STATE_UNKNOWN', -1);
     define('OAUTH_STATE_REQUEST', 0);
