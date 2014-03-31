@@ -1,8 +1,8 @@
 var ParseCrudManager = CrudManager.extend({
-    username: null,
+    objectId: null,
     init: function(config) {
         this._super(config);
-        this.username = config.username;
+        this.objectId = config.objectId;
     },
     executeAddWithUI: function (parseClass) {
         var parseInstance = new parseClass();
