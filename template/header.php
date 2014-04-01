@@ -77,10 +77,12 @@
               <?=$BREADCRUMB?>
             </ul>
 
-            <?php if(is_login()) { ?>
+            <?php if(is_login()) {
+                    require_once "common/auth.php";
+            ?>
             <ul id="user_control" class="nav pull-right">
               <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=$_SESSION['ID']?> <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?=get_user_disp_name_from_session()?> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="setting.php"><i class="icon-cog"></i> <?=$NAV_DICT['setting']?></a></li>
                   <li class="divider"></li>

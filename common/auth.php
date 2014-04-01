@@ -1,17 +1,25 @@
 <?php
-    function get_user_from_session() {
+    function get_user_id_from_session() {
         session_start();
         return $_SESSION['ID'];
     }
-    function keep_user_in_session($user) {
+    function get_user_disp_name_from_session() {
+        session_start();
+        return $_SESSION['NAME'];
+    }
+    function keep_user_in_session($user, $disp_name=null) {
         session_start();
         session_regenerate_id();
         $_SESSION['ID'] = $user;
+        if (isset($disp_name)) {
+            $_SESSION['NAME'] = $disp_name;
+        }
         session_write_close();
     }
     function remove_user_from_session() {
         session_start();
         unset($_SESSION['ID']);
+        unset($_SESSION['NAME']);
         session_write_close();
     }
 

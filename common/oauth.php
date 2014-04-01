@@ -51,7 +51,7 @@
                             $msg = 'oauth user does not link';
                             if (DEV_MODE) {die($msg);}
                         }
-                        keep_user_in_session($user_id);
+                        keep_user_in_session($user_id, $profile['name']);
 
                         if (DEV_MODE) {die('ok');}
                         header('Location: '. get_redirection_from_session());
