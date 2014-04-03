@@ -5,6 +5,7 @@
     #error_log(var_export($_SESSION, true));
     if((isset($_SESSION['ID']) && trim($_SESSION['ID']) != '')) {
         // valid user
+        consume_session_rotation_count();
     } else {
         $ref = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']; // keep query params, too. do not use PHP_SELF
         $ref = rawurlencode($ref);

@@ -14,12 +14,24 @@
         if (isset($disp_name)) {
             $_SESSION['NAME'] = $disp_name;
         }
+        reset_session_rotation_count();
         session_write_close();
+    }
+    function reset_session_rotation_count() {
+        $_SESSION['COUNT'] = 5;
+    }
+    function consume_session_rotation_count() {
+        // http://stackoverflow.com/questions/1221447/what-do-i-need-to-store-in-the-php-session-when-user-logged-in
+        if(($_SESSION['COUNT'] -= 1) == 0) {
+            session_regenerate_id();
+            reset_session_rotation_count();
+        }
     }
     function remove_user_from_session() {
         session_start();
         unset($_SESSION['ID']);
         unset($_SESSION['NAME']);
+        unset($_SESSION['COUNT']);
         session_write_close();
     }
 
