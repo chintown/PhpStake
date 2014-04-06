@@ -32,7 +32,9 @@ css_parent:
 		@$(shell pwd)/tool/gen_css.sh $(shell pwd) $(shell pwd);
 
 bootstrap:
-	lessc -x $(ROOT_CHILD)/script/less/bootstrap/bootstrap.less > $(ROOT_CHILD)/htdoc/css/bootstrap.css
+	lessc -x $(ROOT_PARENT)/script/less/bootstrap/bootstrap.less > $(ROOT_PARENT)/htdoc/css/bootstrap.css;
+	lessc -x $(ROOT_PARENT)/script/less/bootstrap.precompile/bootstrap.less > $(ROOT_PARENT)/htdoc/css/bootstrap.precompile.css;
+	lessc -x $(ROOT_PARENT)/script/less/bootstrap.precompile/bootstrap-responsive.less > $(ROOT_PARENT)/htdoc/css/bootstrap-responsive.precompile.css;
 
 update:
 	@git pull origin master
