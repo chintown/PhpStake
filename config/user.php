@@ -23,3 +23,6 @@
         'logout' => $TRANS->k('entry.logout', 'capital'),
         'register' => $TRANS->k('entry.register', 'capital'),
     );
+    $DROPDOWN_DICT = array(
+        //'board'=> array('acl'=>array(), 'icon'=>'icon-briefcase'),
+    );
