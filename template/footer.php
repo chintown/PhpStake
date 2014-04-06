@@ -34,6 +34,8 @@
       <? include("template/common.project.footer.php"); ?>
 
       <?php if (!empty($FOOTER_EXTRA)) { include("template/$FOOTER_EXTRA"); }?>
-    </div> <?php /*#wrap_resource*/ ?>
+    <?php /*#wrap_resource*/ ?>
+
+    </div>
   </body>
 </html>
