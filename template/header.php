@@ -7,6 +7,7 @@
     <!-- <noscript><meta http-equiv="refresh" content="0;url=/nojs"></noscript> -->
     <meta charset='UTF-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 <?php
       if (!empty($HEADER_EXTRA)) { include("template/$HEADER_EXTRA"); }
 
