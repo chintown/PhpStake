@@ -272,7 +272,9 @@
     }
     function purify($input, $methods) {
         // skip non-string input
-        if (gettype($input) != 'string') {
+        if (gettype($input) == 'NULL') {
+            $input = '';
+        } else if (gettype($input) != 'string') {
             $type = gettype($input);
             de("invalid  purify input type [$type] (should be string).", $backtrace_depth=2);
             return false;                                               // exit
