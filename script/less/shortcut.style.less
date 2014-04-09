@@ -24,19 +24,46 @@
 @color-warm: rgba(255, 165, 0, 1);
 @color-warm-light: rgba(255, 165, 0, 0.4);
 
+
+.property_(@property, @value) {
+  _: 0 ~"; @{property}:" @value;
+}
+
+.vendor(@property, @value) {
+  .property_('-webkit-@{property}', @value);
+  .property_( '-khtml-@{property}', @value);
+  .property_(   '-moz-@{property}', @value);
+  .property_(          @property,   @value);
+}
+
+.transform(@size) {
+  -webkit-transform: @size;
+  -moz-transform: @size;
+  transform: @size;
+}
+.animation(@size) {
+  -webkit-animation: @size;
+  -moz-animation: @size;
+  animation: @size;
+}
 .radius(@size) {
-  border-radius: @size;
   -webkit-border-radius: @size;
   -moz-border-radius: @size;
+  border-radius: @size;
 }
 .box-shadow(@params) {
-  box-shadow: @params;
   -webkit-box-shadow: @params;
   -moz-box-shadow: @params;
+  box-shadow: @params;
 }
 .box-sizing(@param) {
-  box-sizing: @param;
   -moz-box-sizing: @param;
+  box-sizing: @param;
+}
+.text-shadow(@params) {
+  -webkit-text-shadow: @params;
+  -moz-text-shadow: @params;
+  text-shadow: @params;
 }
 .alpha(@ratio) {
     @ratio-ie: @ratio * 100;
