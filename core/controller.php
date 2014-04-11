@@ -2,6 +2,9 @@
     require 'raven.php';
     require_once 'lib/FirePHPCore/fb.php';
 
+    // https://developers.google.com/speed/docs/best-practices/rendering#SpecifyCharsetEarly
+    header("Content-Type: text/html; charset=utf-8");
+
     // routing
     $script_name = $_SERVER['SCRIPT_NAME']; // /foo/bar/index.php
     $controller_id = basename($script_name, '.php'); // index
