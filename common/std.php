@@ -54,6 +54,10 @@
         $new_queries = array_merge($queries, $given_queries);
         return http_build_query($new_queries);
     }
+    function fix_font_css_path($style_content) {
+        // ../ -> PARENT_FOLDER_ROOT/
+        return preg_replace('/[.]{2}/', 'http://'.SERVER_HOST.PARENT_WEB_PATH, $style_content);
+    }
     /* control */
 
     /* template */
