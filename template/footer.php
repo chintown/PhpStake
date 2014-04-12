@@ -21,8 +21,8 @@
         <?php echo serialize_vars_as_js(array('DEV_MODE' => DEV_MODE,'IS_MOBILE' => $IS_MOBILE,'WEB_HOST' => WEB_HOST)); ?>
 
 
-        <script src="//<?=toggle_min_script('ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.js')?>" type="text/javascript"></script>
-        <script>window.jQuery || document.write('<script src="<?=toggle_min_script('js/vendor/jquery-1.8.2.js')?>" type="text/javascript"><\/script>')</script>
+        <script src="//<?=toggle_min_script('ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js')?>" type="text/javascript"></script>
+        <script>window.jQuery || document.write('<script src="<?=toggle_min_script(PARENT_WEB_PATH.'/js/vendor/jquery-1.11.0.js')?>" type="text/javascript"><\/script>')</script>
 
         <script src="<?=toggle_min_script(PARENT_WEB_PATH.'/js/vendor/bootstrap.hacked.js')?>" type="text/javascript"></script>
 
