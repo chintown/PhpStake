@@ -60,3 +60,6 @@
         $uagent_obj = new uagent_info();
         return $uagent_obj->DetectTierIphone();
     }
+
+    // jquery mobile
+    $r_fr = isset($_REQUEST['fr']) ? purify($_REQUEST['fr'], 'url') : '';
