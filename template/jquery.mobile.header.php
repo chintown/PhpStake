@@ -3,8 +3,18 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <? if (is_defined_const_available('MOBILE_NO_TOOLBAR')) { ?>
+
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <? } ?>
+    <? if (is_defined_const_available('MOBILE_APP_ICON')) { ?>
+
+    <link rel="apple-touch-icon-precomposed" href="<?=WEB_PATH?>/img/54/app.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?=WEB_PATH?>/img/72/app.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?=WEB_PATH?>/img/114/app.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?=WEB_PATH?>/img/144/app.png">
+    <? } ?>
     <title></title>
 
 <!--    <link rel="stylesheet" href="--><?//=PARENT_WEB_PATH?><!--/css/reset.boilerplate.css">-->
