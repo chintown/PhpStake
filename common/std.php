@@ -1,5 +1,8 @@
 <?php
     /* data manipulation */
+    function is_defined_const_available($const_name) {
+        return defined($const_name) && constant($const_name);
+    }
     function is_assoc($arr) {
         return array_keys($arr) !== range(0, count($arr) - 1);
     }

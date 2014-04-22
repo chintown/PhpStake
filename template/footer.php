@@ -26,12 +26,12 @@
 
         <script src="<?=toggle_min_script(PARENT_WEB_PATH.'/js/vendor/bootstrap.hacked.js')?>" type="text/javascript"></script>
 
-      <?php if (constant('SENTRY_API_JS')) { ?>
+      <?php if (is_defined_const_available('SENTRY_API_JS')) { ?>
         <script src="//d3nslu0hdya83q.cloudfront.net/dist/1.0/raven.min.js"></script>
         <script>Raven.config('<?=SENTRY_API_JS?>').install();</script>
       <?php } ?>
 
-      <?php if (constant('GA_CODE')) { ?>
+      <?php if (is_defined_const_available('GA_CODE')) { ?>
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
