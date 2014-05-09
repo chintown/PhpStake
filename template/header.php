@@ -41,7 +41,6 @@
     <link rel="stylesheet" href="<?=PARENT_WEB_PATH?>/css/font-awesome.css">
     <link rel="stylesheet" href="<?=PARENT_WEB_PATH?>/css/webfont.css"> <!-- or specific ones -->
     <script src="<?=PARENT_WEB_PATH?>/js/vendor/modernizr-2.6.1.min.js"></script>
-    <script type="text/javascript" src="//dl1d2m8ri9v3j.cloudfront.net/releases/1.2.4/tracker.js" data-customer="54e327e40f1e46b08cf96b2d83630d58"></script>
   </head>
   <body class="<?=getBrowserUACSS()?>">
     <!--[if lt IE 7]>
