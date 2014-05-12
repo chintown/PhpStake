@@ -1,4 +1,4 @@
 <?php
-    function get($req, $res) {
+    function get($req, &$res) {
         $param = pickup($req, '');
     }

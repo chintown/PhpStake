@@ -27,7 +27,7 @@
     if (function_exists('get')) { // get is the key method of any controller file
         $r = array();
         $_REQUEST = purify_values($_REQUEST, 'null|eol'); // policy: binary data in parameter is not allowed
-        get($_REQUEST, &$r);
+        get($_REQUEST, $r);
         // dump result from associated array to prefixed variable
         // for better coding experience
         extract($r, EXTR_PREFIX_ALL, 'r');

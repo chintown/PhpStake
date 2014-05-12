@@ -34,7 +34,7 @@
         if (DEV_MODE) {error_log('RANDOM SALT: '.$salt);}
         return $salt;
     }
-    function get_crypted($raw, $salt=null) {
+    function get_crypted($raw, &$salt=null) {
         $method = '2a'; // Blowfish
         $strength = "08";
         $salt = (isset($salt)) ? $salt : get_random_salt(); // $salt is reference
@@ -45,7 +45,7 @@
     function get_crypted_w_meta($raw, $salt=null) {
         // "meta" meanings appending duplicated salt at the end of crypted result
         // for validator easily extract the salt part later
-        $crypted = get_crypted($raw, &$salt); // pass reference! to get salt if is not set
+        $crypted = get_crypted($raw, $salt); // pass reference! to get salt if is not set
         $crypted_w_meta = compose_crypted_w_meta($crypted, $salt);
         return $crypted_w_meta;
     }
