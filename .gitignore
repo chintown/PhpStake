@@ -2,6 +2,8 @@
 config/pw.php
 htdoc/js/*.min.js
 htdoc/css
+!*.precompile.css
+!*.precompile.css
 script/less/bootstrap/tests
 script/less/*.css
 sftp-config.json
