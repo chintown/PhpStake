@@ -72,7 +72,7 @@
                     $paramsOfSorter[] = $order;
                 }
                 $paramsOfSorter[] = &$result; // make use array_multisort will ...
-                call_user_func_array('array_multisort', &$paramsOfSorter); // change result rather than copy
+                call_user_func_array('array_multisort', $paramsOfSorter); // change result rather than copy
             }
             return $result;
         }
