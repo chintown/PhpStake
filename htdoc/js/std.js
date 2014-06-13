@@ -302,7 +302,9 @@ function setCookie(key, value, days) {
     document.cookie = key + "=" + value +expires + "; path=/";
 }
 function getCookie(key) {
-    var matchResult = document.cookie.match(key+'=(.*?);');
+    var cookieStr = document.cookie;
+    cookieStr = (cookieStr) ? cookieStr+";" : cookieStr; // make the pattern consistent
+    var matchResult = cookieStr.match(key+'=(.*?);');
     if (matchResult) {
         return matchResult[1];
     } else {
