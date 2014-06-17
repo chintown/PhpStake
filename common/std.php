@@ -22,7 +22,7 @@
         return $picked;
     }
     function optional($nullable, $fallback) {
-        return (empty($nullable)) ? $fallback : $nullable;
+        return (!isset($nullable)) ? $fallback : $nullable;
     }
     function optional_str($nullable) {
         return optional($nullable, '');
