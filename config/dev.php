@@ -7,8 +7,8 @@
     // remote (for linode dev) | local (for Mac dev)
     define('ENV','local');
 
-    define('MOBILE_NO_TOOLBAR', fasle);
-    define('MOBILE_APP_ICON', fasle);
+    define('MOBILE_NO_TOOLBAR', false);
+    define('MOBILE_APP_ICON', false);
 
     define('AUTH_COOKIE_SECONDS', 60*60*24); // 24hr
 
