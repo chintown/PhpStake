@@ -23,7 +23,11 @@
     }
     function optional($nullable, $fallback) {
         if (is_array($nullable)) {
-            return (!property_exists($nullable[0], $nullable[1])) ? $fallback : $nullable[0]->{$nullable[1]};
+            if (is_array($nullable[0])) {
+                return (!isset($nullable[0][$nullable[1]])) ? $fallback : $nullable[0][$nullable[1]];
+            } else {
+                return (!property_exists($nullable[0], $nullable[1])) ? $fallback : $nullable[0]->{$nullable[1]};
+            }
         } else {
             return (!isset($nullable)) ? $fallback : $nullable;
         }
