@@ -22,7 +22,11 @@
         return $picked;
     }
     function optional($nullable, $fallback) {
-        return (!isset($nullable)) ? $fallback : $nullable;
+        if (is_array($nullable)) {
+            return (property_exists($nullable[0], $nullable[1])) ? $fallback : $nullable[0]->{$nullable[1]};
+        } else {
+            return (!isset($nullable)) ? $fallback : $nullable;
+        }
     }
     function optional_str($nullable) {
         return optional($nullable, '');
