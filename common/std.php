@@ -21,6 +21,12 @@
         }
         return $picked;
     }
+    function optional($nullable, $fallback) {
+        return (empty($nullable)) ? $fallback : $nullable;
+    }
+    function optional_str($nullable) {
+        return optional($nullable, '');
+    }
     function not_empty($val) { return !empty($val); }
     function map($arr, $callback, $is_pair_para=true) {
         $res = array();
@@ -51,7 +57,7 @@
     /* string manipulation */
 
     /* control */
-    function mergeQuery($given_query) {
+    function mergeQuery($given_query) { // TODO rename
         parse_str($given_query, $given_queries);
         parse_str($_SERVER['QUERY_STRING'], $queries);
         $new_queries = array_merge($queries, $given_queries);
