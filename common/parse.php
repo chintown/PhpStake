@@ -66,10 +66,11 @@
             if (!empty($this->sortCriteria)) {
                 $paramsOfSorter = array();
                 foreach ($this->sortCriteria as $criterion => $order) {
-                    $paramsOfSorter[] = map($result, function($object) use ($criterion) {
+                    $fields = map($result, function($object) use ($criterion) {
                         return $object[$criterion];
                     }, false);
-                    $paramsOfSorter[] = $order;
+                    $paramsOfSorter[] = &$fields;
+                    $paramsOfSorter[] = &$order;
                 }
                 $paramsOfSorter[] = &$result; // make use array_multisort will ...
                 call_user_func_array('array_multisort', $paramsOfSorter); // change result rather than copy
