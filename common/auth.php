@@ -54,3 +54,18 @@
         unset($_COOKIE['TOKEN']);
         setcookie("TOKEN", null, -1, WEB_PATH);
     }
+
+    function keep_session_expiration_in_session($seconds_to_be_expired) {
+        session_start();
+        $_SESSION['SESSION_EXPIRATION'] = time() + $seconds_to_be_expired;
+        session_write_close();
+    }
+    function remove_session_expiration_from_session() {
+        session_start();
+        unset($_SESSION['SESSION_EXPIRATION']);
+        session_write_close();
+    }
+    function is_session_expired() {
+        session_start();
+        return time() > $_SESSION['SESSION_EXPIRATION'];
+    }
