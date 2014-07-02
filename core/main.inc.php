@@ -15,7 +15,6 @@
 
     require $project_path.'config/path.php';
     require $project_path.'common/std.php';
-    define('XHPROF_NS', SITE_CODE);
     require $project_path.'common/xhprof.header.php';
     require $project_path.'lib/mdetect.php';
     require $project_path.'core/translation.php';

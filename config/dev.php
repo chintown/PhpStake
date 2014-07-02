@@ -6,6 +6,7 @@
     }
     // remote (for linode dev) | local (for Mac dev)
     define('ENV','local');
+    // define('XHPROF_NS', 'testing_xhprof_project');
 
     define('MOBILE_NO_TOOLBAR', false);
     define('MOBILE_APP_ICON', false);
