@@ -49,3 +49,6 @@
     </div>
   </body>
 </html>
+
+<?php
+    require $project_path.'common/xhprof.footer.php';
