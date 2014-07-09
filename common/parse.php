@@ -21,10 +21,12 @@
             $this->constraints[] = $constraint;
         }
         /**
-         * @param $criteria array('fieldName'=> SORT_DESC, 'fieldStamp'=> SORT_ASC)
+         * @param $criteria array('field'=>'fieldNameMajor', 'order'=SORT_DESC),
+         *                  array('field'=>'fieldNameMinor', 'order'=SORT_ASC),
+         *                  ...
          */
-        public function setSortCriteria($criteria) {
-            $this->sortCriteria = $criteria;
+        public function setSortCriteria() {
+            $this->sortCriteria = func_get_args();
         }
         public function find() {
             $result = array();
@@ -65,9 +67,11 @@
         private function sort(&$result) {
             if (!empty($this->sortCriteria)) {
                 $paramsOfSorter = array();
-                foreach ($this->sortCriteria as $criterion => $order) {
-                    $fields = map($result, function($object) use ($criterion) {
-                        return $object[$criterion];
+                foreach ($this->sortCriteria as $criterion) {
+                    $field = $criterion['field'];
+                    $order = $criterion['order'];
+                    $fields = map($result, function($object) use ($field) {
+                        return $object[$field];
                     }, false);
                     $paramsOfSorter[] = &$fields;
                     $paramsOfSorter[] = &$order;
