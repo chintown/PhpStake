@@ -49,6 +49,11 @@ stub_purge:
 
 deploy: prod remote update script
 
+map:
+	@rm $(SRCTOP)/static/sitemap.gz;
+	@wget -O- '${host}/sitemap.php' > $(SRCTOP)/static/sitemap.xml;
+	@gzip -c $(SRCTOP)/static/sitemap.xml > $(SRCTOP)/static/sitemap.gz
+
 log_mac:
 	tail -f /var/log/apache2/error_log | sed "s/\\\n/\\n/g"
 
@@ -113,6 +118,6 @@ fork:
 # refs: https://algorithms.rdio.com/post/make/
 
 rsync_js:
-	rsync -rave "ssh -i ${pem}" $(ROOT_CHILD)/htdoc/js/ ${remote}:${remote_root}/htdoc/js/
+	rsync -rave "ssh -i ${pem}" $(ROOT_CHILD)/htdoc/js/ ${host}:${path}/htdoc/js/
 rsync_css:
-	rsync -rave "ssh -i ${pem}" $(ROOT_CHILD)/htdoc/css/ ${remote}:${remote_root}/htdoc/css/
+	rsync -rave "ssh -i ${pem}" $(ROOT_CHILD)/htdoc/css/ ${host}:${path}/htdoc/css/
