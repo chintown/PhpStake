@@ -50,7 +50,7 @@ stub_purge:
 deploy: prod remote update script
 
 map:
-    touch $(ROOT_CHILD)/htdoc/sitemap.gz $(ROOT_CHILD)/htdoc/sitemap.xml;
+	touch $(ROOT_CHILD)/htdoc/sitemap.gz $(ROOT_CHILD)/htdoc/sitemap.xml;
 	@rm $(ROOT_CHILD)/htdoc/sitemap.gz $(ROOT_CHILD)/htdoc/sitemap.xml;
 	@wget -O- '$(WEB_ROOT)/htdoc/sitemap.php' > $(ROOT_CHILD)/htdoc/sitemap.xml;
 	@gzip -c $(ROOT_CHILD)/htdoc/sitemap.xml > $(ROOT_CHILD)htdoc//sitemap.gz
