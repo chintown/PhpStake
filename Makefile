@@ -51,8 +51,8 @@ deploy: prod remote update script
 
 map:
 	@rm $(ROOT_CHILD)/static/sitemap.gz;
-	@wget -O- '${host}/sitemap.php' > $(ROOT_CHILD)/static/sitemap.xml;
-	@gzip -c $(ROOT_CHILD)/static/sitemap.xml > $(ROOT_CHILD)/static/sitemap.gz
+	@wget -O- '$(WEB_ROOT)/sitemap.php' > $(ROOT_CHILD)/sitemap.xml;
+	@gzip -c $(ROOT_CHILD)/sitemap.xml > $(ROOT_CHILD)/sitemap.gz
 
 log_mac:
 	tail -f /var/log/apache2/error_log | sed "s/\\\n/\\n/g"
