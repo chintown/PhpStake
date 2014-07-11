@@ -53,7 +53,7 @@ map:
 	touch $(ROOT_CHILD)/htdoc/sitemap.gz $(ROOT_CHILD)/htdoc/sitemap.xml;
 	@rm $(ROOT_CHILD)/htdoc/sitemap.gz $(ROOT_CHILD)/htdoc/sitemap.xml;
 	@wget -O- '$(WEB_ROOT)/sitemap.php' > $(ROOT_CHILD)/htdoc/sitemap.xml;
-	@gzip -c $(ROOT_CHILD)/htdoc/sitemap.xml > $(ROOT_CHILD)htdoc//sitemap.gz
+	@gzip -c $(ROOT_CHILD)/htdoc/sitemap.xml > $(ROOT_CHILD)/htdoc/sitemap.gz
 
 log_mac:
 	tail -f /var/log/apache2/error_log | sed "s/\\\n/\\n/g"
