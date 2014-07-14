@@ -35,7 +35,7 @@
             // get fb "code"
             $dialog_url = "https://www.facebook.com/dialog/oauth"
                 ."?client_id=" . FB_APP_ID
-                ."&redirect_uri=" . urlencode($this->getOauthPongUrl())
+                ."&redirect_uri=" . $this->getOauthPongUrl()
                 ."&state=" . $_SESSION['token'];
             $this->logDetails("url.request.code", $dialog_url);
             echo("<script> top.location.href='" . $dialog_url . "'</script>");
@@ -47,7 +47,7 @@
             // get fb "access token" for using Graph API
             $token_url = "https://graph.facebook.com/oauth/access_token"
                 ."?client_id=" . FB_APP_ID
-                ."&redirect_uri=" . urlencode($this->getOauthPongUrl())
+                ."&redirect_uri=" . $this->getOauthPongUrl()
                 ."&client_secret=" . FB_APP_SECRET
                 ."&code=" . $code;
             $this->logDetails("url.request.access_token", $token_url);
@@ -93,11 +93,11 @@
                         ."?access_token=" . $this->accessToken;
             $this->logDetails("url.request.user", $graph_url);
             $response = file_get_contents($graph_url);
-            $this->logDetails("response.user", $response);
             if ($response === false) {
                 return false;
             }
             $profile = json_decode($response, true);
+            $this->logDetails("response.user", $profile);
             if (!isset($profile['id'])) {
                 return false;
             }

@@ -27,7 +27,8 @@
 
         function __construct($oauthName) {
             $this->oauthName = $oauthName;
-            $this->oauthPongUrl = WEB_ROOT.'/'.$_SESSION['PHP_SELF'];
+            $protocol = isset($_SERVER['HTTPS']) ? 'https:' : 'http:';
+            $this->oauthPongUrl = $protocol.WEB_ROOT.'/'.basename($_SERVER['PHP_SELF']);
         }
 
         public function setDefaultRedirectionUrl($callbackUrl) {
@@ -46,6 +47,7 @@
             $r = empty($r) ? $this->getDefaultRedirectionUrl() : $r;
             if (DEV_MODE)
 
+             bde($this->parseCsrfToken); // XXX can live without this...
             $this->csrfToken = $this->parseCsrfToken($req);
             $this->code = $this->parseOauthCode($req);
             $state = $this->evaluateOauthState($req);
@@ -127,7 +129,7 @@
 
                 // 5.
                 $this->onEverythingIsDone();
-            } else if ($state == OAUTH_STATE_UNKNOWN) {
+            } else if ($state == self::OAUTH_STATE_UNKNOWN) {
                 $this->logEvent('unknown user request. bye.');//
             }
         }
@@ -220,7 +222,7 @@
         }
         protected function onEverythingIsDone() {
             $this->logEvent("everything is ok. redirect to our service !!");
-//            header('Location: '. $this->getRedirectionFromSession());
+            header('Location: '. $this->getRedirectionFromSession());
             exit(0);
         }
         protected function parseCallbackError($param) {
