@@ -416,7 +416,6 @@
         fb($arr);
     }
     function bde($arr) {
-        if (!DEV_MODE) {return; }
         error_log(var_export($arr, true));
     }
     /* debug */
