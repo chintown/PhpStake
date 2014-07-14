@@ -1,4 +1,13 @@
 <?php
+
+    function validate_http_reference() {
+        $url_parts = parse_url($_SERVER['HTTP_REFERER']);
+        return !(isset($url_parts['host']) && $url_parts['host'] !== NULL && normalize_host($url_parts['host']) !== normalize_host(SERVER_HOST));
+    }
+    function normalize_host($given) {
+        return preg_replace('/^www[.]/', '', $given);
+    }
+
     function get_user_id_from_session() {
         session_start();
         return $_SESSION['ID'];
