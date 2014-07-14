@@ -12,6 +12,7 @@
     define('MOBILE_APP_ICON', false);
 
     define('AUTH_COOKIE_SECONDS', 60*60*24); // 24hr
+    define('AUTH_SESSION_SECONDS', 30 * 60); // 30min
 
     // error logging. http://sentry.chintown.org/
     define('SENTRY_API_PHP', null);
