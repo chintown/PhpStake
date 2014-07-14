@@ -220,7 +220,7 @@
         }
         protected function onEverythingIsDone() {
             $this->logEvent("everything is ok. redirect to our service !!");
-//            header('Location: '. $this->getRedirectionFromSession());
+            header('Location: '. $this->getRedirectionFromSession());
             exit(0);
         }
         protected function parseCallbackError($param) {
