@@ -184,7 +184,7 @@
         return $url;
     }
 
-    // with give oauth source and oauth identification string (and other optional parameters),
+    // with given oauth source and oauth identification string (and other optional parameters),
     // child project must implement oath_link entry
     // to bind login information on certain existing/newly-created user account.
     // the entry should also returns the user_id for session setting
