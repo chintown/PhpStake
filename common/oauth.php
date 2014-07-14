@@ -9,7 +9,7 @@
     define('OAUTH_STATE_FAILED', 2);
 
     // create a entry in child project. then call this flow wrapper in the get method
-    function fb_get_wrapper($req, $res) {
+    function fb_get_wrapper($req, &$res) {
         $param = pickup($req, 'r', 'code', 'state', 'error', 'error_code', 'error_description', 'error_reason');
         $r = purify($param['r'], 'eol');
         $r = empty($r) ? 'index.php' : $r;

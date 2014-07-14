@@ -14,6 +14,9 @@
     define('AUTH_COOKIE_SECONDS', 60*60*24); // 24hr
     define('AUTH_SESSION_SECONDS', 30 * 60); // 30min
 
+    //define('FB_APP_ID', '');
+    //define('FB_APP_SECRET', '');
+
     // error logging. http://sentry.chintown.org/
     define('SENTRY_API_PHP', null);
     define('SENTRY_API_JS', null);
