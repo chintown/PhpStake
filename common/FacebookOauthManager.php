@@ -29,6 +29,7 @@
         }
 
         // https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow/
+        // https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow/v2.0#logindialog
         protected function requestOauthCode() {
             // redirect to fb login path
             // user authentication
