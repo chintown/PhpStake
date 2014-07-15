@@ -108,6 +108,7 @@
         protected function parseUserMainInformation($user) {
             return array(
                 self::KEY_USER_ID => $user['id'],
+                self::KEY_USER_EMAIL => $user['email'],
                 self::KEY_USER_DISP_NAME => $user['name']
             );
         }

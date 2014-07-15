@@ -9,6 +9,7 @@
         protected $accessToken = null;
         protected $secondsToExpire = 0;
         protected $userId = null;
+        protected $userEmail = null;
         protected $userDispName = null;
         protected $dbUserId = null;
         protected $dbClientSession = null;
@@ -21,6 +22,7 @@
         const KEY_ACCESS_TOKEN = 'accessToken';
         const KEY_SECONDS_TO_EXPIRE = 'secondsToExpire';
         const KEY_USER_ID = 'userId';
+        const KEY_USER_EMAIL = 'userEmail';
         const KEY_USER_DISP_NAME = 'userDispName';
         const KEY_DB_USER_ID = 'dbUserId';
         const KEY_DB_CLIENT_SESSION = 'dbClientSession';
@@ -94,6 +96,7 @@
 
                 $userMain = $this->parseUserMainInformation($userMeta);
                 $this->userId = $userMain[self::KEY_USER_ID];
+                $this->userEmail = $userMain[self::KEY_USER_EMAIL];
                 $this->userDispName = $userMain[self::KEY_USER_DISP_NAME];
 
                 // 3.
@@ -118,7 +121,7 @@
                 $this->logEvent('setup session/cookie setup ->');//
                 $this->setSessionsAndCookies(
                     $this->dbUserId,
-                    $this->userDispName,
+                    $this->userEmail,
                     $this->dbClientSession
                 );
                 $this->logEvent('<- finish session/cookie setup');//
