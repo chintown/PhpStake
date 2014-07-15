@@ -235,7 +235,7 @@
         private function setRedirectionToSession($url) {
             $_SESSION['r'] = $url;
         }
-        private function getRedirectionFromSession() {
+        public function getRedirectionFromSession() {
             $url = $_SESSION['r'];
             unset($_SESSION['r']);
             return $url;
