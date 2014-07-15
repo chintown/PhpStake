@@ -69,7 +69,7 @@
                 if (!$this->isCsrfTokenValid($this->csrfToken)) {
                     $this->logEvent('csrf! <-');//
                     $this->logDetails('expected.csrf', $_SESSION['token']);//
-                    exit(0);
+                    throw new OauthFailedException("Detect CSRF");
                 }
 
                 // 1.
@@ -77,7 +77,7 @@
                 $access = $this->requestOauthAccessToken($this->code);
                 if(!$access) {
                     $this->logEvent('<- reject oauth accessToken request');//
-                    exit(0);
+                    throw new OauthFailedException("Rejected by oauth provider. might be expired. try again!");
                 }
                 $this->logEvent('<- return oauth accessToken');//
                 $this->logDetails('accessToken', $access);//
@@ -89,7 +89,7 @@
                 $userMeta = $this->getUserInformation();
                 if(!$userMeta) {
                     $this->logEvent('<- reject userMeta request');//
-                    exit(0);
+                    throw new OauthFailedException("Can not get user detail information");
                 }
                 $this->logEvent('<- return userMeta');//
                 $this->logDetails('userMeta', $userMeta);//
@@ -110,7 +110,7 @@
                 );
                 if(!$dbMeta) {
                     $this->logEvent('<- fail to save user in db');//
-                    exit(0);
+                    throw new OauthFailedException("Can not keep/bind the user in database");
                 }
                 $this->logEvent('<- return db user');//
                 $this->logDetails('dbUserMeta', $dbMeta);//
@@ -267,5 +267,11 @@
         public function __construct($functionality) {
             parent::__construct("PLEASE IMPLEMENT $functionality FIRST!\n"
                 , 9001, null);
+        }
+    }
+    class OauthFailedException extends Exception {
+        public function __construct($msg) {
+            parent::__construct("[$msg]\n"
+                , 9002, null);
         }
     }
