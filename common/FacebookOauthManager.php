@@ -36,7 +36,8 @@
             $dialog_url = "https://www.facebook.com/dialog/oauth"
                 ."?client_id=" . FB_APP_ID
                 ."&redirect_uri=" . $this->getOauthPongUrl()
-                ."&state=" . $_SESSION['token'];
+                ."&state=" . $_SESSION['token']
+                .'&scope=email';
             $this->logDetails("url.request.code", $dialog_url);
             echo("<script> top.location.href='" . $dialog_url . "'</script>");
             exit(0);
