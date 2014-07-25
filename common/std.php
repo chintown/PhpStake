@@ -75,6 +75,14 @@
         // ../ -> PARENT_FOLDER_ROOT/
         return preg_replace('/[.]{2}/', 'http://'.SERVER_HOST.PARENT_WEB_PATH, $style_content);
     }
+    function fix_url_protocol($url_might_miss_protocol) {
+        $protocol = is_https() ? 'https:' : 'http:';
+        if (strpos($url_might_miss_protocol, '://') !== false) {
+            return $url_might_miss_protocol;
+        } else {
+            return $protocol.$url_might_miss_protocol;
+        }
+    }
     /* control */
 
     /* template */
@@ -202,6 +210,9 @@
             );
         }
         return $crumb;
+    }
+    function get_breadcrumb_class($filename, $class='active') {
+        return (basename($_SERVER['PHP_SELF']) == $filename) ? ' '.$class : '';
     }
     function generate_nested($input, $depth=0, $purify=false) {
         if (!is_array($input)) {
@@ -347,6 +358,10 @@
             $ip=$_SERVER['REMOTE_ADDR'];
         }
         return $ip;
+    }
+    function is_https() {
+        return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+                    || $_SERVER['SERVER_PORT'] == 443;
     }
     /* security */
 
