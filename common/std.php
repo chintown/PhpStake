@@ -75,8 +75,10 @@
         // ../ -> PARENT_FOLDER_ROOT/
         return preg_replace('/[.]{2}/', 'http://'.SERVER_HOST.PARENT_WEB_PATH, $style_content);
     }
-    function fix_url_protocol($url_might_miss_protocol) {
-        $protocol = is_https() ? 'https:' : 'http:';
+    function fix_url_protocol($url_might_miss_protocol, $protolcol=null) {
+        if (!$protolcol) {
+            $protocol = is_https() ? 'https:' : 'http:';
+        }
         if (strpos($url_might_miss_protocol, '://') !== false) {
             return $url_might_miss_protocol;
         } else {
