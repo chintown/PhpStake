@@ -2,7 +2,7 @@
     session_start();
     $path_fix_before_inc = '../';
     require $path_fix_before_inc.'core/main.inc.php';
-    require 'core/authentication.php'; // header/session should be handled as early as possible
+    //require 'core/authentication.php'; // header/session should be handled as early as possible
     require 'template/header.php';
 ?>
 
