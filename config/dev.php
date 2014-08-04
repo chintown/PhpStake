@@ -7,6 +7,7 @@
     // remote (for linode dev) | local (for Mac dev)
     define('ENV','local');
     // if (DEV_MODE) { @mkdir('/tmp/xhprof/'); define('XHPROF_NS', SITE_CODE); }
+    // if (DEV_MODE) { define('PHP_DEBUG_BAR', 'on'); }
 
     define('MOBILE_NO_TOOLBAR', false);
     define('MOBILE_APP_ICON', false);

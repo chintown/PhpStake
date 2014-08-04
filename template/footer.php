@@ -44,7 +44,10 @@
       <? include("template/common.project.footer.php"); ?>
 
       <?php if (!empty($FOOTER_EXTRA)) { include("template/$FOOTER_EXTRA"); }?>
-    <?php /*#wrap_resource*/ ?>
+
+
+        <?php require "common/phpdebugbar.footer.php"; ?>
+      <?php /*#wrap_resource*/ ?>
 
     </div>
   </body>

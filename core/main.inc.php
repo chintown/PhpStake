@@ -16,6 +16,7 @@
     require 'config/path.php';
     require $project_path.'common/std.php';
     require $project_path.'common/auth.php';
+    require $project_path.'common/phpdebugbar.header.php';
     require $project_path.'common/xhprof.header.php';
     require $project_path.'lib/mdetect.php';
     require $project_path.'core/translation.php';
