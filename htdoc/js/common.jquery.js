@@ -109,6 +109,15 @@ function toggleRadio(_this) {
     $this.prop('checked', true);
 }
 
+function autoHideSoftKeyboard() {
+    // http://stackoverflow.com/questions/2890216/hide-keyboard-in-iphone-safari-webapp
+    $(document).on('touchstart', function (e) {
+        var $target = $(e.target);
+        if (!$target.is('input') && !$target.is('textarea')) {
+            document.activeElement.blur();
+        }
+    });
+}
 // -----------------------------------------------------------------------------
 
 function ajaxMsgInfo(msg, seconds) {
