@@ -118,6 +118,12 @@ function autoHideSoftKeyboard() {
         }
     });
 }
+
+function autoBindTabIndexOn($jquery_collection) {
+    $jquery_collection.each(function(idx, target) {
+        $(target).attr('tabindex', idx+1);
+    });
+}
 // -----------------------------------------------------------------------------
 
 function ajaxMsgInfo(msg, seconds) {
