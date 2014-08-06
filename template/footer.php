@@ -38,6 +38,28 @@
             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
           })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
           <?=GA_CODE?>
+          var trackOutboundLink = function(url, new_window) {
+              ga('send', 'event', 'outbound', 'click', url, {'hitCallback': function () {
+                  if (!new_window) {
+                      document.location = url;
+                  }
+              }});
+              if (new_window){
+                  window.open(url);
+              }
+          };
+          $(document).ready(function(){
+              // set google analytics onclick link event on each link with class track
+              $('a.track').each(function(index, element){
+                  element = $(element);
+                  var link = element.attr('href');
+                  var new_window = element.attr('target') == '_blank' ? true : false;
+                  element.click(function(){
+                      trackOutboundLink(link, new_window);
+                      return false;
+                  });
+              });
+          });
         </script>
       <?php } ?>
 
