@@ -22,7 +22,7 @@ class SiteMap {
 HEADER;
     }
     private function getEntry($entry) {
-        $loc = $this->locationRoot.$entry->location;
+        $loc = trim($this->locationRoot,'/').'/'.$entry->location;
         return <<<ENTRY
 <url>
     <loc>$loc</loc>
