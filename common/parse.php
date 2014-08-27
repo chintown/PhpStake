@@ -1,4 +1,16 @@
 <?php
+
+    /*
+    $query_helper = new UtilParseQuery('Brand');
+    $query_helper->setSortCriteria(array('field'=>'title', 'order'=> SORT_ASC));
+    $query_helper->addConstraint(function($query) use ($objectId) {
+        $query->whereEqualTo("objectId", $objectId);
+        $query->whereContainedIn('objectId', $item_object_ids);
+        $query->whereInclude('images');
+        return $query;
+    });
+    $result = $query_helper->find();
+    */
     class UtilParseQuery {
         protected $baseClass = '';
         protected $constraints = array();
@@ -34,6 +46,9 @@
                 $query = new ParseQuery($this->baseClass);
                 foreach ($this->constraints as $constraint) {
                     $query = $constraint($query);
+                }
+                if(empty($this->_query) && (!empty($this->_inclue) || !empty($this->_order) || !empty($this->_limit) || !empty($this->_skip) || !empty($this->_count))) {
+                    throw new Exception('due to limitation of parse php library, you must give a "where" clause for using "order", "limit" or similar constraint!!');
                 }
                 $ret = $query->find();
             } catch (ParseLibraryException $e) {
@@ -82,6 +97,17 @@
             return $result;
         }
     }
+
+    /*
+    $query_helper = new UtilParseForeignKeyQuery('Item', 'Brand');
+    $query_helper->addConstraintForeignKey('brand', $brand_object_id);
+    $query_helper->addConstraint(function ($query) {
+        $query->whereInclude('images');
+        return $query;
+    });
+    $query_helper->setSortCriteria(array('field'=>'title', 'order'=> SORT_ASC));
+    $results = $query_helper->find();
+    */
     class UtilParseForeignKeyQuery extends UtilParseQuery {
         private $foreignClass = '';
         public function __construct($baseClass, $foreignClass){
