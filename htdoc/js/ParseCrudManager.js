@@ -3,9 +3,16 @@ function createParseAclUmask022() {
     acl.setPublicReadAccess(true);
     return acl;
 }
+function createParseAclUmask000() {
+    var acl = new Parse.ACL();
+    acl.setPublicReadAccess(true);
+    acl.setPublicWriteAccess(true);
+    return acl;
+}
 
 var ParseCrudManager = CrudManager.extend({
     objectId: null,
+    aclCreator: createParseAclUmask022,
     init: function(config) {
         this._super(config);
         this.objectId = config.objectId;
@@ -20,7 +27,7 @@ var ParseCrudManager = CrudManager.extend({
             parseInstance.set(key, value);
         });
 
-        parseInstance.setACL(createParseAclUmask022());
+        parseInstance.setACL(this.aclCreator());
 
         parseInstance.save().then(
             function(parseInstance) {
