@@ -207,7 +207,7 @@ var CrudManager = Class.extend({
         $columns = ($columns === false) ? this.genDefaultColumns(data) : $columns; // default
         // template-generated result does not have addClass method
         $.each($columns, function (idx, column) {
-            $(column).addClass('crud-column');
+            $(column).addClass('crud-column').attr('title', data[idx].v);
         });
 
         var $mostInner = $row.find(' *:not(:has("*"))'); // http://stackoverflow.com/questions/4250893/find-the-inner-most-text-with-javascript-jquery-regardless-of-number-of-nested
