@@ -65,6 +65,17 @@
   -moz-text-shadow: @params;
   text-shadow: @params;
 }
+.linear-gradient-vertical-3 (@color1, @color2, @color3) {
+  .linear-gradient-vertical-3-w-pos (@color1, 0, @color2, 50%, @color3, 100%);
+}
+.linear-gradient-vertical-3-w-pos (@color1, @pos1, @color2, @pos2, @color3, @pos3) {
+  background: -moz-linear-gradient(top,  @color1 @pos1, @color2 @pos2, @color3 @pos3); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(@pos1,@color1), color-stop(@pos2,@color2), color-stop(@pos3,@color3)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  @color1 @pos1,@color2 @pos2,@color3 @pos3); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  @color1 @pos1,@color2 @pos2,@color3 @pos3); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  @color1 @pos1,@color2 @pos2,@color3 @pos3); /* IE10+ */
+  background: linear-gradient(to bottom,  @color1 @pos1,@color2 @pos2,@color3 @pos3); /* W3C */
+}
 .alpha(@ratio) {
     @ratio-ie: @ratio * 100;
     /* IE 8 */
