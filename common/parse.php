@@ -16,6 +16,7 @@
         protected $constraints = array();
         protected $sortCriteria = array();
         protected $sorter;
+        protected $count;
 
         public function __construct($baseClass){
             $this->baseClass = $baseClass;
@@ -63,9 +64,17 @@
                 $result = $this->convertParseResultsToArrays($ret->results);
             }
 
+            if (isset($ret->count)) {
+                $this->count = $ret->count;
+            }
+
             $this->sort($result);
             return $result;
         }
+        public function getCount() {
+            return $this->count;
+        }
+
 
         private function convertParseResultsToArrays($results) {
             $self = $this;
