@@ -395,7 +395,7 @@ var CrudManager = Class.extend({
         if (!paramValue) {
             return orderCriteria;
         }
-        var parts = paramValue.split(',');
+        var parts = decodeURIComponent(paramValue).split(',');
         parts.forEach(function(part, idx) {
             orderCriteria['_'+part.substr(1)] = part.substr(0, 1); // prefix to avoid pollution
         });
