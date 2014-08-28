@@ -391,12 +391,15 @@ var CrudManager = Class.extend({
     // -------------------------------------------------------------------------
     decodeOrderCriteria: function (paramValue) {
         // +field1,-field2
-        var parts = paramValue.split(',');
         var orderCriteria = {};
+        if (!paramValue) {
+            return orderCriteria;
+        }
+        var parts = paramValue.split(',');
         parts.forEach(function(part, idx) {
             orderCriteria['_'+part.substr(1)] = part.substr(0, 1); // prefix to avoid pollution
         });
-        console.log(orderCriteria);
+        //console.log(orderCriteria);
         return orderCriteria;
     },
     encodeOrderCriteria: function () {
@@ -418,6 +421,7 @@ var CrudManager = Class.extend({
     },
     toggleSort: function ($column, columnName) {
         var orderSymbol = this.getOrderCriterion(columnName);
+        orderSymbol = (orderSymbol === '') ? '+' : orderSymbol;
         orderSymbol = (orderSymbol === '-') ? '+' : '-';
         this.setOrderCriterion(columnName, orderSymbol);
         //$column.attr('data-order', orderSymbol);
