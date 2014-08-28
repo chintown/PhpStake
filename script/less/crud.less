@@ -6,13 +6,14 @@
 .crud-head, .crud-row {
   padding: 10px 10px;
 }
+.crud-head .crud-column {
+  cursor: pointer;
+}
 .crud-head .crud-column[data-order="+"]:after {
   content: "▲";
-  cursor: pointer;
 }
 .crud-head .crud-column[data-order="-"]:after {
   content: "▼";
-  cursor: pointer;
 }
 
 
