@@ -85,7 +85,6 @@
         foreach ($parts as $part) {
             if (empty($part)) { continue; }
             $criterion = substr($part, 0, 1);
-            $criterion = $criterion === ' ' ? '+' : $criterion; // workaround. see updateLinkParams() in std.js
             $criterion = $criterion === '+' ? SORT_ASC : SORT_DESC;
             // comply with UtilParseQuery->setSortCriteria
             $orderCriteria[] = array(

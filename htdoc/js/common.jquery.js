@@ -68,7 +68,7 @@ function updateLinkParams(updates) {
     var params = parseQueryString(info.search.substr(1));
 
     $.each(updates, function (key, val) {
-        params[key] = encodeURI(val);
+        params[key] = encodeURIComponent(val);
     });
 
     var query = [];
