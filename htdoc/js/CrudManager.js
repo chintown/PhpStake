@@ -19,12 +19,15 @@ var CrudManager = Class.extend({
     getNextRowId: function () {
         return this.panelBody.find('.crud-row').length - 1;
     },
+    orderCriteria: {},
 
     init: function (config) {
         this.panel = $(config.containerSelector).addClass('crud-table');
         this.panel.css('position', 'relative'); // avoid leak of absolute children
         this.editingCallback = config.editingCallback || this.editingCallback;
         this.template_id = config.template_id || '';
+
+        this.orderCriteria = this.decodeOrderCriteria(getLinkParam('order'));
     },
     render: function () {
         this.panel.append(this.genHead());
@@ -176,6 +179,7 @@ var CrudManager = Class.extend({
     },
     // -------------------------------------------------------------------------
     genHead: function () {
+        var self = this; // make this accessible in closure
         var tmplHead = $('.crud_head_row'); // user-defined
         var $head = (tmplHead.length === 0)
             ? this.genDefaultRow() // default
@@ -187,7 +191,15 @@ var CrudManager = Class.extend({
         $columns = ($columns === false) ? this.genDefaultColumns(data) : $columns; // default
         // template-generated result does not have addClass method
         $.each($columns, function (idx, column) {
-            $(column).addClass('crud-column');
+            var $column = $(column);
+            var columnName = data[idx].k;
+            $column
+                .addClass('crud-column')
+                .on('click', self.toggleSort.bind(self, $column, columnName));
+            var existedOrder = self.getOrderCriterion(columnName);
+            if (existedOrder !== '') {
+                $column.attr('data-order', existedOrder);
+            }
         });
 
         $head.append($columns);
@@ -375,5 +387,40 @@ var CrudManager = Class.extend({
             });
         });
         return data;
+    },
+    // -------------------------------------------------------------------------
+    decodeOrderCriteria: function (paramValue) {
+        // +field1,-field2
+        var parts = paramValue.split(',');
+        var orderCriteria = {};
+        parts.forEach(function(part, idx) {
+            orderCriteria['_'+part.substr(1)] = part.substr(0, 1); // prefix to avoid pollution
+        });
+        console.log(orderCriteria);
+        return orderCriteria;
+    },
+    encodeOrderCriteria: function () {
+        var parts = [];
+        for (var k in this.orderCriteria) {
+            parts.push(this.orderCriteria[k]+ k.substr(1));
+        }
+        return parts.join(',');
+    },
+    getOrderCriterion: function (columnName) {
+        if ('_'+columnName in this.orderCriteria) {
+            return this.orderCriteria['_'+columnName];
+        } else {
+            return '';
+        }
+    },
+    setOrderCriterion: function (columnName, orderCriteria) {
+        this.orderCriteria['_'+columnName] = orderCriteria;
+    },
+    toggleSort: function ($column, columnName) {
+        var orderSymbol = this.getOrderCriterion(columnName);
+        orderSymbol = (orderSymbol === '-') ? '+' : '-';
+        this.setOrderCriterion(columnName, orderSymbol);
+        //$column.attr('data-order', orderSymbol);
+        window.location.href = updateLinkParams({order: this.encodeOrderCriteria()})
     }
  });

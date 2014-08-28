@@ -6,6 +6,12 @@
 .crud-head, .crud-row {
   padding: 10px 10px;
 }
+.crud-head .crud-column[data-order="+"]:after {
+  content: "▲"
+}
+.crud-head .crud-column[data-order="-"]:after {
+  content: "▼"
+}
 
 
 .crud-row {
