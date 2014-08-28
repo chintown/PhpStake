@@ -34,3 +34,26 @@ input[type=date] {
   display: -webkit-inline-flex !important;
 }
 
+
+.pagination {
+  list-style: none;
+  @pager-size: 20px;
+  .pager {
+    display: inline-block;
+    width: @pager-size;
+    height: @pager-size;
+    margin: 5px;
+    padding: 5px;
+    font-size: 18px;
+    font-family: Georgia;
+
+    text-shadow: 0px 1px 0px #FFF;
+  }
+  .pager.active {
+    .border-radius(@pager-size);
+    background-color: #DDD; //@color-warm;
+  }
+  .pager.inactive {
+    visibility: hidden;
+  }
+}

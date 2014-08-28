@@ -151,14 +151,14 @@
             echo $s;
         }
     }
-    function generate_pager($info=array('val'=>0, 'text'=>0, 'class'=>''), $active=false) {
+    function generate_pager($info=array('val'=>0, 'text'=>0, 'class'=>''), $url_param, $active=false) {
         $active = ($active) ? 'active' : '';
-        $query = 'o=' . $info['val'];
+        $query = $url_param.'=' . $info['val'];
         $query = mergeQuery($query);
         //de($query);
         return '<li class="pager ' . $active . ' '. $info['class'] . '" ><a href="?' . $query . '">' . $info['text'] . '</a></li>';
     }
-    function render_pagers($info=array('low'=>0, 'high'=>10, 'current'=>0, 'max'=>0, 'num_per_page'=> 10), $is_return=false) {
+    function render_pagers($info=array('low'=>0, 'high'=>10, 'current'=>0, 'max'=>0, 'num_per_page'=> 10), $url_param='o', $is_return=false) {
         global $TRANS;
         $s = array();
         $s[] = '<ul class="pagination container">';
@@ -166,17 +166,18 @@
         $class_prev = ( $info['current'] === 1) ? 'inactive' : '';
         $class_next = ( $info['current'] === $info['max']) ? 'inactive' : '';
         $class_last = ($info['low'] + $info['num_per_page'] >= $info['max']) ? 'inactive' : '';
-        $s[] = generate_pager(array('val'=> 1, 'text'=> 1, 'class'=> $class_first));
-        $s[] = generate_pager(array('val'=> $info['current'] - 1, 'text'=> $TRANS->k('common.prev page', 'capital'), 'class'=> $class_prev));
+        $s[] = generate_pager(array('val'=> 1, 'text'=> 1, 'class'=> $class_first), $url_param);
+        $s[] = generate_pager(array('val'=> $info['current'] - 1, 'text'=> $TRANS->k('common.prev page', 'capital'), 'class'=> $class_prev), $url_param);
         for ($i = $info['low']; $i <= $info['high']; $i++) {
             $s[] = generate_pager(
                 array('val'=> $i, 'text'=> $i, 'class'=> ''),
+                $url_param,
                 ($i === $info['current'])
             );
         }
         //$class = ($info['high'] >= $info['max']) ? 'inactive' : '';
-        $s[] = generate_pager(array('val'=> $info['current'] + 1, 'text'=> $TRANS->k('common.next page', 'capital'), 'class'=> $class_next));
-        $s[] = generate_pager(array('val'=> $info['max'], 'text'=> $info['max'], 'class'=> $class_last));
+        $s[] = generate_pager(array('val'=> $info['current'] + 1, 'text'=> $TRANS->k('common.next page', 'capital'), 'class'=> $class_next), $url_param);
+        $s[] = generate_pager(array('val'=> $info['max'], 'text'=> $info['max'], 'class'=> $class_last), $url_param);
         $s[] = '</ul>';
         $s = implode('', $s);
         if (!$is_return) {
