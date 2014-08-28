@@ -63,7 +63,7 @@ class parseQuery extends parseRestClient{
 		}
 	}
 	//setting this to 1 by default since you'd typically only call this function if you were wanting to turn it on
-  public function setCount($bool=1){
+  public function setCount($bool=true){
   	if(is_bool($bool)){
   		$this->_count = $bool;
   	}
