@@ -1,4 +1,14 @@
 <?php
+/*
+
+    $pager_object = new PaginationObject();
+    $pager_object->setNumItemPerPage($num_rows_per_page);
+    $pager_object->setNumPagerPerPage($num_pagers_per_page);
+    $pager_object->setNumItem($result['count']);
+    $pager_object->setCurrentPage($page);
+
+    render_pagers($r_pager_object->export(), 'name_in_url');
+*/
 class PaginationObject {
     public $numItemPerPage = 10;
     public $numPagerPerPage = 10;
