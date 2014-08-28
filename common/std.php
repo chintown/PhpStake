@@ -74,6 +74,28 @@
         $new_queries = array_merge($queries, $given_queries);
         return http_build_query($new_queries);
     }
+    function decode_order_criteria($paramValue) {
+        // +field1,-field2
+        $orderCriteria = array();
+        $test = trim($paramValue);
+        if (empty($test)) {
+            return $orderCriteria;
+        }
+        $parts = explode(',', $paramValue);
+        foreach ($parts as $part) {
+            if (empty($part)) { continue; }
+            $criterion = substr($part, 0, 1);
+            $criterion = $criterion === ' ' ? '+' : $criterion; // workaround. see updateLinkParams() in std.js
+            $criterion = $criterion === '+' ? SORT_ASC : SORT_DESC;
+            // comply with UtilParseQuery->setSortCriteria
+            $orderCriteria[] = array(
+                'field'=> substr($part, 1),
+                'order'=> $criterion
+            );
+        }
+        //de($orderCriteria);
+        return $orderCriteria;
+    }
     function fix_font_css_path($style_content) {
         // ../ -> PARENT_FOLDER_ROOT/
         return preg_replace('/[.]{2}/', 'http://'.SERVER_HOST.PARENT_WEB_PATH, $style_content);
