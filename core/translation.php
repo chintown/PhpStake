@@ -25,7 +25,7 @@
                 $child_dict = spyc_load_file($fn_lang);
             }
 
-            $this->dict = array_merge_recursive($parent_dict, $child_dict);
+            $this->dict = array_replace_recursive($parent_dict, $child_dict); // array_merge_recursive
         }
         public function k($key, $options='') {
             $value = $this->get_value($key);
