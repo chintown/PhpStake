@@ -14,7 +14,8 @@
     class UtilParseQuery {
         protected $baseClass = '';
         protected $constraints = array();
-        protected $sortCriteria = array();
+        protected $localSortCriteria = array();
+        protected $globalSortCriteria = array();
         protected $sorter;
         protected $count;
 
@@ -34,12 +35,25 @@
             $this->constraints[] = $constraint;
         }
         /**
-         * @param $criteria array('field'=>'fieldNameMajor', 'order'=SORT_DESC),
-         *                  array('field'=>'fieldNameMinor', 'order'=SORT_ASC),
+         * @param $criteria  OrderCriterion('-fieldNameMajor')
+         *                   OrderCriterion('+fieldNameMinor')
          *                  ...
          */
-        public function setSortCriteria() {
-            $this->sortCriteria = func_get_args();
+        public function setLocalSortCriteria() {
+            $args = func_get_args();
+            if (func_num_args() === 1 && is_array($args[0])) {
+                $this->localSortCriteria = $args[0];
+            } else {
+                $this->localSortCriteria = func_get_args();
+            }
+        }
+        public function setGlobalSortCriteria() {
+            $args = func_get_args();
+            if (func_num_args() === 1 && is_array($args[0])) {
+                $this->globalSortCriteria = $args[0];
+            } else {
+                $this->globalSortCriteria = func_get_args();
+            }
         }
         public function find() {
             $result = array();
@@ -51,6 +65,16 @@
                 if(empty($this->_query) && (!empty($this->_inclue) || !empty($this->_order) || !empty($this->_limit) || !empty($this->_skip) || !empty($this->_count))) {
                     throw new Exception('due to limitation of parse php library, you must give a "where" clause for using "order", "limit" or similar constraint!!');
                 }
+
+                if (!empty($this->globalSortCriteria)) {
+                    map($this->globalSortCriteria, function (OrderCriterion $criterion) use($query) {
+                        $orderSetter = ($criterion->getOrder() === SORT_ASC)
+                                    ? array($query, 'orderByAscending')
+                                    :  array($query, 'orderByDescending');
+                        call_user_func($orderSetter, $criterion->getField());
+                    }, false);
+                }
+                //de($query);
                 $ret = $query->find();
             } catch (ParseLibraryException $e) {
                 bde('ParseLibraryException: '.$e->getMessage());
@@ -89,11 +113,11 @@
         }
 
         private function sort(&$result) {
-            if (!empty($this->sortCriteria)) {
+            if (!empty($this->localSortCriteria)) {
                 $paramsOfSorter = array();
-                foreach ($this->sortCriteria as $criterion) {
-                    $field = $criterion['field'];
-                    $order = $criterion['order'];
+                foreach ($this->localSortCriteria as $criterion) {
+                    $field = $criterion->getField();
+                    $order = $criterion->getOrder();
                     $fields = map($result, function($object) use ($field) {
                         return $object[$field];
                     }, false);
@@ -114,7 +138,6 @@
         $query->whereInclude('images');
         return $query;
     });
-    $query_helper->setSortCriteria(array('field'=>'title', 'order'=> SORT_ASC));
     $results = $query_helper->find();
     */
     class UtilParseForeignKeyQuery extends UtilParseQuery {

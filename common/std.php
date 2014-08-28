@@ -75,6 +75,7 @@
         return http_build_query($new_queries);
     }
     function decode_order_criteria($paramValue) {
+        require_once 'common/OrderCriterion.php';
         // +field1,-field2
         $orderCriteria = array();
         $test = trim($paramValue);
@@ -84,13 +85,7 @@
         $parts = explode(',', $paramValue);
         foreach ($parts as $part) {
             if (empty($part)) { continue; }
-            $criterion = substr($part, 0, 1);
-            $criterion = $criterion === '+' ? SORT_ASC : SORT_DESC;
-            // comply with UtilParseQuery->setSortCriteria
-            $orderCriteria[] = array(
-                'field'=> substr($part, 1),
-                'order'=> $criterion
-            );
+            $orderCriteria[] = new OrderCriterion($part);
         }
         //de($orderCriteria);
         return $orderCriteria;
