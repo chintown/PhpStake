@@ -47,6 +47,9 @@ stub:
 stub_purge:
 	$(ROOT_PARENT)/tool/clean_entry.sh ${name} $(ROOT_PARENT) $(ROOT_CHILD);
 
+flo:
+	supervisor -- $(ROOT_PARENT)/tool/flo.js '$(ROOT_CHILD)'
+
 deploy: prod remote update script
 
 map:
