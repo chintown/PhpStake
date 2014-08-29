@@ -20,6 +20,7 @@ var CrudManager = Class.extend({
         return this.panelBody.find('.crud-row').length - 1;
     },
     orderCriteria: {},
+    orderSymbolSequence: ['', '+', '-'], // ASC, DESC, none
 
     init: function (config) {
         this.panel = $(config.containerSelector).addClass('crud-table');
@@ -27,7 +28,7 @@ var CrudManager = Class.extend({
         this.editingCallback = config.editingCallback || this.editingCallback;
         this.template_id = config.template_id || '';
 
-        this.orderCriteria = this.decodeOrderCriteria(getLinkParam('order'));
+        this.orderCriteria = this.decodeOrderCriteria(getLinkParam('sort'));
     },
     render: function () {
         this.panel.append(this.genHead());
@@ -417,14 +418,38 @@ var CrudManager = Class.extend({
         }
     },
     setOrderCriterion: function (columnName, orderCriteria) {
-        this.orderCriteria['_'+columnName] = orderCriteria;
+        if (orderCriteria === '') {
+            delete this.orderCriteria['_'+columnName];
+        } else {
+            this.orderCriteria['_'+columnName] = orderCriteria;
+        }
     },
     toggleSort: function ($column, columnName) {
         var orderSymbol = this.getOrderCriterion(columnName);
-        orderSymbol = (orderSymbol === '') ? '+' : orderSymbol;
-        orderSymbol = (orderSymbol === '-') ? '+' : '-';
+
+        orderSymbol = this.getNextOrderSymbol(orderSymbol);
+
         this.setOrderCriterion(columnName, orderSymbol);
         //$column.attr('data-order', orderSymbol);
-        window.location.href = updateLinkParams({order: this.encodeOrderCriteria()})
+        window.location.href = updateLinkParams({sort: this.encodeOrderCriteria()})
+    },
+    getNextOrderSymbol: function (currentSymbol) {
+        var nextSymbol = '';
+        var sequence = this.orderSymbolSequence;
+        var maxIdx = sequence.length - 1;
+        sequence.forEach(function(symbol, idx) {
+            if (currentSymbol !== symbol) {
+                return;
+            }
+            if ((idx+1) <= maxIdx) {
+                nextSymbol = sequence[idx+1];
+            } else {
+                nextSymbol = sequence[0];
+            }
+        });
+        return nextSymbol;
+    },
+    setOrderSymbolSequence: function (sequence) {
+        this.orderSymbolSequence = sequence;
     }
  });
