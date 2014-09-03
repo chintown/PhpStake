@@ -138,6 +138,8 @@
 }
 
 .component-inner-separator(@item-selector, @sep-selector, @sep-mixin) {
+  // http://stackoverflow.com/questions/11551313/less-css-pass-mixin-as-a-parameter-to-another-mixin
+  // http://stackoverflow.com/questions/13266828/css-less-adding-a-variable-to-the-selector
   @{item-selector} {
     &:not(:last-child) {
       &@{sep-selector} {
