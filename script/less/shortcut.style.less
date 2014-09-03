@@ -1,4 +1,4 @@
-@dev: 0;
+@dev: 1;
 * { .dev-border(@dev); }
 .dev-color (@dev, @color) when (@dev = 1) {background-color: @color;}
 .dev-color (@dev, @color) when (@dev = 0) {}
@@ -88,6 +88,16 @@
     -khtml-opacity: @ratio;
     /* Good browsers */
     opacity: @ratio;
+}
+.blur(@radius){
+  // http://demosthenes.info/blog/534/Cross-browser-Image-Blur-with-CSS
+  filter: blur(@radius * 1px); /* Someday, sigh ... */
+  -webkit-filter: blur(@radius * 1px); /* Prefixed CSS3 blur filters */
+  -moz-filter: blur(@radius * 1px);
+  -o-filter: blur(@radius * 1px);
+  -ms-filter: blur(@radius * 1px);
+  filter: url(../svg/blur.svg#blur); /* Firefox needs SVG */
+  filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius=@radius); /* IE lte 9 */
 }
 .bold {font-weight: bolder;}
 .hide {display: none;}
