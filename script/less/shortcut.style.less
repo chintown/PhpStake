@@ -136,3 +136,13 @@
   background-position: center center;
   background-repeat: no-repeat;
 }
+
+.component-inner-separator(@item-selector, @sep-selector, @sep-mixin) {
+  @{item-selector} {
+    &:not(:last-child) {
+      &@{sep-selector} {
+        @sep-mixin();
+      }
+    }
+  }
+}
