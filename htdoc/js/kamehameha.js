@@ -44,7 +44,11 @@ var Goku = (function($) {
         console.log('emit!');
         this.setStateClass('emit');
 
-        this.options.onEmit(this.counter, this.rest.bind(this));
+        if ((arguments.length > 0)) {
+            this.options.onEmit(this.counter, this.rest.bind(this), arguments[0]);
+        } else {
+            this.options.onEmit(this.counter, this.rest.bind(this));
+        }
     };
     Goku.prototype.rest = function () {
         console.log('take a rest...');
@@ -58,7 +62,7 @@ var Goku = (function($) {
         }, this.options.restingSeconds * 1000);
     };
     Goku.prototype.setStateClass = function(state) {
-        this.$indicator.removeClass('rest trigger hold emit').addClass(state);
+        this.$indicator.removeClass('ready trigger hold emit rest').addClass(state);
     };
     // -------------------------------------------------------------------------
     Goku.prototype.study = function () {
