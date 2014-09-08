@@ -258,6 +258,37 @@
         return implode("\n", $r);
 
     }
+    function generate_equal_height_table(Array $elements, $num_cols_in_row) {
+        $full_elements = array_pad($elements, count($elements) + $num_cols_in_row - (count($elements) % $num_cols_in_row), '');
+        $rows = array_chunk($full_elements, $num_cols_in_row);
+
+        $html = array('<div class="ehc-table ehc-num-'.$num_cols_in_row.'">');
+        foreach ($rows as $i => $row) {
+            $html[] = '<div class="ehc-row ehc-row-'.$i.'">';
+            $html[] = generate_equal_height_row($row);
+            $html[] = '</div>';
+        }
+        $html[] = '</div>';
+        return implode("\n", $html);
+    }
+    function generate_equal_height_row(Array $elements) {
+        $wrapper_starts = array();
+        $contents = array();
+        $wrapper_ends = array();
+
+        $num_elements = count($elements);
+        foreach($elements as $idx => $content){
+            $idx_inverse = ($num_elements-1) - $idx;
+            $wrapper_starts[] = "<div class=\"ehc-col ehc-col-{$idx_inverse}\">";
+            $contents[] = "<div class=\"ehc-content ehc-content-{$idx}\">{$content}</div>";
+            $wrapper_ends[] = '</div>';
+        }
+
+        return implode('', $wrapper_starts).
+                    implode('', $contents).
+                implode('', $wrapper_ends)
+                ;
+    }
     /* template */
 
     /* time */

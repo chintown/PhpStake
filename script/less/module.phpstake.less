@@ -77,3 +77,37 @@
   float: left;
   padding-right: 20px;
 }
+
+
+.ehc-table {
+  .ehc-row>.ehc-col {
+    overflow: hidden;
+  }
+
+  .ehc-col,
+  .ehc-content {
+    float:left;
+    position:relative;
+  }
+
+  .ehc-col {
+    width:100%
+  }
+
+  .ehc-table-template(2);
+  .ehc-table-template(3);
+  .ehc-table-template(4);
+  .ehc-table-template(5);
+}
+.ehc-table-template(@num) {
+  &.ehc-num-@{num} .ehc-row>.ehc-col {
+    right: 0;
+  }
+  &.ehc-num-@{num} .ehc-col {
+    right: 100% / @num;
+  }
+  &.ehc-num-@{num} .ehc-content {
+    width: 100% / @num;
+    left: calc(100% * (1 - 1 / @num));
+  }
+}
