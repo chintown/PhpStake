@@ -1,0 +1,16 @@
+// http://pymaster.logdown.com/post/230263-simple-and-crude-detecting-elements-for-establishing
+// document.addEventListener('animationstart', onNewElementCreated, true);
+// function onNewElementCreated(evt) { //evt.target is the new element created
+@-webkit-keyframes pymaster-detect-dom-insertion { from {opacity: 0.99;} to {opacity: 1;} }
+@keyframes         pymaster-detect-dom-insertion { from {opacity: 0.99;} to {opacity: 1;} }
+
+.is-established {
+  -webkit-animation-delay: 0s !important;
+  -webkit-animation-name: pymaster-detect-dom-insertion !important;
+  -webkit-animation-duration: 1ms !important;
+  -webkit-animation-play-state: running !important;
+  animation-delay: 0s !important;
+  animation-name: pymaster-detect-dom-insertion !important;
+  animation-duration: 1ms !important;
+  animation-play-state: running !important;
+}
