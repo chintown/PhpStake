@@ -4,6 +4,9 @@
 ROOT_CHILD := $(shell pwd)
 ROOT_PARENT := $(shell grep __PARENT_ROOT__ core/main.inc.php |  cut -d ' ' -f6 | tr -d "'")
 
+%: # for all not matched target
+	@: # do nothing silently
+
 dev:
 	@perl -pi -e "s/MODE',[0-1]/MODE',1/" "$(ROOT_CHILD)/config/dev.php";
 	@echo "DEV MODE";
@@ -51,6 +54,13 @@ flo:
 	supervisor -- $(ROOT_PARENT)/tool/flo.js '$(ROOT_CHILD)'
 
 deploy: prod remote update script
+
+#http://stackoverflow.com/questions/6273608/how-to-pass-argument-to-makefile-from-command-line
+#make query_parse get Diary where='={"pet":{"__type":"Pointer","className":"Pet","objectId":"W7G2xRgmrG"}}' count==1
+KEY_APP := $(shell grep PARSE_APP_ID $(ROOT_CHILD)/config/dev.php | sed -E "s/define\('PARSE_APP_ID', '(.*)'\);/\1/" | tr -d ' ')
+KEY_REST := $(shell grep PARSE_REST_ID $(ROOT_CHILD)/config/dev.php | sed -E "s/define\('PARSE_REST_ID', '(.*)'\);/\1/" | tr -d ' ')
+query_parse:
+	@debug=${debug} app=$(KEY_APP) rest=$(KEY_REST) where='${where}' skip='${skip}' limit='${limit}' order='${order}' count='${count}' include='${include}' $(ROOT_PARENT)/tool/query_parse.sh $(filter-out $@,$(MAKECMDGOALS))
 
 map:
 	touch $(ROOT_CHILD)/htdoc/sitemap.gz $(ROOT_CHILD)/htdoc/sitemap.xml;
