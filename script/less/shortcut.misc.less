@@ -14,3 +14,34 @@
   animation-duration: 1ms !important;
   animation-play-state: running !important;
 }
+
+.bootstrap-navbar-reset(@color, @color-bg, @target-mixin) {
+  // put this in body
+  div.navbar .nav>li>a {
+    color: @color;
+    text-shadow: none;
+  }
+  div.navbar {
+    margin-bottom: 0 !important;
+
+    .navbar-inner {
+      background-color: @color-bg;
+      background-image: none; // reset bootstrap
+      box-shadow: none;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      border: none;
+      border-radius: 0;
+    }
+
+    @target-mixin();
+  }
+  div.nav-collapse  {
+    .nav>li>a {
+      border-radius: 0;
+    }
+    .nav>li>a:hover {
+      background-color: transparent;
+    }
+  }
+}
