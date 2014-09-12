@@ -26,6 +26,14 @@
 
         <script src="<?=toggle_min_script(PARENT_WEB_PATH.'/js/vendor/bootstrap.hacked.js')?>" type="text/javascript"></script>
 
+        <?php if (DEV_MODE && is_defined_const_available('JS_PREF_BAR')) { ?>
+            <script src="<?=PARENT_WEB_PATH?>/js/vendor/perfbar.js"></script>
+            <script type="text/javascript">perfBar.init({
+                budget: {
+                }
+            });</script>
+        <?php } ?>
+
         <?php if (is_defined_const_available('SENTRY_API_JS')) { ?>
             <script src="//d3nslu0hdya83q.cloudfront.net/dist/1.0/raven.min.js"></script>
             <script>Raven.config('<?=SENTRY_API_JS?>').install();</script>
