@@ -26,3 +26,9 @@
 .l-clear {clear: both;}
 .l-last {float: none; .l-clear;}
 .l-last {float: none; .l-clear;}
+
+.media-less-than(@width, @target-mixin) {
+  @media (max-width: @width) {
+    @target-mixin();
+  }
+}
