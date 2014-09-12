@@ -26,51 +26,49 @@
 
         <script src="<?=toggle_min_script(PARENT_WEB_PATH.'/js/vendor/bootstrap.hacked.js')?>" type="text/javascript"></script>
 
-      <?php if (is_defined_const_available('SENTRY_API_JS')) { ?>
-        <script src="//d3nslu0hdya83q.cloudfront.net/dist/1.0/raven.min.js"></script>
-        <script>Raven.config('<?=SENTRY_API_JS?>').install();</script>
-      <?php } ?>
+        <?php if (is_defined_const_available('SENTRY_API_JS')) { ?>
+            <script src="//d3nslu0hdya83q.cloudfront.net/dist/1.0/raven.min.js"></script>
+            <script>Raven.config('<?=SENTRY_API_JS?>').install();</script>
+        <?php } ?>
 
-      <?php if (is_defined_const_available('GA_CODE')) { ?>
-        <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-          <?=GA_CODE?>
-          var trackOutboundLink = function(url, new_window) {
-              ga('send', 'event', 'outbound', 'click', url, {'hitCallback': function () {
-                  if (!new_window) {
-                      document.location = url;
-                  }
-              }});
-              if (new_window){
-                  window.open(url);
-              }
-          };
-          $(document).ready(function(){
-              // set google analytics onclick link event on each link with class track
-              $('a.track').each(function(index, element){
-                  element = $(element);
-                  var link = element.attr('href');
-                  var new_window = element.attr('target') == '_blank' ? true : false;
-                  element.click(function(){
-                      trackOutboundLink(link, new_window);
-                      return false;
-                  });
-              });
-          });
-        </script>
-      <?php } ?>
+        <?php if (is_defined_const_available('GA_CODE')) { ?>
+            <script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+                <?=GA_CODE?>
+                var trackOutboundLink = function(url, new_window) {
+                    ga('send', 'event', 'outbound', 'click', url, {'hitCallback': function () {
+                        if (!new_window) {
+                            document.location = url;
+                        }
+                    }});
+                    if (new_window){
+                        window.open(url);
+                    }
+                };
+                $(document).ready(function(){
+                    // set google analytics onclick link event on each link with class track
+                    $('a.track').each(function(index, element){
+                        element = $(element);
+                        var link = element.attr('href');
+                        var new_window = element.attr('target') == '_blank' ? true : false;
+                        element.click(function(){
+                            trackOutboundLink(link, new_window);
+                            return false;
+                        });
+                    });
+                });
+            </script>
+        <?php } ?>
 
-      <? include("template/common.project.footer.php"); ?>
+        <? include("template/common.project.footer.php"); ?>
 
-      <?php if (!empty($FOOTER_EXTRA)) { include("template/$FOOTER_EXTRA"); }?>
-
+        <?php if (!empty($FOOTER_EXTRA)) { include("template/$FOOTER_EXTRA"); }?>
 
         <?php require "common/phpdebugbar.footer.php"; ?>
-      <?php /*#wrap_resource*/ ?>
-
+    <?php /*#wrap_resource*/ ?>
     </div>
   </body>
 </html>
