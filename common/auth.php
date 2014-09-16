@@ -2,6 +2,8 @@
 
     function validate_http_reference() {
         $url_parts = parse_url($_SERVER['HTTP_REFERER']);
+        //de(normalize_host($url_parts['host']));
+        //de(normalize_host(SERVER_HOST));
         return !(isset($url_parts['host']) && $url_parts['host'] !== NULL && normalize_host($url_parts['host']) !== normalize_host(SERVER_HOST));
     }
     function normalize_host($given) {
