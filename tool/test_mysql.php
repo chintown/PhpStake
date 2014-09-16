@@ -1,10 +1,11 @@
 <?php
 
 passthru("ps aux | grep mysqld");
-$root = $argv[1];
-require $root.'/config/dev.php';
-require $root.'/config/path.php';
-require $root.'/config/pw.php';
+$project_path = $argv[1];
+require $project_path.'/config/prerequisite.php';
+require $project_path.'/config/dev.php';
+require $project_path.'/config/path.php';
+require $project_path.'/config/pw.php';
 $info = array(
     "HOST ".DB_HOST,
     "USER ".AUTH_USER,
