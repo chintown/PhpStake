@@ -75,7 +75,7 @@ clean_log:
 	#@sudo bash -c '> error_log '
 
 test_db:
-	@cd tool; php -f test_mysql.php;
+	php -f $(ROOT_PARENT)/tool/test_mysql.php $(ROOT_CHILD);
 
 fix_tool_permission:
 	@chmod +x $(ROOT_CHILD)/tool/*.sh
