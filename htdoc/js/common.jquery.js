@@ -124,6 +124,57 @@ function autoBindTabIndexOn($jquery_collection) {
         $(target).attr('tabindex', idx+1);
     });
 }
+
+function wrapFileElements(event, filter) {
+    filter = filter || [];
+    var raw = event.target.files || event.dataTransfer.files;
+    $.each(raw, function(idx, file) {
+        /*
+         lastModifiedDate: Mon Sep 15 2014 10:58:58 GMT+0800 (CST)
+         name: "pcc-master.zip"
+         size: 20429
+         type: "application/zip"
+         */
+        var fullPath = file.name;
+        var parts = fullPath.split('.');
+        var dispExt = parts.length < 2 ? '' : parts[1];
+        dispExt = dispExt.toLowerCase();
+
+        var parts = file.type.split('/');
+        var mimeExt = parts.length < 2 ? '' : parts[1];
+        mimeExt = mimeExt.toLowerCase();
+
+        file['_disp_ext'] = dispExt;
+        file['_mime_ext'] = mimeExt;
+        file['_ext_conflict'] = dispExt !== mimeExt;
+
+        if ($.inArray(dispExt, filter) === -1) {
+            throw Error('file type ['+dispExt+'] does not match expectations ['+filter+']');
+        }
+    });
+    return raw;
+}
+
+function ajaxFileUpload (url, file, onSuccess, onFail) {
+    de.time('ajax upload');
+    var formData = window.FormData ? new FormData() : false;
+
+    if (!formData || !file) {
+        onFail(new Error('file or file-form is empty'));
+        return;
+    }
+
+    formData.append("user_uploaded", file);
+    $.ajax({
+        url: url,
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: onSuccess,
+        error: onFail
+    });
+}
 // -----------------------------------------------------------------------------
 
 function ajaxMsgInfo(msg, seconds) {
