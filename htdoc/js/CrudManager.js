@@ -100,6 +100,21 @@ var CrudManager = Class.extend({
         });
     },
     // -------------------------------------------------------------------------
+    onBackendError: function(where, detail, how, what) {
+        // where: text label by developer
+        // details: $.jqXHR. useful fields: "responseJSON", "responseText, "status", "statusText"
+        // how: "timeout", "error", "abort", and "parsererror". see $.ajax.error.textStatus
+        // what: http response text
+        console.error('CrudManager.onBackendError');
+        console.warn('override me for better error handling');
+        console.log({
+            where: where, how: how, what: what, detail: {
+                status: detail.status, statusText: detail.statusText,
+                responseJSON: detail.responseJSON, responseText: detail.responseText
+            }
+        });
+    },
+    // -------------------------------------------------------------------------
     genDefaultRow: function () {
         return $('<div>');
     },
