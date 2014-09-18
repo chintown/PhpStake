@@ -4,14 +4,20 @@ var JqueryCrudManager = CrudManager.extend({
         var dict = this.extractFromModal(this.addModal, 'add');
         var params = this.extractToBackend(dict);
 
-        $.post(url, params, function(res) {
-            self.panelBody.append(self.genBodyRow(
-                self,
-                self.getNextRowId(),
-                self.convertToInternal(dict)
-            ));
+        $.ajax({
+            url: url
+            , type: 'POST'
+            , data: params
+            , success: function(res) {
+                self.panelBody.append(self.genBodyRow(
+                    self,
+                    self.getNextRowId(),
+                    self.convertToInternal(dict)
+                ));
 
-            self.editingCallback();
+                self.editingCallback();
+            }
+            , error: self.onBackendError.bind(self, 'add')
         });
     },
     executeUpdateWithUI: function (url, $row) {
@@ -30,6 +36,7 @@ var JqueryCrudManager = CrudManager.extend({
 
                 self.editingCallback();
             }
+            , error: self.onBackendError.bind(self, 'update')
         });
     },
     executeRemoveWithUI: function (url, $row) {
@@ -44,6 +51,7 @@ var JqueryCrudManager = CrudManager.extend({
 
                 $row.remove();
             }
+            , error: self.onBackendError.bind(self, 'remove')
         });
     }
 });
