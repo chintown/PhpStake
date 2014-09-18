@@ -57,6 +57,21 @@ for controller in $controllers; do
     echo
 
 
+#    output="$DIR_CHILD/htdoc/js/$controller.pack.min.js";              # output
+#    inputs='';
+#    for user in $user_scripts; do
+#        pre="htdoc/"${user%.*};                                 # output
+#        from_file="$DIR_CHILD/$pre.js"
+#        ([ -e $from_file ] && from_file="$from_file") || from_file="$DIR_PARENT/$pre.js";
+#                                          # fallback to parent project directory
+#        echo "$from_file";
+#        inputs="$inputs $from_file";
+#    done
+#    echo "  > $output";
+#    java -jar $TOOL_ROOT/closure-compiler.jar --js $inputs --js_output_file $output; # actual command
+#    echo
+
+
     echo '----- ----- -----'
     echo '[lib scripts pack] prepare merged min file for 3rd js (*.min.js should be ready before merge), http://refresh-sf.com/yui/';
     lib_scripts=`python $TOOL_ROOT/gen_js_util.py lib_js_file_names $controller $DIR_CHILD`;
