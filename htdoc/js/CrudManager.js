@@ -330,6 +330,14 @@ var CrudManager = Class.extend({
         }
         return $field;
     },
+    getModalColumnByName: function ($row, name) {
+        var $field = $row.find('.crud-modal-column [name="'+name+'"]');
+        if ($field.length === 0) {
+            console.error('can not get column, '+name+', from $row', $row);
+            return false;
+        }
+        return $field;
+    },
     getModalColumnByClass: function ($row, clazz) {
         var $field = $row.find('.crud-modal-column.'+clazz+'');
         if ($field.length === 0) {
@@ -339,9 +347,10 @@ var CrudManager = Class.extend({
         return $field;
     },
     extractFromDisplay: function ($row) {
-        /* <div name="content" class="content crud-column">a</div>
-            -> {content: "a", ...}
+        /* <div name="column" class="field crud-column">value</div>
+            -> {column: "value", ...}
          */
+        // helper: dict['column'] = this.getDisplayColumnByName($row, 'column').val()
         var dict = {};
         $row.find('.crud-column').each(function (idx, column) {
             var $column = $(column);
@@ -351,14 +360,23 @@ var CrudManager = Class.extend({
         });
         return dict;
     },
-    extractFromModal: function (modal, source) {
+    extractFromModal: function ($modal, source) {
+        /* <li class="column crud-modal-column pair>
+            <span class="k">
+            <div class="v">
+                <textarea name="column">value</textarea>
+            </div>
+                -> {column: "value", ...}
+         */
+        // helper: data['field'] = this.getDisplayColumnByName($row, 'field').val()
+        // helper: data['field'] = this.getDisplayColumnByClass($row, 'field').find('.actual_input_dom).val()
         var data = {};
-        if (!modal) {
+        if (!$modal) {
             console.warn('undefined modal object found while extractFromModal');
             return data;
         }
 
-        modal.find('.crud-modal-column').each(function (idx, column) {
+        $modal.find('.crud-modal-column').each(function (idx, column) {
             var $column = $(column);
             var $input = $column.find('input');
             if ($input.length === 0) {
