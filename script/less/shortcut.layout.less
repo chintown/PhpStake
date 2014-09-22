@@ -32,3 +32,9 @@
     @target-mixin();
   }
 }
+.media-greater-than(@width, @target-mixin) {
+  @fixed-width: (@width - 1px);
+  @media (min-width: @fixed-width) {
+    @target-mixin();
+  }
+}
