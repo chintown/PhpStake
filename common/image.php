@@ -51,7 +51,7 @@
     * 2. larger
     *    use original size
     */
-    function gen_thumbnail($path_in, $path_out, $maxW, $maxH, $method='ImageMagick') {
+    function gen_thumbnail($path_in, $path_out, $max_w, $max_h, $method='ImageMagick') {
         $return = array('success'=> true, 'msg'=> '', 'output_w'=> $maxW, 'output_h'=> $maxH);
 
         $type = get_image_type_name($path_in);
@@ -60,7 +60,7 @@
         $src_w = imagesx($src);
         $src_h = imagesy($src);
 
-        $new_size = fit_size($src_w, $src_h, $maxW, $maxH);
+        $new_size = fit_size($src_w, $src_h, $max_w, $max_h);
         $thumb_w = $new_size['width'];
         $thumb_h = $new_size['height'];
 
@@ -95,6 +95,62 @@
     //        shell_exec($cmd);
         }
         return $return;
+    }
+    function gen_fill_thumbnail($path_in, $path_out, $dest_w, $dest_h, $method = 'GD') {
+        //$return = array('success'=> true, 'msg'=> '', 'output_w'=> $maxW, 'output_h'=> $maxH);
+
+        $type = get_image_type_name($path_in);
+        $src = imagecreatefrom_by_type($path_in);
+        // get the source image's width and height
+        $src_w = imagesx($src);
+        $src_h = imagesy($src);
+
+        $src_r = 1.0 * $src_w / (1.0 * $src_h);
+        $dest_r = 1.0 * $dest_w / (1.0 * $dest_h);
+        if ($dest_r > $src_r) {
+            // grow width to fill
+            $new_w = $dest_w;
+            $new_h = resize_h_by_w($src_h, $dest_w, $src_w);
+        } else {
+            // grow height to fill
+            $new_h = $dest_h;
+            $new_w = resize_w_by_h($src_w, $dest_h, $src_h);
+        }
+
+        $new_src_w = $new_w;
+        $new_src_h = $new_h;
+
+        if ('GD' == $method) {
+            $new_src = imagecreatetruecolor($new_src_w, $new_src_h);
+            // start resize
+            imagecopyresized($new_src, $src, 0, 0, 0, 0, $new_src_w, $new_src_h, $src_w, $src_h);
+
+        } else if ('ImageMagick' == $method) {
+            $exports = array(
+                'PATH'=> '$PATH:/opt/ImageMagick/bin/'
+            );
+            $exec_info = execute_external(
+                '/opt/ImageMagick/bin/convert', array("-resize {$new_src_w}x{$new_src_h} '$path_in' '$path_out'"),
+                '', $exports, '.'
+            );
+
+            $new_src = imagecreatefrom_by_type($path_out);
+        }
+
+        $crop_info = crop_size($new_src_w, $new_src_h, $dest_w, $dest_h);
+        // http://farm8.staticflickr.com/7155/6772422375_74450dcbf7.jpg
+        $thumb = imagecreatetruecolor($dest_w, $dest_h);
+        $ret = imagecopyresampled(
+            $thumb, $new_src,
+            0, 0,
+            $crop_info[0], $crop_info[1],
+            $dest_w, $dest_h,
+            $crop_info[2], $crop_info[3]
+        );
+        bde($ret);
+        image_by_type($type, $thumb, $path_out);
+
+        //return $return;
     }
 
     function thumb_hd (&$src, $x, $y) {
@@ -156,6 +212,23 @@
     }
     function resize_w_by_h($origW, $newH, $origH) {
         return $origW * ($newH / $origH);
+    }
+
+    function crop_size($srcW, $srcH, $destW, $destH) {
+        // crop the given dimension from the center to fill destW x destH rectangle
+        // but keep the original ratio of dimension
+        if ($destW > $srcW || $destH > $srcH) {
+            // can not crop
+            return array('width' => $srcW, 'height' => $srcH);
+        }
+        // http://php.net/manual/en/function.imagecrop.php
+        return array(
+            round(($srcW - $destW) / 2.0), // x
+            round(($srcH - $destH) / 2.0), // y
+            round($destW), // w
+            round($destH), // h
+
+        );
     }
 
 
