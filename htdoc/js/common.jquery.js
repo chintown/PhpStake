@@ -169,6 +169,7 @@ function ajaxFileUpload (url, file, onSuccess, onFail) {
         url: url,
         type: "POST",
         data: formData,
+        crossDomain: true,
         processData: false,
         contentType: false,
         success: onSuccess,
