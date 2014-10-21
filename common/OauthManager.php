@@ -29,8 +29,7 @@
 
         function __construct($oauthName) {
             $this->oauthName = $oauthName;
-            $protocol = isset($_SERVER['HTTPS']) ? 'https:' : 'http:';
-            $this->oauthPongUrl = $protocol.WEB_ROOT.'/'.basename($_SERVER['PHP_SELF']);
+            $this->oauthPongUrl = fix_url_protocol(WEB_ROOT.'/'.basename($_SERVER['PHP_SELF']));
         }
 
         public function setDefaultRedirectionUrl($callbackUrl) {
@@ -47,9 +46,9 @@
             $param = pickup($req, 'r');
             $r = purify($param['r'], 'eol');
             $r = empty($r) ? $this->getDefaultRedirectionUrl() : $r;
-            if (DEV_MODE)
-
-             bde($this->parseCsrfToken); // XXX can live without this...
+            if (DEV_MODE) {
+                bde($this->parseCsrfToken); // XXX can live without this...
+            }
             $this->csrfToken = $this->parseCsrfToken($req);
             $this->code = $this->parseOauthCode($req);
             $state = $this->evaluateOauthState($req);
