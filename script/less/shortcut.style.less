@@ -148,3 +148,49 @@
     }
   }
 }
+
+.component-horizontal-scroll(@item-selector, @height, @item-mixin) {
+  max-height: unit(@height, px);
+  white-space: nowrap;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  @{item-selector} {
+    display: inline-block;
+    position: relative;
+    height: @height;
+    @item-mixin();
+  }
+}
+
+//http://jsfiddle.net/axrwkr/eaefL/
+.component-centered-responsive-tiles-iter(@width, @count) when (@count > 0) {
+  .component-centered-responsive-tiles-iter(@width, (@count - 1));
+  @fit-width: unit((@width * @count + @padding * (@count + 1)), px);
+  @media (min-width: @fit-width) {
+    width: @fit-width;
+  }
+}
+.component-centered-responsive-tiles(@item-selector, @max-num, @width, @height, @padding, @item-mixin) {
+  display: table;
+  margin-left: auto;
+  margin-right: auto;
+  @{item-selector} {
+    display: inline-block;
+    width: @width;
+    height: @height;
+    margin: @padding;
+    margin-right: 0;
+    @item-mixin();
+  }
+  padding-right: @padding;
+  .component-centered-responsive-tiles-iter(@width, @max-num);
+  @min-width: unit((@width * 1 + @padding * (1 + 1)), px);
+  @media (max-width: @min-width) {
+    width: 90%;
+    @{item-selector} {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+}
