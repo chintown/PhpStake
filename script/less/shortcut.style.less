@@ -150,6 +150,7 @@
 }
 
 .component-horizontal-scroll(@item-selector, @height, @item-mixin) {
+  margin: 10px; // avoid unexpected push-right
   max-height: unit(@height, px);
   white-space: nowrap;
   overflow-x: scroll;
@@ -173,6 +174,7 @@
 }
 .component-centered-responsive-tiles(@item-selector, @max-num, @width, @height, @padding, @item-mixin) {
   display: table;
+  margin-top: 10px; // avoid unexpected push-right
   margin-left: auto;
   margin-right: auto;
   @{item-selector} {
