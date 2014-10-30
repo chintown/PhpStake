@@ -38,6 +38,9 @@
     function optional_int($nullable, $fallback) {
         return intval(optional($nullable, $fallback), 10);
     }
+    function optional_float($nullable, $fallback) {
+        return floatval(optional($nullable, $fallback));
+    }
     function not_empty($val) { return !empty($val); }
     function map($arr, $callback, $is_pair_para=true) {
         $res = array();

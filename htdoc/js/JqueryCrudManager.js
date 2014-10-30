@@ -2,7 +2,7 @@ var JqueryCrudManager = CrudManager.extend({
     executeAddWithUI: function (url, callback) {
         var self = this;
         var dict = this.extractFromModal(this.addModal, 'add');
-        var params = this.extractToBackend(dict);
+        var params = this.extractToBackend(dict, this.addModal);
 
         $.ajax({
             url: url
@@ -25,7 +25,7 @@ var JqueryCrudManager = CrudManager.extend({
     executeUpdateWithUI: function (url, $row, callback) {
         var self = this;
         var dict = this.extractFromModal(this.editModal, 'edit');
-        var params = this.extractToBackend(dict);
+        var params = this.extractToBackend(dict, this.editModal);
 
         $.ajax({
             url: url +'' + dict['id']

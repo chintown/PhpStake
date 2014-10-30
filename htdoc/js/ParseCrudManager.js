@@ -21,7 +21,7 @@ var ParseCrudManager = CrudManager.extend({
         var parseInstance = new parseClass();
         var self = this;
         var dict = this.extractFromModal(this.addModal, 'add');
-        var params = this.extractToBackend(dict);
+        var params = this.extractToBackend(dict, this.addModal);
 
         $.each(params, function(key, value) {
             parseInstance.set(key, value);
@@ -49,7 +49,7 @@ var ParseCrudManager = CrudManager.extend({
         var parseInstance = new parseClass();
         var self = this;
         var dict = this.extractFromModal(this.editModal, 'edit');
-        var params = this.extractToBackend(dict);
+        var params = this.extractToBackend(dict, this.editModal);
 
         parseInstance.id = dict['id'];
         $.each(params, function(key, value) {
@@ -80,10 +80,5 @@ var ParseCrudManager = CrudManager.extend({
         }, function(parseInstance, error) {
             ajaxMsgError('Failed to remove project, '+id+', with error code: ' + JSON.stringify(error));
         });
-    },
-    extractToBackend: function (dict) {
-        var params =  $.extend({}, dict);
-        delete params['id'];
-        return params;
     }
 });

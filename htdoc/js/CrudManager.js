@@ -52,7 +52,7 @@ var CrudManager = Class.extend({
     executeAddWithUI: function (dpd) {
         var self = this;
         var dict = this.extractFromModal(this.addModal, 'add');
-        var params = this.extractToBackend(dict);
+        var params = this.extractToBackend(dict, this.addModal);
         dpd.post(params, function (r) {
             self.editingCallback();
 
@@ -73,7 +73,7 @@ var CrudManager = Class.extend({
     executeUpdateWithUI: function (dpd, $row) {
         var self = this;
         var dict = this.extractFromModal(this.editModal, 'edit');
-        var params = this.extractToBackend(dict);
+        var params = this.extractToBackend(dict, this.editModal);
         dpd.put(dict['id'], params, function (r) {
             self.editingCallback();
 
@@ -389,8 +389,40 @@ var CrudManager = Class.extend({
         });
         return data;
     },
-    extractToBackend: function (dict) {
+    extractToBackend: function (dict, $modal) {
         var params =  $.extend({}, dict);
+
+        $modal.find('.crud-modal-column').each(function (idx, column) {
+            var $column = $(column);
+            var $input = $column.find('input');
+            if ($input.length === 0) {
+                $input = $column.find('textarea');
+            }
+            var k = $input.attr('name');
+
+            var fallback = $column.is('[data-crud-fallback]') ? $column.attr('data-crud-fallback') : '';
+            var columnType = $column.is('[data-crud-type]') ? $column.attr('data-crud-type') : '';
+            switch (columnType) {
+                case 'int':
+                    params[k] = parseInt(params[k], 10) || fallback;
+                    break;
+                case 'float':
+                    params[k] = parseFloat(params[k]) || fallback;
+                    break;
+                case 'boolean':
+                    fallback = fallback.toLowerCase() === 'true';
+                    params[k] = parseInt(params[k], 10);
+                    params[k] = isNaN(params[k]) ? false : params[k] > 0;
+                    break;
+                case 'date':
+                    params[k] = new Date(params[k]);
+                    params[k].setHours(0);
+                    break;
+                default:
+                    break;
+            }
+        });
+
         delete params['id'];
         return params;
     },
