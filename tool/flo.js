@@ -19,7 +19,7 @@ function resolver(filepath, callback) {
     var webInput = 'css/'+targetFile;
     var lessInput = ROOT+'/'+filepath;
     var lessOutput = ROOT+'/htdoc/css/'+targetFile;
-    var cmd = '/usr/local/bin/lessc -x --no-color --include-path=/Users/chintown/src/php/PhpStake/script/less/ '+lessInput+' > '+lessOutput;
+    var cmd = '/usr/local/bin/lessc -x --no-color --include-path=/home/chintown/proj/php/PhpStake/script/less/ '+lessInput+' > '+lessOutput;
     //console.log(cmd);
     exec(cmd, function (err, stdout) {
       if (err) {

@@ -1,11 +1,11 @@
 <?php
     // 0 | 1
-    define('DEV_MODE',1);
+    define('DEV_MODE',0);
     if (DEV_MODE) {
         ini_set('display_errors', 'On');
     }
     // remote (for linode dev) | local (for Mac dev)
-    define('ENV','local');
+    define('ENV','remote');
 //    if (DEV_MODE) { @mkdir('/tmp/xhprof/'); define('XHPROF_NS', SITE_CODE); }
 //    if (DEV_MODE) { define('PHP_DEBUG_BAR', 'on'); }
 //    if (DEV_MODE) { define('JS_PREF_BAR', 'on'); } // will conflict with PHP_DEBUG_BAR
