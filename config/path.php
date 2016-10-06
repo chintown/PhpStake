@@ -11,7 +11,7 @@
 
 
     define('HOME',        (ENV === 'remote') ? '/home/chintown' : '/Users/chintown');
-    define('FOLDER_ROOT', HOME.'/src/php/'.SITE_CODE.'/');
+    define('FOLDER_ROOT', HOME.'/proj/php/'.SITE_CODE.'/');
 
 
     define('PARENT_SITE_CODE', 'phpstake');
