@@ -2,7 +2,7 @@
 
     // NEED path.php
     require dirname(__FILE__).'/crypt.php';
-    require FOLDER_ROOT.'config/pw.php';
+    require FOLDER_ROOT.'config/conn.php';
 
     define('DB_VALID', 1);
     define('DB_INVALID', 0);
