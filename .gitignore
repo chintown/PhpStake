@@ -4,6 +4,7 @@ htdoc/js/*.min.js
 htdoc/css/*
 !htdoc/css/bootstrap.precompile.css
 !htdoc/css/bootstrap-responsive.precompile.css
+!htdoc/css/jquery.mobile/
 script/less/bootstrap/tests
 script/less/*.css
 sftp-config.json
